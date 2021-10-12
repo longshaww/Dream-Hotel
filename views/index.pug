@@ -1,2 +1,5 @@
-h1 Hello #{name}
-a(href="/Users") Users
+extends ./layouts/general
+block content 
+    h1 Hello #{name}
+    a.d-block(href="/users") Users
+    a.d-block(href="/rooms") Room

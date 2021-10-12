@@ -10,5 +10,77 @@
       "phone": "0938131201",
       "id": "u_cq-lHfA"
     }
+  ],
+  "rooms": [
+    {
+      "room_type": "Standard",
+      "price": "$27.10",
+      "note": "nothing",
+      "room_state": false,
+      "room_id": "101"
+    },
+    {
+      "room_type": "Standard",
+      "price": "$27.21",
+      "note": "nothing",
+      "room_state": false,
+      "room_id": "102"
+    },
+    {
+      "room_type": "Standard",
+      "price": "$16.69",
+      "note": "nothing",
+      "room_state": false,
+      "room_id": "103"
+    },
+    {
+      "room_type": "Standard",
+      "price": "$10.43",
+      "note": "nothing",
+      "room_state": false,
+      "room_id": "104"
+    },
+    {
+      "room_type": "Standard",
+      "price": "$27.44",
+      "note": "nothing",
+      "room_state": false,
+      "room_id": "105"
+    },
+    {
+      "room_type": "Superior",
+      "price": "$29.59",
+      "note": "nothing",
+      "room_state": false,
+      "room_id": "106"
+    },
+    {
+      "room_type": "Superior",
+      "price": "$11.57",
+      "note": "nothing",
+      "room_state": true,
+      "room_id": "107"
+    },
+    {
+      "room_type": "Superior",
+      "price": "$20.85",
+      "note": "nothing",
+      "room_state": true,
+      "room_id": "108"
+    },
+    {
+      "room_type": "Superior",
+      "price": "$17.03",
+      "note": "nothing",
+      "room_state": true,
+      "room_id": "109"
+    },
+    {
+      "room_type": "Superior",
+      "price": "$15.98",
+      "note": "nothing",
+      "room_state": true,
+      "room_id": "110"
+    }
   ]
 }

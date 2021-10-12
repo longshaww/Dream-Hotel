@@ -1,0 +1,24 @@
+html
+  head
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    link(rel="stylesheet", href="/styles/style.css")
+body
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+        .container-fluid
+            a.navbar-brand(href='#') Dream Hotel
+            button.navbar-toggler(type='button', data-bs-toggle='collapse', data-bs-target='#navbarNavDropdown', aria-controls='navbarNavDropdown', aria-expanded='false', aria-label='Toggle navigation')
+                span.navbar-toggler-icon
+            #navbarNavDropdown.collapse.navbar-collapse
+                ul.navbar-nav
+                    li.nav-item
+                        a.nav-link.active(aria-current='page', href='/') Home
+                    li.nav-item
+                        a.nav-link(href='/users') Users
+                        li.nav-item
+                        a.nav-link(href='/rooms') Rooms
+                    li.nav-item.dropdown
+                        a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href='#', role='button', data-bs-toggle='dropdown', aria-expanded='false')
+                            | Contact
+
+    .container.pt-5
+        block content

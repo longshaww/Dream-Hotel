@@ -1,14 +1,21 @@
-h1 Users 
+extends ../layouts/general
+block content
+        .d-flex.align-items-center
+            h1 Users 
+            a.btn.btn-primary(href="/users/create" class="mx-3") New users
+            form(action="/users/search",method="GET" class="d-flex flex-grow-1 mt-3")
+                input(type="text", name="q" class="form-control")
+                button(class="btn btn-primary ml-4") Search
 
-a(href="/users/create") New user
-
-form(action="/users/search",method="GET")
-    input(type="text", name="q")
-    button Search
-
-h3 Name
-ul
-    each user in users
-        li
-            span=user.name
-            a(href="/users/"+ user.id) View
+        h3 Name
+        table.table 
+            tr
+                th Name
+                th Phone
+                th Actions
+            each user in users
+                tr
+                    td=user.name
+                    td=user.phone
+                    td
+                        a.btn.btn-primary(href="/users/"+ user.id class="ml-2") View

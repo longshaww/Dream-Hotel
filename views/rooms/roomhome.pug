@@ -1,0 +1,17 @@
+extends ../layouts/general
+block content 
+    .d-flex
+        h1 Rooms
+        form(action="/rooms/search",method="GET" class="d-flex ml-auto")
+            input(type="text", name="q" class="form-control")
+            button(class="btn btn-primary ml-4") Search
+    .d-flex.justify-content-between.flex-wrap
+        each room in rooms
+                ul.card.list-unstyled
+                    h5.card-header="Phòng "+room.room_id
+                    .card-body
+                        li="Loại phòng: "+room.room_type
+                        li="Giá phòng: "+room.price 
+                        li="Ghi chú: "+room.note 
+                        li=`Tình trạng: ${room.room_state? "Còn" : "Hết"}`
+                        <a href="#" class="btn btn-primary">View</a>
