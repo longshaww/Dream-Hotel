@@ -15,7 +15,7 @@
     {
       "id": "1",
       "room_type": "Standard",
-      "price": "$27.21",
+      "price": "$16.69",
       "note": "nothing",
       "room_state": false,
       "room_id": "101"
@@ -91,6 +91,22 @@
       "note": "nothing",
       "room_state": false,
       "room_id": "109"
+    },
+    {
+      "room_id": "110",
+      "room_type": "Deluxe",
+      "price": "$9.64",
+      "note": "nothing",
+      "room_state": "true",
+      "id": "fD6ROldXI"
+    },
+    {
+      "room_id": "111",
+      "room_type": "Deluxe",
+      "price": "$49",
+      "note": "nothing",
+      "room_state": "true",
+      "id": "SnXxcb6C1"
     }
   ]
 }

@@ -1,10 +1,7 @@
 extends ../layouts/general
-block content 
-     h1 Create Room
-     if errors
-        each error in errors 
-            .alert.alert-danger=error
-     form(action="/rooms/create" ,method="POST")
+block content
+     h1 Edit Room
+     form(action="/rooms/"+room.id+"/edit" ,method="POST")
         .from-group
             label(for="room_id") Số phòng
             input#room_id.form-control(name="room_id" type="text" value = values ? values.room_id :'')
@@ -19,5 +16,5 @@ block content
             input#note.form-control(name="note" type="text" value = values ? values.note :'')    
         .from-group.mb-3
             label(for="room_state") Tình trạng
-            input#room_state.form-control(name="room_state" type="text" value = values ? values.room_state :'')
-        button.btn.btn-primary Create
+            input#room_state.form-control(name="room_state" type="text" onclick="window.location.href='/rooms/'"+room.id value = values ? values.room_state :'')
+        button.btn.btn-primary(type="submit") Edit

@@ -5,5 +5,8 @@ block content
     li="Giá phòng: "+room.price 
     li="Ghi chú: "+room.note 
     li=`Tình trạng: ${room.room_state? "Còn" : "Hết"}`
-    form(action="/rooms/"+ room.id,method="DELETE") 
-        button.btn.btn-primary Delete    
+        form(action="/rooms/delete/"+ room.id,method="POST") 
+            .form-group
+                a.btn.btn-primary(href="/rooms/"+room.id+"/edit") Edit 
+                button.btn.btn-primary(type="submit") Delete
+                  

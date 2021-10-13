@@ -59,9 +59,20 @@ router.get("/:id", (req, res) => {
 		room: room,
 	});
 });
-router.delete("/:id", (req, res) => {
+router.post("/delete/:id", (req, res) => {
 	var id = req.params.id;
-	var delRoom = db.get("rooms").remove({ id: id }).write();
-	res.send(delRoom);
+	db.get("rooms").remove({ id: id }).write();
+	res.redirect("/rooms");
 });
+router.get("/:id/edit", (req, res) => {
+	var id = req.params.id;
+	var room = db.get("rooms").find({ id: id }).value();
+	res.render("rooms/edit", { room: room });
+});
+router.post("/:id/edit", (req, res) => {
+	var id = req.params.id;
+	db.get("rooms").find({ id: id }).assign(req.body).write();
+	res.redirect("/rooms/" + id);
+});
+
 module.exports = router;
