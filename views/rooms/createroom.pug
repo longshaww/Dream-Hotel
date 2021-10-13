@@ -1,0 +1,23 @@
+extends ../layouts/general
+block content 
+     h1 Create Room
+     if errors
+        each error in errors 
+            .alert.alert-danger=error
+     form(action="/rooms/create" ,method="POST")
+        .from-group
+            label(for="room_id") Số phòng
+            input#room_id.form-control(name="room_id" type="text")
+        .from-group.mb-3
+            label(for="room_type") Loại phòng
+            input#room_type.form-control(name="room_type" type="text")
+        .from-group.mb-3
+            label(for="price") Giá phòng
+            input#price.form-control(name="price" type="text")
+        .from-group.mb-3
+            label(for="note") Ghi chú
+            input#note.form-control(name="note" type="text")    
+        .from-group.mb-3
+            label(for="room_state") Tình trạng
+            input#room_state.form-control(name="room_state" type="text")
+        button.btn.btn-primary Create

@@ -13,55 +13,55 @@
   ],
   "rooms": [
     {
+      "id": "1",
       "room_type": "Standard",
-      "price": "$27.10",
+      "price": "$27.21",
       "note": "nothing",
       "room_state": false,
       "room_id": "101"
     },
     {
+      "id": "2",
       "room_type": "Standard",
-      "price": "$27.21",
+      "price": "$16.69",
       "note": "nothing",
       "room_state": false,
       "room_id": "102"
     },
     {
+      "id": "3",
       "room_type": "Standard",
-      "price": "$16.69",
+      "price": "$10.43",
       "note": "nothing",
       "room_state": false,
       "room_id": "103"
     },
     {
+      "id": "4",
       "room_type": "Standard",
-      "price": "$10.43",
+      "price": "$27.44",
       "note": "nothing",
       "room_state": false,
       "room_id": "104"
     },
     {
-      "room_type": "Standard",
-      "price": "$27.44",
+      "id": "5",
+      "room_type": "Superior",
+      "price": "$29.59",
       "note": "nothing",
       "room_state": false,
       "room_id": "105"
     },
     {
-      "room_type": "Superior",
-      "price": "$29.59",
-      "note": "nothing",
-      "room_state": false,
-      "room_id": "106"
-    },
-    {
+      "id": "6",
       "room_type": "Superior",
       "price": "$11.57",
       "note": "nothing",
       "room_state": true,
-      "room_id": "107"
+      "room_id": "106"
     },
     {
+      "id": "7",
       "room_type": "Superior",
       "price": "$20.85",
       "note": "nothing",
@@ -69,18 +69,28 @@
       "room_id": "108"
     },
     {
+      "id": "8",
       "room_type": "Superior",
       "price": "$17.03",
       "note": "nothing",
       "room_state": true,
-      "room_id": "109"
+      "room_id": "107"
     },
     {
+      "id": "9",
       "room_type": "Superior",
       "price": "$15.98",
       "note": "nothing",
       "room_state": true,
-      "room_id": "110"
+      "room_id": "108"
+    },
+    {
+      "id": "10",
+      "room_type": "Standard",
+      "price": "$27.10",
+      "note": "nothing",
+      "room_state": false,
+      "room_id": "109"
     }
   ]
 }
