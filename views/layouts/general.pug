@@ -19,7 +19,13 @@ body
                     li.nav-item.dropdown
                         a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href='#', role='button', data-bs-toggle='dropdown', aria-expanded='false')
                             | Contact
-            if user
-                p = user.name
+    
     .container.pt-5
+        if user
+            figure.text-center
+                blockquote.blockquote
+                    p= "You made your way in "+user.name+" !!!"
+                figcaption.blockquote-footer
+                    | Someone famous in 
+                    cite(title='Source Title') program
         block content
