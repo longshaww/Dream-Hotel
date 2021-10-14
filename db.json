@@ -107,6 +107,14 @@
       "note": "nothing",
       "room_state": "true",
       "id": "SnXxcb6C1"
+    },
+    {
+      "room_id": "1101",
+      "room_type": "test",
+      "price": "test",
+      "note": "test",
+      "room_state": "test",
+      "id": "4CDteJJ10"
     }
   ]
 }
