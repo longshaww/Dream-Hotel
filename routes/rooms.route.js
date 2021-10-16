@@ -15,10 +15,10 @@ router.post(
 
 router.get("/:id", controller.viewRoom);
 
-router.post("/delete/:id", controller.deleteRoom);
+router.delete("/:id", controller.deleteRoom);
 
 router.get("/:id/edit", controller.editRoomPug);
 
-router.post("/:id/edit", controller.editRoomHandling);
+router.put("/:id", controller.editRoomHandling);
 
 module.exports = router;
