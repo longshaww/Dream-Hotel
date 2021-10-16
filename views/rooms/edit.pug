@@ -1,7 +1,7 @@
 extends ../layouts/general
 block content
      h1 Edit Room
-     form(action="/rooms/"+room.id+"/edit" ,method="POST")
+     form(method="POST" action="/rooms/"+room.id+"?_method=PUT" )
         .from-group
             label(for="room_id") Số phòng
             input#room_id.form-control(name="room_id" type="text" value = values ? values.room_id :'')
