@@ -1,16 +1,35 @@
-# ExpressJS Installation
-1/ If you don't have nodejs please download
-=> https://nodejs.org/en/ 
+# Dream Hotel
+A Website where you can mangement your hotel.
 
-*In terminal
+## Languages and libraries
+*Front-end: PUG,Bootstrap 4
 
-2/ git clone https://github.com/longshaww/ExpressJS.git
-=> To clone this project to your working dir
+*Back-end: Nodejs & ExpressJS
 
-3/ npm install
-=> To get up to date the libraries we are using
+## Required
+-If you don't have [nodejs](https://nodejs.org/en/) please install
 
-4/ node index.js
-=> To run the sever
+-Git and github knowledge
 
-*** Now you can run the web and modify code !!!
+## Installation
+To clone the project
+``` 
+git clone https://github.com/longshaww/ExpressJS.git
+```
+To get up to date the libraries we are using
+```
+npm install
+```
+
+## Usage
+To start the sever
+```
+node index.js
+```
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
