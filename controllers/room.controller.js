@@ -27,9 +27,32 @@ module.exports.createRoomPug = (req, res) => {
 
 module.exports.createRoomValidation = (req, res) => {
 	req.body.id = shortid.generate();
-
-	db.get("rooms").push(req.body).write();
-	res.redirect("/rooms");
+	var remain = "còn";
+	var over = "hết";
+	if (
+		req.body.room_state
+			.toLowerCase()
+			.localeCompare(remain.toLowerCase()) === 0
+	) {
+		req.body.room_state = true;
+		db.get("rooms").push(req.body).write();
+		res.redirect("/rooms");
+		return;
+	}
+	if (
+		req.body.room_state
+			.toLowerCase()
+			.localeCompare(over.toLowerCase()) === 0
+	) {
+		req.body.room_state = false;
+		db.get("rooms").push(req.body).write();
+		res.redirect("/rooms");
+		return;
+	}
+	res.render("rooms/createroom", {
+		errors: ["Wrong room state !!! Please try again"],
+		values: req.body,
+	});
 };
 module.exports.viewRoom = (req, res) => {
 	var id = req.params.id;

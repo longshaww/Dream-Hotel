@@ -1,14 +1,16 @@
 extends ../layouts/general
 block content 
-    h1 View Room 
-    li="Số Phòng: " +room.room_id
-    li="Loại phòng: "+room.room_type
-    li="Giá phòng: "+room.price 
-    li="Ghi chú: "+room.note 
-    li=`Tình trạng: ${room.room_state? "Còn" : "Hết"}`
-        form(method="POST" action="/rooms/"+room.id+"?_method=DELETE") 
-            .form-group
-                a.btn.btn-primary(href="/rooms/"+room.id+"/edit") Edit 
-                button(type="submit" class="btn btn-primary") Delete
+        h1 View Room
+        ul.list-unstyled.d-flex.flex-column.justify-content-center.align-items-center
+            img(src= room.image class="img-fluid")
+            li="Số Phòng: " +room.room_id
+            li="Loại phòng: "+room.room_type
+            li="Giá phòng: "+room.price 
+            li="Ghi chú: "+room.note 
+            li=`Tình trạng: ${room.room_state? "Còn" : "Hết"}`
+            form(method="POST" action="/rooms/"+room.id+"?_method=DELETE") 
+                .form-group
+                    a.btn.btn-primary(href="/rooms/"+room.id+"/edit") Edit 
+                    button(type="submit" class="btn btn-primary") Delete
                 
                 

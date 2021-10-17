@@ -20,7 +20,8 @@
       "price": "$16.69",
       "note": "nothing",
       "room_state": false,
-      "room_id": "101"
+      "room_id": "101",
+      "image": "https://product.hstatic.net/200000261703/product/standard-room-2_bf5f55cc82a645c9aaa62963fb6280eb.jpg"
     },
     {
       "id": "2",
@@ -28,7 +29,8 @@
       "price": "$16.69",
       "note": "nothing",
       "room_state": false,
-      "room_id": "102"
+      "room_id": "102",
+      "image": "https://product.hstatic.net/200000261703/product/standard-room-2_bf5f55cc82a645c9aaa62963fb6280eb.jpg"
     },
     {
       "id": "3",
@@ -36,7 +38,8 @@
       "price": "$10.43",
       "note": "nothing",
       "room_state": false,
-      "room_id": "103"
+      "room_id": "103",
+      "image": "https://product.hstatic.net/200000261703/product/standard-room-2_bf5f55cc82a645c9aaa62963fb6280eb.jpg"
     },
     {
       "id": "4",
@@ -44,7 +47,8 @@
       "price": "$27.44",
       "note": "nothing",
       "room_state": false,
-      "room_id": "104"
+      "room_id": "104",
+      "image": "https://product.hstatic.net/200000261703/product/standard-room-2_bf5f55cc82a645c9aaa62963fb6280eb.jpg"
     },
     {
       "id": "5",
@@ -52,7 +56,8 @@
       "price": "$29.59",
       "note": "nothing",
       "room_state": false,
-      "room_id": "105"
+      "room_id": "105",
+      "image": "https://product.hstatic.net/200000261703/product/standard-room-2_bf5f55cc82a645c9aaa62963fb6280eb.jpg"
     },
     {
       "id": "6",
@@ -60,7 +65,8 @@
       "price": "$11.57",
       "note": "nothing",
       "room_state": true,
-      "room_id": "106"
+      "room_id": "106",
+      "image": "https://product.hstatic.net/200000261703/product/standard-room-2_bf5f55cc82a645c9aaa62963fb6280eb.jpg"
     },
     {
       "id": "7",
@@ -68,7 +74,8 @@
       "price": "$20.85",
       "note": "nothing",
       "room_state": true,
-      "room_id": "108"
+      "room_id": "108",
+      "image": "https://product.hstatic.net/200000261703/product/standard-room-2_bf5f55cc82a645c9aaa62963fb6280eb.jpg"
     },
     {
       "id": "8",
@@ -76,7 +83,8 @@
       "price": "$17.03",
       "note": "nothing",
       "room_state": true,
-      "room_id": "107"
+      "room_id": "107",
+      "image": "https://product.hstatic.net/200000261703/product/standard-room-2_bf5f55cc82a645c9aaa62963fb6280eb.jpg"
     },
     {
       "id": "9",
@@ -84,7 +92,8 @@
       "price": "$15.98",
       "note": "nothing",
       "room_state": true,
-      "room_id": "108"
+      "room_id": "108",
+      "image": "https://product.hstatic.net/200000261703/product/standard-room-2_bf5f55cc82a645c9aaa62963fb6280eb.jpg"
     },
     {
       "id": "10",
@@ -92,15 +101,17 @@
       "price": "$27.10",
       "note": "nothing",
       "room_state": false,
-      "room_id": "109"
+      "room_id": "109",
+      "image": "https://product.hstatic.net/200000261703/product/standard-room-2_bf5f55cc82a645c9aaa62963fb6280eb.jpg"
     },
     {
       "room_id": "110",
       "room_type": "Deluxe",
       "price": "$9.64",
       "note": "nothing",
-      "room_state": "true",
-      "id": "fD6ROldXI"
+      "room_state": true,
+      "id": "mZaw46t2U",
+      "image": "https://product.hstatic.net/200000261703/product/standard-room-2_bf5f55cc82a645c9aaa62963fb6280eb.jpg"
     }
   ]
 }
