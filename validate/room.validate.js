@@ -1,3 +1,6 @@
+const db = require("../db");
+const shortid = require("shortid");
+
 module.exports.createRoomValidation = (req, res, next) => {
 	var errors = [];
 	if (!req.body.room_id) {
