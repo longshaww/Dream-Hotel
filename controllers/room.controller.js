@@ -57,7 +57,7 @@ module.exports.viewRoom = async (req, res) => {
 		room: room,
 	});
 };
-module.exports.deleteRoom = async (req, res, next) => {
+module.exports.deleteRoom = async (req, res) => {
 	var id = req.params.id;
 	await Room.findByIdAndRemove({ _id: id });
 	res.redirect("/rooms");
