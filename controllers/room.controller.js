@@ -1,21 +1,18 @@
-const db = require("../db");
-const shortid = require("shortid");
-const { value, values } = require("../db");
-const { application } = require("express");
+var Room = require("../models/room.model");
 
-module.exports.roomHome = (req, res) => {
-	res.render("rooms/roomhome", { rooms: db.get("rooms").value() });
+module.exports.roomHome = async (req, res) => {
+	var rooms = await Room.find();
+	res.render("rooms/roomhome", {
+		rooms: rooms,
+	});
 };
-module.exports.searchRoom = (req, res) => {
+
+module.exports.searchRoom = async (req, res) => {
+	var rooms = await Room.find();
 	var q = req.query.q;
-	var matchedRooms = db
-		.get("rooms")
-		.value()
-		.filter(function (room) {
-			return (
-				room.room_type.toLowerCase().indexOf(q.toLowerCase()) !== -1
-			);
-		});
+	var matchedRooms = rooms.filter(function (room) {
+		return room.room_type.toLowerCase().indexOf(q.toLowerCase()) !== -1;
+	});
 	res.render("rooms/roomhome", {
 		rooms: matchedRooms,
 	});
@@ -25,8 +22,7 @@ module.exports.createRoomPug = (req, res) => {
 	res.render("rooms/createroom");
 };
 
-module.exports.createRoomValidation = (req, res) => {
-	req.body.id = shortid.generate();
+module.exports.createRoomValidation = async (req, res) => {
 	var remain = "còn";
 	var over = "hết";
 	if (
@@ -35,7 +31,7 @@ module.exports.createRoomValidation = (req, res) => {
 			.localeCompare(remain.toLowerCase()) === 0
 	) {
 		req.body.room_state = true;
-		db.get("rooms").push(req.body).write();
+		await Room.create(req.body);
 		res.redirect("/rooms");
 		return;
 	}
@@ -45,7 +41,7 @@ module.exports.createRoomValidation = (req, res) => {
 			.localeCompare(over.toLowerCase()) === 0
 	) {
 		req.body.room_state = false;
-		db.get("rooms").push(req.body).write();
+		await Room.create(req.body);
 		res.redirect("/rooms");
 		return;
 	}
@@ -54,25 +50,25 @@ module.exports.createRoomValidation = (req, res) => {
 		values: req.body,
 	});
 };
-module.exports.viewRoom = (req, res) => {
+module.exports.viewRoom = async (req, res) => {
 	var id = req.params.id;
-	var room = db.get("rooms").find({ id: id }).value();
+	var room = await Room.findById(id);
 	res.render("rooms/view", {
 		room: room,
 	});
 };
-module.exports.deleteRoom = (req, res) => {
+module.exports.deleteRoom = async (req, res, next) => {
 	var id = req.params.id;
-	db.get("rooms").remove({ id: id }).write();
+	await Room.findByIdAndRemove({ _id: id });
 	res.redirect("/rooms");
 };
-module.exports.editRoomPug = (req, res) => {
+module.exports.editRoomPug = async (req, res) => {
 	var id = req.params.id;
-	var room = db.get("rooms").find({ id: id }).value();
+	var room = await Room.findById(id);
 	res.render("rooms/edit", { room: room });
 };
-module.exports.editRoomHandling = (req, res) => {
+module.exports.editRoomHandling = async (req, res) => {
 	var id = req.params.id;
-	db.get("rooms").find({ id: id }).assign(req.body).write();
+	await Room.findByIdAndUpdate({ _id: id }, req.body, { new: true });
 	res.redirect("/rooms/" + id);
 };
