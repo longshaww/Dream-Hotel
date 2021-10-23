@@ -12,6 +12,9 @@ router.post(
 	validate.createRoomValidation,
 	controller.createRoomValidation
 );
+router.get("/checkin", controller.checkInForm);
+
+router.post("/checkin", controller.postCheckIn);
 
 router.get("/:id", controller.viewRoom);
 

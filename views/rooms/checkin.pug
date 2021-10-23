@@ -1,0 +1,24 @@
+extends ../layouts/general
+block content
+    h1 Check in 
+
+    if errors
+        each error in errors 
+            .alert.alert-danger=error
+    form(method="POST" action="/rooms/checkin")
+        .from-group
+            label(for="name") Tên khách
+            input#name.form-control(name="name" type="text")
+        .from-group.mb-3
+            label(for="phone") SĐT
+            input#phone.form-control(name="phone" type="text")
+        .from-group.mb-3
+            label(for="room_id") Phòng
+            input#room_id.form-control(name="room_id" type="text")
+        .from-group.mb-3
+            label(for="checkin_date") Ngày Checkin 
+            input#checkin_date.form-control(name="checkin_date" type="text")
+        .from-group.mb-3
+            label(for="checkout_date") Ngày Checkout
+            input#checkout_date.form-control(name="checkout_date" type="text")
+        button.btn.btn-primary Checkin

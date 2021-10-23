@@ -133,46 +133,26 @@
   ],
   "customers": [
     {
-      "id": "1",
       "name": "LongTran",
-      "phone": "0938131201",
-      "room_type": "Deluxe",
-      "checkin_date": "20/10/2021",
-      "checkout_date": "23/10/2021"
+      "phone": "0938131201"
     },
     {
-      "id": "2",
       "name": "VinhPhan",
-      "phone": "0938131201",
-      "room_type": "Deluxe",
-      "checkin_date": "25/10/2021",
-      "checkout_date": "29/10/2021"
+      "phone": "0938131201"
     }
   ],
   "rents": [
     {
-      "id": "1",
-      "room_id": "1",
+      "room_id": "101",
       "customer_id": "1",
-      "room_type": "Deluxe",
-      "price": "$9.64",
-      "note": "nothing",
-      "room_state": true,
-      "name": "LongTran",
-      "checkin_date": "25/10/2021",
-      "checkout_date": "29/10/2021"
+      "checkin_date": "20/10/2021",
+      "checkout_date": "23/10/2021"
     },
     {
-      "id": "2",
-      "room_id": "2",
+      "room_id": "102",
       "customer_id": "2",
-      "room_type": "Deluxe",
-      "price": "$9.64",
-      "note": "nothing",
-      "room_state": true,
-      "name": "VinhPhan",
-      "checkin_date": "30/10/2021",
-      "checkout_date": "02/11/2021"
+      "checkin_date": "25/10/2021",
+      "checkout_date": "29/10/2021"
     }
   ]
 }
