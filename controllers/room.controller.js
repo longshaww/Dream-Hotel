@@ -96,24 +96,29 @@ module.exports.checkInForm = async (req, res) => {
 	res.render("rooms/checkin");
 };
 module.exports.postCheckIn = async (req, res) => {
-	var matchedName = await Rent.find({
-		customer_info: { $elemMatch: { name: req.body.name } },
+	// var matchedName = await Rent.find({
+	// 	customer_info: { $elemMatch: { name: req.body.name } },
+	// });
+	// var matchedPhone = await Rent.find({
+	// 	customer_info: { $elemMatch: { phone: req.body.phone } },
+	// });
+	var customer = await Customer.findOne({
+		name: req.body.name,
 	});
-	var matchedPhone = await Rent.find({
-		customer_info: { $elemMatch: { phone: req.body.phone } },
-	});
-	if (!matchedName.length) {
+
+	if (!customer) {
 		res.render("rooms/checkin", {
 			errors: ["Khách hàng không tồn tại"],
 			values: req.body,
 		});
 		return;
 	}
-	if (!matchedPhone.length) {
+	if (customer.phone !== req.body.phone) {
 		res.render("rooms/checkin", {
 			errors: ["SĐT không khớp"],
 			values: req.body,
 		});
+		return;
 	}
 	await Rent.create({
 		room_id: req.body.room_id,
@@ -121,6 +126,5 @@ module.exports.postCheckIn = async (req, res) => {
 		checkout_date: req.body.checkout_date,
 		customer_info: [{ name: req.body.name, phone: req.body.phone }],
 	});
-	res.locals.customer = matchedName;
 	res.redirect("/rooms");
 };

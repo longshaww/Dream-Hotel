@@ -11,15 +11,14 @@ block content
             button(class="btn btn-dark ml-4") Search
     .d-flex.flex-wrap
         each room in rooms
-            ul.card.list-unstyled.shadow-lg.m-2(class=room.room_state ? "text-white bg-success mb-3":"text-white bg-danger mb-3")
+            ul.card.list-unstyled.shadow-lg.m-2(class=room.Rent[0] ? "text-white bg-dark mb-3":"text-dark bg-light mb-3")
                 h5.card-header="Phòng "+room.room_id
                 .card-body
                     li="Loại phòng: "+room.room_type
                     li="Giá phòng: "+room.price 
                     li="Ghi chú: "+room.note 
-                    li=`Tình trạng: ${room.room_state? "Còn" : "Hết"}`
                     if(room.Rent[0] != null)
                         li="Tên khách: "+ room.Rent[0].customer_info[0].name
                         li="Checkin: "+room.Rent[0].checkin_date
                         li="Checkout: "+room.Rent[0].checkout_date
-                    a(href="/rooms/"+room._id class="btn btn-dark") View
+                    a(href="/rooms/"+room._id class="btn btn-primary") View
