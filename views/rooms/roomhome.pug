@@ -10,15 +10,16 @@ block content
             input(type="text", name="q" class="form-control")
             button(class="btn btn-dark ml-4") Search
     .d-flex.flex-wrap
-        each room in rooms
-            ul.card.list-unstyled.shadow-lg.m-2(class=room.Rent[0] ? "text-white bg-dark mb-3":"text-dark bg-light mb-3")
+            each room in rooms
+             ul.card.list-unstyled.shadow-lg.m-2(class= room.rent ? "text-white bg-dark mb-3":"text-dark bg-light mb-3")
                 h5.card-header="Phòng "+room.room_id
                 .card-body
                     li="Loại phòng: "+room.room_type
                     li="Giá phòng: "+room.price 
                     li="Ghi chú: "+room.note 
-                    if(room.Rent[0] != null)
-                        li="Tên khách: "+ room.Rent[0].customer_info[0].name
-                        li="Checkin: "+room.Rent[0].checkin_date
-                        li="Checkout: "+room.Rent[0].checkout_date
+                    if(room.customer)
+                        li="Tên khách hàng: "+room.customer.name
+                    if(room.rent)
+                        li="Ngày checkin: "+room.rent.checkin_date
+                        li="Ngày checkout:"+room.rent.checkout_date
                     a(href="/rooms/"+room._id class="btn btn-primary") View

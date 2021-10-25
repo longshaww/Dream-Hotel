@@ -33,5 +33,5 @@ app.use("/users", authMiddleware.requireAuth, userRoute);
 app.use("/booking", bookingRoute);
 app.use("/auth", authRoute);
 app.listen(port, () => {
-	console.log(`Example app listening at http://localhost:${port}`);
+	console.log(`Dream Hotel website listening at http://localhost:${port}`);
 });

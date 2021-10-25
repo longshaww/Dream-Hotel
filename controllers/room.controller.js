@@ -3,32 +3,15 @@ var { Room } = require("../models/room.model");
 var { Rent } = require("../models/room.model");
 var { Customer } = require("../models/room.model");
 module.exports.roomHome = async (req, res) => {
-	var rooms = await Room.aggregate([
-		{
-			$lookup: {
-				from: "rents", // collection name in db
-				localField: "room_id",
-				foreignField: "room_id",
-				as: "Rent",
-			},
-		},
-	]);
+	var rooms = await Room.find().populate("rent").populate("customer");
+
 	res.render("rooms/roomhome", {
 		rooms: rooms,
 	});
 };
 
 module.exports.searchRoom = async (req, res) => {
-	var rooms = await Room.aggregate([
-		{
-			$lookup: {
-				from: "rents", // collection name in db
-				localField: "room_id",
-				foreignField: "room_id",
-				as: "Rent",
-			},
-		},
-	]);
+	var rooms = await Room.find().populate("rent").populate("customer");
 	var q = req.query.q;
 	var matchedRooms = rooms.filter(function (room) {
 		return room.room_type.toLowerCase().indexOf(q.toLowerCase()) !== -1;
@@ -96,12 +79,6 @@ module.exports.checkInForm = async (req, res) => {
 	res.render("rooms/checkin");
 };
 module.exports.postCheckIn = async (req, res) => {
-	// var matchedName = await Rent.find({
-	// 	customer_info: { $elemMatch: { name: req.body.name } },
-	// });
-	// var matchedPhone = await Rent.find({
-	// 	customer_info: { $elemMatch: { phone: req.body.phone } },
-	// });
 	var customer = await Customer.findOne({
 		name: req.body.name,
 	});
@@ -120,11 +97,25 @@ module.exports.postCheckIn = async (req, res) => {
 		});
 		return;
 	}
-	await Rent.create({
-		room_id: req.body.room_id,
-		checkin_date: req.body.checkin_date,
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, "0");
+	var mm = String(today.getMonth() + 1).padStart(2, "0");
+	var yyyy = today.getFullYear();
+	today = dd + "/" + mm + "/" + yyyy;
+	//find room_id = req.body.room_id
+	var room = await Room.findOne({ room_id: req.body.room_id });
+	//create new rent
+	var rent = await Rent.create({
+		room: room._id,
+		customer: customer._id,
+		checkin_date: today,
 		checkout_date: req.body.checkout_date,
-		customer_info: [{ name: req.body.name, phone: req.body.phone }],
 	});
+	//create new field on Room
+	await Room.updateOne(
+		{ _id: room._id },
+		{ rent: rent._id, customer: customer._id },
+		{ multi: true }
+	);
 	res.redirect("/rooms");
 };
