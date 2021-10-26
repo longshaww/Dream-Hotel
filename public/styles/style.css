@@ -1,1 +1,7 @@
 /* custom css */
+.card {
+	transition: all 0.5s;
+}
+.card:hover {
+	transform: translate(0, -0.5rem);
+}

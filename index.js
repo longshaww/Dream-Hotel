@@ -10,6 +10,7 @@ mongoose.connect("mongodb://localhost/express-js");
 const userRoute = require("./routes/user.route");
 const roomRoute = require("./routes/rooms.route");
 const bookingRoute = require("./routes/booking.route");
+const customerRoute = require("./routes/customers.route");
 const authRoute = require("./routes/auth.route");
 const authMiddleware = require("./middlewares/auth.middleware");
 const port = 4000;
@@ -31,7 +32,9 @@ app.get("/", (req, res) => {
 app.use("/rooms", authMiddleware.requireAuth, roomRoute);
 app.use("/users", authMiddleware.requireAuth, userRoute);
 app.use("/booking", bookingRoute);
+app.use("/customers", customerRoute);
 app.use("/auth", authRoute);
+
 app.listen(port, () => {
 	console.log(`Dream Hotel website listening at http://localhost:${port}`);
 });

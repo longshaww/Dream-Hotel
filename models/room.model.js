@@ -48,14 +48,3 @@ module.exports = {
 	Rent: Rent,
 	Customer: Customer,
 };
-// Rent.find()
-// 	.populate("customer")
-// 	.populate("room")
-// 	.then(function (rent) {
-// 		rent.forEach(function (room) {
-// 			console.log(room);
-// 		});
-// 	})
-// 	.catch((err) => {
-// 		console.log(err);
-// 	});

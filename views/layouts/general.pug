@@ -1,6 +1,6 @@
 html
   head
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css")
     link(rel="stylesheet", href="/styles/style.css")
 body
     nav.navbar.navbar-expand-lg.navbar-light.bg-light
@@ -18,16 +18,11 @@ body
                         a.nav-link(href='/users') Users
                     li.nav-item
                         a.nav-link(href='/rooms') Rooms
+                    li.nav-item
+                        a.nav-link(href='/customers') Customers
                     li.nav-item.dropdown
                         a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href='#', role='button', data-bs-toggle='dropdown', aria-expanded='false')
                             | Contact
     
     .container.pt-5
-        if user
-            figure.text-center
-                blockquote.blockquote
-                    p= "You made your way in "+user.name+" !!!"
-                figcaption.blockquote-footer
-                    | Someone famous in 
-                    cite(title='Source Title') program
         block content

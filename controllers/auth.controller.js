@@ -24,7 +24,7 @@ module.exports.postLogin = (req, res) => {
 	}
 	res.cookie("userId", user.id, {
 		signed: true,
-		expires: new Date(Date.now() + 1000000),
+		expires: new Date(Date.now() + 5000000),
 		httpOnly: true,
 	});
 	res.redirect("/users");

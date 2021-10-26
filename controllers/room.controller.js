@@ -76,7 +76,8 @@ module.exports.editRoomHandling = async (req, res) => {
 	res.redirect("/rooms/" + id);
 };
 module.exports.checkInForm = async (req, res) => {
-	res.render("rooms/checkin");
+	var customers = await Customer.find();
+	res.render("rooms/checkin", { customers: customers });
 };
 module.exports.postCheckIn = async (req, res) => {
 	var customer = await Customer.findOne({
@@ -111,7 +112,7 @@ module.exports.postCheckIn = async (req, res) => {
 		checkin_date: today,
 		checkout_date: req.body.checkout_date,
 	});
-	//create new field on Room
+	//create new field on Room for rerender
 	await Room.updateOne(
 		{ _id: room._id },
 		{ rent: rent._id, customer: customer._id },
