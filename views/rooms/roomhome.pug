@@ -18,7 +18,7 @@ block content
             button(class="btn btn-dark ml-4") Search
     .d-flex.flex-wrap
             each room in rooms
-             ul.card.list-unstyled.shadow-lg.m-2(class= room.rent ? "text-white bg-dark mb-3":"text-dark bg-light mb-3")
+             ul.card.list-unstyled.shadow-lg.m-2(class= room.customer ? "text-white bg-dark mb-3":"text-dark bg-light mb-3")
                 h5.card-header="Phòng "+room.room_id
                 .card-body
                     li="Loại phòng: "+room.room_type
@@ -26,7 +26,7 @@ block content
                     li="Ghi chú: "+room.note 
                     if(room.customer)
                         li="Tên khách hàng: "+room.customer.name
-                    if(room.rent)
-                        li="Ngày checkin: "+room.rent.checkin_date
-                        li="Ngày checkout:"+room.rent.checkout_date
-                    a(href="/rooms/"+room._id class=room.rent? "btn btn-light":"btn btn-dark") View
+                    if(room.customer)
+                        li="Ngày checkin: "+room.customer.checkin_date
+                        li="Ngày checkout:"+room.customer.checkout_date
+                    a(href="/rooms/"+room._id class=room.customer? "btn btn-light":"btn btn-dark") View
