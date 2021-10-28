@@ -1,7 +1,7 @@
 extends ../layouts/general
 block content
     h1 Booking form
-    form(method="POST" action="/booking/bookingform")
+    form(method="POST" action="/booking/bookingform" id="form")
         .from-group
             label(for="name") Tên khách
             input#name.form-control(name="name" type="text")
@@ -16,8 +16,28 @@ block content
             input#room_type.form-control(name="room_type" type="text")
         .from-group.mb-3
             label(for="checkin_date") Ngày Checkin
-            input#checkin_date.form-control(name="checkin_date" type="text")
+            input#checkin_date.form-control.datepick(name="checkin_date" type="text")
         .from-group.mb-3
             label(for="checkout_date") Ngày Checkout 
-            input#checkout_date.form-control(name="checkout_date" type="text")
-        button.btn.btn-dark Send
+            input#checkout_date.form-control.datepick(name="checkout_date" type="text")
+    button.btn.btn-dark(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal') Send
+    #exampleModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
+        .modal-dialog.modal-dialog-centered
+            .modal-content
+                .modal-header
+                    h5#exampleModalLabel.modal-title Confirmation
+                    button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+                .modal-body Are you sure you want to booking ?
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancel
+                    button.btn.btn-primary(type='submit' form="form") Send
+
+
+
+    script.
+            $('.datepick').each(function(){
+            $(this).datepicker({
+                dateFormat:"dd/mm/yy"
+            });
+            });
+
