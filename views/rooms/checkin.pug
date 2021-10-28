@@ -1,8 +1,10 @@
 extends ../layouts/general
+block append head 
+    script(src="/js/checkin.js")
 block content
-    
+
     .row
-        .col-md-4
+        .col#checkin
             h1 Check in 
             if errors
                 each error in errors 
@@ -17,20 +19,27 @@ block content
                 .from-group.mb-3
                     label(for="room_id") Phòng
                     input#room_id.form-control(name="room_id" type="text")
-                button.btn.btn-primary Checkin
-        .col-md-3.text-center
-                h2 Khách hàng đã đặt trước
-                each customer in customers 
-                    ul.card.list-unstyled.shadow-lg.m-2.border-dark(class="text-dark bg-light mb-3")
-                        h5.card-header="Khách: "+customer._id
-                        .card-body
-                            li="Tên: "+customer.name 
-                            li="Phone: "+customer.phone 
-                            li="Loại phòng: "+customer.room_type 
-                            li="Checkin: "+customer.checkin_date 
-                            li="Checkout: "+customer.checkout_date
-        .col-md-5.text-center
-                h2 Phòng còn
+                button.btn.btn-dark Checkin
+            h3.text-secondary Tùy chọn:
+            button#orderedCustomer.btn.btn-dark Khách đã đặt
+            button#remainRoom.btn.btn-dark.ml-2 Phòng còn
+        .col-md-3#customers
+            .d-flex.justify-content-center.align-items-center
+                h2 Khách hàng đã đặt
+                button#close-customer.btn.btn-dark.ml-1 X
+            each customer in customers 
+                ul.card.list-unstyled.shadow-lg.m-2.border-success(class="text-dark bg-light mb-3")
+                    h5.card-header="Khách: "+customer._id
+                    .card-body
+                        li="Tên: "+customer.name 
+                        li="Phone: "+customer.phone 
+                        li="Loại phòng: "+customer.room_type 
+                        li="Checkin: "+customer.checkin_date 
+                        li="Checkout: "+customer.checkout_date
+        .col-md-5#rooms
+                .d-flex.justify-content-center.align-items-center
+                    h2 Phòng còn
+                    button#close-room.btn.btn-dark.ml-2 X
                 .d-flex.flex-wrap
                     each room in rooms
                         if(!room.customer)
@@ -38,3 +47,8 @@ block content
                                 h5.card-header="Phòng "+room.room_id
                                 .card-body
                                     li="Loại phòng: "+room.room_type
+
+           
+           
+           
+            

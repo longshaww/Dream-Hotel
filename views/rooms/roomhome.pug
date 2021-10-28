@@ -13,12 +13,13 @@ block content
             a(href="/rooms/create" class="btn btn-dark m-2") Create
             a(href=`/rooms/checkin` class="btn btn-dark m-2") Checkin
             a(href=`#` class="btn btn-dark m-2") Checkout
+            a(href="/rooms/history" class="btn btn-dark m-2") Rent history
         form(action="/rooms/search",method="GET" class="d-flex ml-auto")
             input(type="text", name="q" class="form-control")
             button(class="btn btn-dark ml-4") Search
     .d-flex.flex-wrap
             each room in rooms
-             ul.card.list-unstyled.shadow-lg.m-2(class= room.customer ? "text-white bg-dark mb-3":"text-dark bg-light mb-3")
+             ul.card.list-unstyled.shadow-lg.m-2(class= room.customer ? "text-white bg-dark mb-3 ":"text-dark bg-light mb-3 ")
                 h5.card-header="Phòng "+room.room_id
                 .card-body
                     li="Loại phòng: "+room.room_type

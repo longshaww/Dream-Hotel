@@ -105,11 +105,11 @@ module.exports.postCheckIn = async (req, res) => {
 		return;
 	}
 	var room = await Room.findOne({ room_id: req.body.room_id });
-	//create new rent
-	// var rent = await Rent.create({
-	// 	room: room._id,
-	// 	customer: customer._id,
-	// });
+	// create new rent
+	var rent = await Rent.create({
+		room: room._id,
+		customer: customer._id,
+	});
 	//create new field on Room for rerender
 	await Room.updateOne(
 		{ _id: room._id },
@@ -117,4 +117,11 @@ module.exports.postCheckIn = async (req, res) => {
 		{ multi: true }
 	);
 	res.redirect("/rooms");
+};
+
+module.exports.rentHistory = async (req, res) => {
+	var rents = await Rent.find().populate("customer").populate("room");
+	res.render("rooms/history", {
+		rents: rents,
+	});
 };
