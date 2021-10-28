@@ -1,0 +1,13 @@
+extends ../layouts/general
+block content
+    h1 Rent history    
+    .d-flex.flex-wrap
+        each rent in rents
+            ul.card.list-unstyled.shadow-lg.m-2(class="text-dark bg-light mb-3 border-dark")
+                h5.card-header="Mã thuê:"+ rent._id
+                .card-body
+                    li="Phòng: "+rent.room.room_id 
+                    li="Tên khách: "+rent.customer.name
+                    li="CMND: "+rent.customer.CMND 
+                    li="Phone "+rent.customer.phone
+                    li="Ngày thuê "+rent.customer.checkin_date+" - "+rent.customer.checkout_date
