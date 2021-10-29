@@ -9,7 +9,7 @@ block content
             if errors
                 each error in errors 
                     .alert.alert-danger=error        
-            form(method="POST" action="/rooms/checkin")
+            form(method="POST" action="/rooms/checkin" id="form")
                 .from-group
                     label(for="name") Tên khách
                     input#name.form-control(name="name" type="text")
@@ -19,14 +19,24 @@ block content
                 .from-group.mb-3
                     label(for="room_id") Phòng
                     input#room_id.form-control(name="room_id" type="text")
-                button.btn.btn-dark Checkin
+            button.btn.btn-dark(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal') Checkin
+            #exampleModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                .modal-dialog.modal-dialog-centered
+                    .modal-content
+                        .modal-header
+                            h5#exampleModalLabel.modal-title Confirmation
+                            button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+                        .modal-body Are you sure you want to checkin?
+                        .modal-footer
+                            button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancel
+                            button.btn.btn-primary(type='submit' form="form") Checkin
             h3.text-secondary Tùy chọn:
             button#orderedCustomer.btn.btn-dark Khách đã đặt
-            button#remainRoom.btn.btn-dark.ml-2 Phòng còn
+            button#remainRoom.btn.btn-dark.ms-2 Phòng còn
         .col-md-3#customers
             .d-flex.justify-content-center.align-items-center
                 h2 Khách hàng đã đặt
-                button#close-customer.btn.btn-dark.ml-1 X
+                button#close-customer.btn-close.ms-1(type="button" aria-label="Close")
             each customer in customers 
                 ul.card.list-unstyled.shadow-lg.m-2.border-success(class="text-dark bg-light mb-3")
                     h5.card-header="Khách: "+customer._id
@@ -39,7 +49,7 @@ block content
         .col-md-5#rooms
                 .d-flex.justify-content-center.align-items-center
                     h2 Phòng còn
-                    button#close-room.btn.btn-dark.ml-2 X
+                    button#close-room.btn-close.ms-1(type="button" aria-label="Close")
                 .d-flex.flex-wrap
                     each room in rooms
                         if(!room.customer)
