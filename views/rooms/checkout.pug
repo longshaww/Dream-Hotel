@@ -1,0 +1,16 @@
+extends ../layouts/general
+block content
+    h1 Checkout
+    form(method="POST" action="/rooms/checkout" id="form")
+        .from-group.mb-3
+            label(for="room_id") Phòng
+            input#room_id.form-control(name="room_id" type="text")
+    button.btn.btn-dark(type="submit" form="form") Send
+    if checkout
+        ul.list-unstyled
+            li=checkout.room_id 
+            li=checkout.customer.name 
+            li=checkout.customer.phone
+            li=checkout.customer.checkin_date + "-" + checkout.customer.checkout_date
+            li=checkout.price
+            

@@ -2,6 +2,8 @@ const { forEach } = require("../db");
 var { Room } = require("../models/room.model");
 var { Rent } = require("../models/room.model");
 var { Customer } = require("../models/room.model");
+const moment = require("moment");
+
 module.exports.roomHome = async (req, res) => {
 	var rooms = await Room.find().populate("customer");
 
@@ -124,4 +126,19 @@ module.exports.rentHistory = async (req, res) => {
 	res.render("rooms/history", {
 		rents: rents,
 	});
+};
+
+module.exports.checkOutForm = async (req, res) => {
+	res.render("rooms/checkout");
+};
+module.exports.postCheckOut = async (req, res) => {
+	var checkout = await Room.findOne({ room_id: req.body.room_id }).populate(
+		"customer"
+	);
+	res.render("rooms/checkout", {
+		checkout: checkout,
+	});
+	var checkInDate = moment(checkout.customer.checkin_date, "DD/MM/YYYY");
+	var checkOutDate = moment(checkout.customer.checkout_date, "DD/MM/YYYY");
+	console.log(moment.duration(checkOutDate.diff(checkInDate)).asDays());
 };

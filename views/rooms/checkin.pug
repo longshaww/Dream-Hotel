@@ -30,7 +30,7 @@ block content
                         .modal-footer
                             button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancel
                             button.btn.btn-primary(type='submit' form="form") Checkin
-            h3.text-secondary Tùy chọn:
+            h3 Tùy chọn:
             button#orderedCustomer.btn.btn-dark Khách đã đặt
             button#remainRoom.btn.btn-dark.ms-2 Phòng còn
         .col-md-3#customers
@@ -50,13 +50,15 @@ block content
                 .d-flex.justify-content-center.align-items-center
                     h2 Phòng còn
                     button#close-room.btn-close.ms-1(type="button" aria-label="Close")
-                .d-flex.flex-wrap
-                    each room in rooms
-                        if(!room.customer)
-                            ul.card.list-unstyled.shadow-lg.m-2.border-success(class= "text-dark bg-light mb-3")
-                                h5.card-header="Phòng "+room.room_id
-                                .card-body
-                                    li="Loại phòng: "+room.room_type
+                .container 
+                    .row(class="row-cols-1 row-cols-sm-1 row-cols-lg-2")
+                        each room in rooms
+                            if(!room.customer)
+                                .col
+                                    ul.card.list-unstyled.shadow-lg.m-2.border-success(class= "text-dark bg-light mb-3")
+                                        h5.card-header="Phòng "+room.room_id
+                                        .card-body
+                                            li="Loại phòng: "+room.room_type
 
            
            

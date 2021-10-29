@@ -1,9 +1,12 @@
 extends ../layouts/general
 block content
-    h1 Booking form
+    h1 Booking form  
+    if errors
+        each error in errors 
+            .alert.alert-danger=error
     form(method="POST" action="/booking/bookingform" id="form")
         .from-group
-            label(for="name") Tên khách
+            label(for="name") Tên
             input#name.form-control(name="name" type="text")
         .from-group.mb-3
             label(for="phone") SĐT
