@@ -10,21 +10,21 @@ window.onload = () => {
 
 	//Open Customer
 	orderedCusBtn.addEventListener("click", function () {
-		customers.classList.add("col-md-3");
+		customers.classList.add("col-md");
 		customers.style.display = "block";
 	});
 	//Open Room
 	remainRoomBtn.addEventListener("click", function () {
-		rooms.classList.add("col-md-5");
+		rooms.classList.add("col-md");
 		rooms.style.display = "block";
 	});
 	//Close Customer
 	closeCustomer.addEventListener("click", function () {
-		customers.classList.remove("col-md-3");
+		customers.classList.remove("col-md");
 		customers.style.display = "none";
 	});
 	closeRoom.addEventListener("click", function () {
-		rooms.classList.remove("col-md-5");
+		rooms.classList.remove("col-md");
 		rooms.style.display = "none";
 	});
 };

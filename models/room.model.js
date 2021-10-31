@@ -40,8 +40,10 @@ var roomSchema = new mongoose.Schema(
 
 var paymentSChema = new mongoose.Schema(
 	{
-		customer: String,
+		name: String,
 		phone: String,
+		CMND: String,
+		room_id: String,
 		days_rent: String,
 		price_per_day: String,
 		summary: String,

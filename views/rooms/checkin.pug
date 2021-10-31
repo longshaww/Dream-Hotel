@@ -33,20 +33,38 @@ block content
             h3 Tùy chọn:
             button#orderedCustomer.btn.btn-dark Khách đã đặt
             button#remainRoom.btn.btn-dark.ms-2 Phòng còn
-        .col-md-3#customers
+    .row
+        .col-md#customers
             .d-flex.justify-content-center.align-items-center
                 h2 Khách hàng đã đặt
                 button#close-customer.btn-close.ms-1(type="button" aria-label="Close")
-            each customer in customers 
-                ul.card.list-unstyled.shadow-lg.m-2.border-success(class="text-dark bg-light mb-3")
-                    h5.card-header="Khách: "+customer._id
-                    .card-body
-                        li="Tên: "+customer.name 
-                        li="Phone: "+customer.phone 
-                        li="Loại phòng: "+customer.room_type 
-                        li="Checkin: "+customer.checkin_date 
-                        li="Checkout: "+customer.checkout_date
-        .col-md-5#rooms
+            .table-responsive
+                table.table
+                    thead 
+                        tr
+                            th.col Tên
+                            th.col Phone 
+                            th.col Loại phòng 
+                            th.col Checkin 
+                            th.col Checkout
+                    tbody 
+                        each customer in customers
+                            tr 
+                                td=customer.name 
+                                td=customer.phone 
+                                td=customer.room_type
+                                td=customer.checkin_date 
+                                td=customer.checkout_date
+            //- each customer in customers 
+            //-     ul.card.list-unstyled.shadow-lg.m-2.border-success(class="text-dark bg-light mb-3")
+            //-         h5.card-header="Khách: "+customer._id
+            //-         .card-body
+            //-             li="Tên: "+customer.name 
+            //-             li="Phone: "+customer.phone 
+            //-             li="Loại phòng: "+customer.room_type 
+            //-             li="Checkin: "+customer.checkin_date 
+            //-             li="Checkout: "+customer.checkout_date
+        .col-md#rooms
                 .d-flex.justify-content-center.align-items-center
                     h2 Phòng còn
                     button#close-room.btn-close.ms-1(type="button" aria-label="Close")

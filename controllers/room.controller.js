@@ -164,28 +164,51 @@ module.exports.postCheckOut = async (req, res) => {
 		var duration = moment
 			.duration(checkOutDate.diff(checkInDate))
 			.asDays();
+		res.render("rooms/checkout", {
+			errors: errors,
+			checkout: checkout,
+			duration: duration,
+		});
 	}
-	res.render("rooms/checkout", {
-		errors: errors,
+};
+module.exports.onlinePayment = async (req, res) => {
+	res.render("rooms/online-payment");
+};
+
+module.exports.cashPayment = async (req, res) => {
+	var checkout = await Room.findOne({ room_id: req.params.id }).populate(
+		"customer"
+	);
+	var checkInDate = moment(checkout.customer.checkin_date, "DD/MM/YYYY");
+	var checkOutDate = moment(checkout.customer.checkout_date, "DD/MM/YYYY");
+	var duration = moment.duration(checkOutDate.diff(checkInDate)).asDays();
+	res.render("rooms/cash-payment", {
 		checkout: checkout,
 		duration: duration,
 	});
 };
 
-module.exports.onlinePayment = async (req, res) => {
-	res.render("rooms/online-payment");
-};
-module.exports.cashPayment = async (req, res) => {
-	res.render("rooms/cash-payment");
-};
 module.exports.postCash = async (req, res) => {
-	// await Payment.create({
-	// 	customer: checkout.customer.name,
-	// 	phone: checkout.customer.phone,
-	// 	days_rent: duration,
-	// 	price_per_day: checkout.price,
-	// 	summary: checkout.price * duration,
-	// 	pay_date: "hj",
-	// });
-	res.redirect("/rooms/checkout");
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, "0");
+	var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+	var yyyy = today.getFullYear();
+	today = dd + "/" + mm + "/" + yyyy;
+
+	await Payment.create({
+		name: req.body.name,
+		phone: req.body.phone,
+		CMND: req.body.CMND,
+		room_id: req.body.room_id,
+		days_rent: req.body.days_rent,
+		price_per_day: req.body.price_per_day,
+		summary: req.body.summary,
+		pay_date: today,
+	});
+	await Room.updateOne(
+		{ room_id: req.body.room_id },
+		{ $unset: { customer: 1 } }
+	);
+
+	res.redirect("/rooms");
 };

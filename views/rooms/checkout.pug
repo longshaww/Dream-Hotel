@@ -20,6 +20,9 @@ block content
                         th.col="Phone"
                         th.col="Từ ngày"
                         th.col="Giá phòng"
+                        th.col="Số ngày ở"
+                        th.col="Tổng"
+                        th.col="Hình thức thanh toán"
                 tbody
                     tr
                         th(scope="row")=checkout.room_id 
@@ -28,22 +31,11 @@ block content
                             td=checkout.customer.phone
                             td=checkout.customer.checkin_date + "-" + checkout.customer.checkout_date
                             td=checkout.price
-            table.table
-                thead 
-                    tr 
-                        th.col="Tổng"
-                        th.col="Số ngày ở"
-                        th.col="Giá phòng"
-                        th.col="Thanh toán"
-                tbody 
-                    tr
-                        if(duration)
-                            th(scope="row")="Số ngày ở X Giá phòng = "+checkout.price.slice(1)*duration
-                            td=duration
-                            td=checkout.price
-                            td
-                                a.btn.btn-dark(href="/rooms/checkout/online") Thanh toán online 
-                                form(method="POST" action="/rooms/checkout/cash" id="cashform")
-                                button.btn.btn-dark(form="cashform") Thanh toán tiền mặt
-
+                            if(duration)
+                                td=duration
+                                td='$'+checkout.price.slice(1)*duration
+                                td
+                                    a.btn.btn-dark(href="/rooms/checkout/online") Thanh toán online 
+                                    a.btn.btn-dark.ms-2(href="/rooms/checkout/"+checkout.room_id) Thanh toán tiền mặt
+                        
             

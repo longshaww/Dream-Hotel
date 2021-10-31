@@ -49,56 +49,26 @@ block content
                             input.form-control(type='text', placeholder='Promo code')
                             button.btn.btn-secondary(type='submit') Redeem
                 .col-md-7.col-lg-8
-                    h4.mb-3 Billing address
-                    form.needs-validation(novalidate='')
+                    h4.mb-3 Thông tin
+                    form.needs-validation(novalidate='' method="POST" action="/rooms/checkout/"+checkout.room_id id="form")
                         .row.g-3
-                            .col-sm-6
-                                label.form-label(for='firstName') First name
-                                input#firstName.form-control(type='text', placeholder='', value='', required='')
-                                .invalid-feedback Valid first name is required.
-                            .col-sm-6
-                                label.form-label(for='lastName') Last name
-                                input#lastName.form-control(type='text', placeholder='', value='', required='')
-                                .invalid-feedback Valid last name is required.
+                            .col-sm
+                                label.form-label(for='name') Tên
+                                input#name.form-control(type='text', placeholder='', value=checkout.customer.name, required='' name="name")
+                                .invalid-feedback Valid name required
                             .col-12
-                                label.form-label(for='username') Username
-                                .input-group.has-validation
-                                    span.input-group-text @
-                                    input#username.form-control(type='text', placeholder='Username', required='')
-                                    .invalid-feedback Your username is required.
-                            .col-12
-                                label.form-label(for='email') Email 
-                                    span.text-muted (Optional)
-                                input#email.form-control(type='email', placeholder='you@example.com')
-                                .invalid-feedback Please enter a valid email address for shipping updates.
-                            .col-12
-                                label.form-label(for='address') Address
-                                input#address.form-control(type='text', placeholder='1234 Main St', required='')
-                                .invalid-feedback Please enter your shipping address.
-                            .col-12
-                                label.form-label(for='address2') Address 2 
-                                    span.text-muted (Optional)
-                                input#address2.form-control(type='text', placeholder='Apartment or suite')
-                            .col-md-5
-                                label.form-label(for='country') Country
-                                select#country.form-select(required='')
-                                    option(value='') Choose...
-                                    option United States
-                                .invalid-feedback Please select a valid country.
-                            .col-md-4
-                                label.form-label(for='state') State
-                                select#state.form-select(required='')
-                                    option(value='') Choose...
-                                    option California
-                                .invalid-feedback Please provide a valid state.
-                            .col-md-3
-                                label.form-label(for='zip') Zip
-                                input#zip.form-control(type='text', placeholder='', required='')
-                                .invalid-feedback Zip code required.
+                                label.form-label(for='phone') Phone
+                                input#phone.form-control(type='text', placeholder='',value=checkout.customer.phone required='' name="phone")
+                                .invalid-feedback Please enter phone number
+                            .col-md-12
+                                label.form-label(for='CMND') CMND
+                                input#CMND.form-control(type='text',value=checkout.customer.CMND placeholder='', required='' name="CMND")
+                                .invalid-feedback Please provide your identity card
+                            .col-md-12
+                                label.form-label(for='room') Phòng
+                                input#room.form-control(type='text',value=checkout.room_id placeholder='', required='' name="room_id")
+                                .invalid-feedback Please provide your room.
                         hr.my-4
-                        .form-check
-                            input#same-address.form-check-input(type='checkbox')
-                            label.form-check-label(for='same-address') Shipping address is the same as my billing address
                         .form-check
                             input#save-info.form-check-input(type='checkbox')
                             label.form-check-label(for='save-info') Save this information for next time
@@ -106,13 +76,40 @@ block content
                         h4.mb-3 Payment
                         .my-3
                             .form-check
-                                input#cash.form-check-input(name='paymentMethod', type='radio', checked='', required='')
+                                input#cash.form-check-input(type='radio', checked='', required='')
                                 label.form-check-label(for='cash') Cash
-                        #change.row.gy-3
-                            .col
-                                label.form-label(for='cash') Số tiền
-                                input#cash.form-control(type='text', placeholder='', required='')
-                                .invalid-feedback Chưa nhập số tiền
+                        table.table 
+                            thead
+                                tr
+                                    th.col Công thức
+                                    th.col 
+                                    th.col
+                            tbody 
+                                tr 
+                                    td
+                                        label.form-label(for="days_rent") Số ngày
+                                        input#days_rent.form-control(name="days_rent" value=duration)
+                                    td x
+                                    td 
+                                        label.form-label(for="price_per_day") Giá phòng 
+                                        input#price_per_day.form-control(name="price_per_day" value=checkout.price)
+
+                                tr
+                                    th 
+                                        label.form-label(for="summary") Tổng
+                                    td 
+                                    td
+                                        input#summary.form-control(name="summary" value='$'+duration*checkout.price.slice(1))
                         hr.my-4
-                        button.w-100.btn.btn-primary.btn-lg(type='submit') Continue to checkout
+                        button.w-100.btn.btn-dark.btn-lg(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal') Continue to Checkout
+                        #exampleModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                            .modal-dialog.modal-dialog-centered
+                                .modal-content
+                                    .modal-header
+                                        h5#exampleModalLabel.modal-title Confirmation
+                                        button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+                                    .modal-body Please check your infomation before checkout !
+                                    .modal-footer
+                                        button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancel
+                                        button.btn.btn-primary(type='submit' form="form") Checkout
     script(src='/js/form-validation.js')
