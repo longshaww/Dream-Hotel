@@ -38,6 +38,9 @@ block content
             .d-flex.justify-content-center.align-items-center
                 h2 Khách hàng đã đặt
                 button#close-customer.btn-close.ms-1(type="button" aria-label="Close")
+                form(action="/rooms/checkin/searchCus",method="GET" class="d-flex ms-auto")
+                    input(type="text", name="q" class="form-control")
+                    button(class="btn btn-dark ms-3") Search
             .table-responsive
                 table.table
                     thead 
@@ -55,19 +58,13 @@ block content
                                 td=customer.room_type
                                 td=customer.checkin_date 
                                 td=customer.checkout_date
-            //- each customer in customers 
-            //-     ul.card.list-unstyled.shadow-lg.m-2.border-success(class="text-dark bg-light mb-3")
-            //-         h5.card-header="Khách: "+customer._id
-            //-         .card-body
-            //-             li="Tên: "+customer.name 
-            //-             li="Phone: "+customer.phone 
-            //-             li="Loại phòng: "+customer.room_type 
-            //-             li="Checkin: "+customer.checkin_date 
-            //-             li="Checkout: "+customer.checkout_date
         .col-md#rooms
                 .d-flex.justify-content-center.align-items-center
                     h2 Phòng còn
                     button#close-room.btn-close.ms-1(type="button" aria-label="Close")
+                    form(action="/rooms/checkin/searchRo",method="GET" class="d-flex ms-auto")
+                        input(type="text", name="q" class="form-control")
+                        button(class="btn btn-dark ms-3") Search
                 .container 
                     .row(class="row-cols-1 row-cols-sm-1 row-cols-lg-2")
                         each room in rooms

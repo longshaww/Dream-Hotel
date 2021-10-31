@@ -83,6 +83,34 @@ module.exports.checkInForm = async (req, res) => {
 	var rooms = await Room.find().populate("customer");
 	res.render("rooms/checkin", { rooms: rooms, customers: customers });
 };
+module.exports.searchCustomer = async (req, res) => {
+	var customers = await Customer.find();
+	var q = req.query.q;
+	var matchedCustomers = customers.filter(function (customer) {
+		return customer.name.toLowerCase().indexOf(q.toLowerCase()) !== -1;
+	});
+	var rooms = await Room.find().populate("customer");
+	res.render("rooms/checkin", {
+		customers: matchedCustomers,
+		rooms: rooms,
+	});
+};
+module.exports.searchRo = async (req, res) => {
+	var customers = await Customer.find();
+	var rooms = await Room.find().populate("customer");
+	var q = req.query.q;
+	var matchedRooms = rooms.filter(function (room) {
+		return (
+			room.room_type.toLowerCase().indexOf(q.toLowerCase()) !== -1 ||
+			room.room_id.toLowerCase().indexOf(q.toLowerCase()) !== -1
+		);
+	});
+
+	res.render("rooms/checkin", {
+		customers: customers,
+		rooms: matchedRooms,
+	});
+};
 
 module.exports.postCheckIn = async (req, res) => {
 	var customer = await Customer.findOne({

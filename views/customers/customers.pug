@@ -1,24 +1,30 @@
 extends ../layouts/general
 block content
-    h1.text-center Customers
-        .table-responsive 
-            table.table
-                thead
-                    tr
-                        th.col Mã KH
-                        th.col Tên 
-                        th.col Phone
-                        th.col CMND
-                        th.col Loại phòng
-                        th.col Checkin 
-                        th.col Checkout 
-                    tbody
-                        each customer in customers
-                            tr
-                                td=customer._id
-                                td=customer.name 
-                                td=customer.phone 
-                                td=customer.CMND 
-                                td=customer.room_type
-                                td=customer.checkin_date 
-                                td=customer.checkout_date
+    .row
+        .col-md
+            h1 Customers
+        .col-md
+            form(action="/customers/search",method="GET" class="d-flex ms-auto")
+                input(type="text", name="q" class="form-control")
+                button(class="btn btn-dark ms-3") Search
+    .table-responsive 
+        table.table
+            thead
+                tr
+                    th.col Mã KH
+                    th.col Tên 
+                    th.col Phone
+                    th.col CMND
+                    th.col Loại phòng
+                    th.col Checkin 
+                    th.col Checkout 
+                tbody
+                    each customer in customers
+                        tr
+                            td=customer._id
+                            td=customer.name 
+                            td=customer.phone 
+                            td=customer.CMND 
+                            td=customer.room_type
+                            td=customer.checkin_date 
+                            td=customer.checkout_date

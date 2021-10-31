@@ -14,6 +14,10 @@ router.post(
 );
 router.get("/checkin", controller.checkInForm);
 
+router.get("/checkin/searchCus", controller.searchCustomer);
+
+router.get("/checkin/searchRo", controller.searchRo);
+
 router.post("/checkin", controller.postCheckIn);
 
 router.get("/history", controller.rentHistory);
