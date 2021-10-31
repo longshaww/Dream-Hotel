@@ -14,6 +14,7 @@ block content
                 a(href=`/rooms/checkin` class="btn btn-dark m-2") Checkin
                 a(href="rooms/checkout" class="btn btn-dark m-2") Checkout
                 a(href="/rooms/history" class="btn btn-dark m-2") Rent history
+                button(type="button" class="btn btn-dark m-2" id="liveToastBtn") Phòng đến hạn
             .col-md-4
                 form(action="/rooms/search",method="GET" class="d-flex ml-auto")
                     input(type="text", name="q" class="form-control")
@@ -54,3 +55,10 @@ block content
         var toastLiveExample = document.getElementById('liveToast')
         var toast = new bootstrap.Toast(toastLiveExample)
         window.onload = toast.show()
+
+        var toastTrigger = document.getElementById('liveToastBtn')
+        if (toastTrigger) {
+        toastTrigger.addEventListener('click', function () {
+            toast.show()
+        })
+        }
