@@ -37,12 +37,26 @@ var roomSchema = new mongoose.Schema(
 	},
 	{ collection: "rooms" }
 );
+
+var paymentSChema = new mongoose.Schema(
+	{
+		customer: String,
+		phone: String,
+		days_rent: String,
+		price_per_day: String,
+		summary: String,
+		pay_date: String,
+	},
+	{ collection: "payment" }
+);
 var Room = mongoose.model("Room", roomSchema, "rooms");
 var Rent = mongoose.model("Rent", rentSchema, "rents");
 var Customer = mongoose.model("Customers", customerSchema, "customers");
+var Payment = mongoose.model("Payments", paymentSChema, "payment");
 
 module.exports = {
 	Room: Room,
 	Rent: Rent,
 	Customer: Customer,
+	Payment: Payment,
 };

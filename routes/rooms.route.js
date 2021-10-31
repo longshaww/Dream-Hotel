@@ -22,6 +22,12 @@ router.get("/checkout", controller.checkOutForm);
 
 router.post("/checkout", controller.postCheckOut);
 
+router.get("/checkout/online", controller.onlinePayment);
+
+router.get("/checkout/cash", controller.cashPayment);
+
+router.post("/checkout/cash", controller.postCash);
+
 router.get("/:id", controller.viewRoom);
 
 router.delete("/:id", controller.deleteRoom);

@@ -1,28 +1,31 @@
 extends ../layouts/general
 block content
-    h1 Booking form  
-    if errors
-        each error in errors 
-            .alert.alert-danger=error
-    form(method="POST" action="/booking/bookingform" id="form")
+    h1 Booking form 
+    form(method="POST" action="/booking/bookingform" id="form" class="needs-validation" novalidate)
         .from-group
             label(for="name") Tên
-            input#name.form-control(name="name" type="text")
+            input#name.form-control(name="name" type="text" required)
+            .invalid-feedback Bạn cần phải nhập tên
         .from-group.mb-3
             label(for="phone") SĐT
-            input#phone.form-control(name="phone" type="text")
+            input#phone.form-control(name="phone" type="text" required)
+            .invalid-feedback Bạn cần phải nhập SĐT
         .from-group.mb-3
             label(for="CMND") Số CMND
-            input#CMND.form-control(name="CMND" type="text")
+            input#CMND.form-control(name="CMND" type="text" required)
+            .invalid-feedback Bạn cần phải nhập CMND
         .from-group.mb-3
             label(for="room_type") Loại Phòng
-            input#room_type.form-control(name="room_type" type="text")
+            input#room_type.form-control(name="room_type" type="text" required)
+            .invalid-feedback Bạn cần phải nhập loại phòng
         .from-group.mb-3
             label(for="checkin_date") Ngày Checkin
-            input#checkin_date.form-control.datepick(name="checkin_date" type="text")
+            input#checkin_date.form-control.datepick(name="checkin_date" type="text" required)
+            .invalid-feedback Bạn cần phải nhập ngày checkin
         .from-group.mb-3
             label(for="checkout_date") Ngày Checkout 
-            input#checkout_date.form-control.datepick(name="checkout_date" type="text")
+            input#checkout_date.form-control.datepick(name="checkout_date" type="text" required)
+            .invalid-feedback Bạn cần phải nhập ngày checkout
     button.btn.btn-dark(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal') Send
     #exampleModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
         .modal-dialog.modal-dialog-centered
@@ -36,11 +39,10 @@ block content
                     button.btn.btn-primary(type='submit' form="form") Send
 
 
-
+    script(src='/js/form-validation.js')
     script.
             $('.datepick').each(function(){
             $(this).datepicker({
                 dateFormat:"dd/mm/yy"
             });
             });
-

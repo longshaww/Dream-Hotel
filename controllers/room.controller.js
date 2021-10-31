@@ -2,6 +2,7 @@ const { forEach } = require("../db");
 var { Room } = require("../models/room.model");
 var { Rent } = require("../models/room.model");
 var { Customer } = require("../models/room.model");
+var { Payment } = require("../models/room.model");
 const moment = require("moment");
 
 module.exports.roomHome = async (req, res) => {
@@ -82,6 +83,7 @@ module.exports.checkInForm = async (req, res) => {
 	var rooms = await Room.find().populate("customer");
 	res.render("rooms/checkin", { rooms: rooms, customers: customers });
 };
+
 module.exports.postCheckIn = async (req, res) => {
 	var customer = await Customer.findOne({
 		name: req.body.name,
@@ -131,14 +133,59 @@ module.exports.rentHistory = async (req, res) => {
 module.exports.checkOutForm = async (req, res) => {
 	res.render("rooms/checkout");
 };
+
 module.exports.postCheckOut = async (req, res) => {
+	var errors = [];
 	var checkout = await Room.findOne({ room_id: req.body.room_id }).populate(
 		"customer"
 	);
+	if (checkout == null) {
+		errors.push("Phòng không tồn tại");
+		res.render("rooms/checkout", {
+			errors: errors,
+		});
+		return;
+	}
+	if (!checkout.customer) {
+		errors.push("Phòng không có khách");
+		res.render("rooms/checkout", {
+			errors: errors,
+		});
+		return;
+	} else {
+		var checkInDate = moment(
+			checkout.customer.checkin_date,
+			"DD/MM/YYYY"
+		);
+		var checkOutDate = moment(
+			checkout.customer.checkout_date,
+			"DD/MM/YYYY"
+		);
+		var duration = moment
+			.duration(checkOutDate.diff(checkInDate))
+			.asDays();
+	}
 	res.render("rooms/checkout", {
+		errors: errors,
 		checkout: checkout,
+		duration: duration,
 	});
-	var checkInDate = moment(checkout.customer.checkin_date, "DD/MM/YYYY");
-	var checkOutDate = moment(checkout.customer.checkout_date, "DD/MM/YYYY");
-	console.log(moment.duration(checkOutDate.diff(checkInDate)).asDays());
+};
+
+module.exports.onlinePayment = async (req, res) => {
+	res.render("rooms/online-payment");
+};
+module.exports.cashPayment = async (req, res) => {
+	res.render("rooms/cash-payment");
+};
+module.exports.postCash = async (req, res) => {
+	// await Payment.create({
+	// 	customer: checkout.customer.name,
+	// 	phone: checkout.customer.phone,
+	// 	days_rent: duration,
+	// 	price_per_day: checkout.price,
+	// 	summary: checkout.price * duration,
+	// 	pay_date: "hj",
+	// });
+	res.redirect("/rooms/checkout");
 };
