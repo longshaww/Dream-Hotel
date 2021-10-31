@@ -29,11 +29,28 @@ block content
                         li="Ghi chú: "+room.note 
                         if(room.customer)
                             li="Tên khách hàng: "+room.customer.name
-                        if(room.customer)
                             li="Ngày checkin: "+room.customer.checkin_date
                             li="Ngày checkout:"+room.customer.checkout_date
                         a.mt-2(href="/rooms/"+room._id class=room.customer? "btn btn-light":"btn btn-dark") View
+    .position-fixed.bottom-0.end-0.p-3(style='z-index: 11')
+        #liveToast.toast(role='alert', aria-live='assertive', aria-atomic='true' data-bs-autohide="false")
+            .toast-header
+                img.rounded.me-2(src='/images/logo.jpg', style="width:10%")
+                strong.me-auto Dream Hotel
+                small=today
+                button.btn-close(type='button', data-bs-dismiss='toast', aria-label='Close')
+            .toast-body
+                each room in rooms
+                    if(room.customer)
+                        if(room.customer.checkout_date === today)
+                            h5.text-danger="Phòng đến ngày checkout: "+room.room_id 
+
+
     style. 
         #room-list{
             height: 17rem;
         }
+    script.
+        var toastLiveExample = document.getElementById('liveToast')
+        var toast = new bootstrap.Toast(toastLiveExample)
+        window.onload = toast.show()
