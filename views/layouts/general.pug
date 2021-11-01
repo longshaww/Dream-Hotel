@@ -12,12 +12,11 @@ html
         nav.navbar.navbar-expand-lg.navbar-light.bg-light
             .container-fluid
                 a.navbar-brand(href='/') Dream Hotel
+                    img.rounded(src='/images/logo.jpg', width="34" height="28" class="d-inline-block align-text-top")
                 button.navbar-toggler(type='button', data-bs-toggle='collapse', data-bs-target='#navbarNavDropdown', aria-controls='navbarNavDropdown', aria-expanded='false', aria-label='Toggle navigation')
                     span.navbar-toggler-icon
                 #navbarNavDropdown.collapse.navbar-collapse
                     ul.navbar-nav
-                        li.nav-item
-                            a.nav-link.active(aria-current='page', href='/') Home
                         li.nav-item
                             a.nav-link(href='/booking') Booking
                         li.nav-item
@@ -40,7 +39,9 @@ html
         block content
         block foot 
             footer.my-5.pt-5.text-muted.text-center.text-small
+                img.rounded(src='/images/logo.jpg', style="width:10%")
                 p.mb-1 &copy; 2017&ndash;2021 Dream Hotel
+                p &copy; A3-CNPM-HUFLIT
                 ul.list-inline
                     li.list-inline-item
                         a(href='#') Privacy

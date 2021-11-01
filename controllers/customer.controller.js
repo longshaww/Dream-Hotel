@@ -14,3 +14,13 @@ module.exports.searchCustomer = async (req, res) => {
 		customers: matchedCustomers,
 	});
 };
+module.exports.editCustomer = async (req, res) => {
+	var customer = await Customer.findOne({ _id: req.params.id });
+	res.render("customers/edit", { customer: customer });
+};
+module.exports.editCustomerHandling = async (req, res) => {
+	await Customer.findByIdAndUpdate({ _id: req.params.id }, req.body, {
+		new: true,
+	});
+	res.redirect("/customers");
+};

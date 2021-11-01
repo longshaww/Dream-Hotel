@@ -231,6 +231,8 @@ module.exports.postCash = async (req, res) => {
 	today = dd + "/" + mm + "/" + yyyy;
 
 	await Payment.create({
+		//name phone cmnd => customer_id
+		//room_id,days_rent => room_id
 		name: req.body.name,
 		phone: req.body.phone,
 		CMND: req.body.CMND,

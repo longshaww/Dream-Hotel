@@ -5,7 +5,6 @@ block content
         table.table
             thead 
                 tr  
-                    th Mã thuê
                     th Phòng 
                     th Tên khách 
                     th CMND 
@@ -14,7 +13,6 @@ block content
             tbody 
                 each rent in rents
                     tr 
-                        td=rent._id
                         td=rent.room.room_id 
                         td=rent.customer.name
                         td=rent.customer.CMND 

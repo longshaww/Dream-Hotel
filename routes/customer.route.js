@@ -6,4 +6,8 @@ router.get("/", controller.customerHome);
 
 router.get("/search", controller.searchCustomer);
 
+router.get("/:id", controller.editCustomer);
+
+router.put("/:id", controller.editCustomerHandling);
+
 module.exports = router;

@@ -11,20 +11,21 @@ block content
         table.table
             thead
                 tr
-                    th.col Mã KH
                     th.col Tên 
                     th.col Phone
                     th.col CMND
                     th.col Loại phòng
                     th.col Checkin 
-                    th.col Checkout 
+                    th.col Checkout
+                    th.col Edit
                 tbody
                     each customer in customers
                         tr
-                            td=customer._id
                             td=customer.name 
                             td=customer.phone 
                             td=customer.CMND 
                             td=customer.room_type
                             td=customer.checkin_date 
                             td=customer.checkout_date
+                            td 
+                               a.btn.btn-dark(href="/customers/"+customer._id) Sửa
