@@ -29,7 +29,7 @@ block content
                         .modal-body Are you sure you want to checkin?
                         .modal-footer
                             button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancel
-                            button.btn.btn-primary(type='submit' form="form") Checkin
+                            button.btn.btn-dark(type='submit' form="form") Checkin
             h3 Tùy chọn:
             button#orderedCustomer.btn.btn-dark Khách đã đặt
             button#remainRoom.btn.btn-dark.ms-2 Phòng còn
@@ -52,12 +52,13 @@ block content
                             th.col Checkout
                     tbody 
                         each customer in customers
-                            tr 
-                                td=customer.name 
-                                td=customer.phone 
-                                td=customer.room_type
-                                td=customer.checkin_date 
-                                td=customer.checkout_date
+                            if(!customer.checkin_state)
+                                tr 
+                                    td=customer.name 
+                                    td=customer.phone 
+                                    td=customer.room_type
+                                    td=customer.checkin_date 
+                                    td=customer.checkout_date
         .col-md#rooms
                 .d-flex.justify-content-center.align-items-center
                     h2 Phòng còn

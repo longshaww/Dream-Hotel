@@ -18,6 +18,9 @@ block content
                     th.col Checkin 
                     th.col Checkout
                     th.col Edit
+                    th.col Checkin State
+                    th.col Checkout State
+
                 tbody
                     each customer in customers
                         tr
@@ -29,3 +32,7 @@ block content
                             td=customer.checkout_date
                             td 
                                a.btn.btn-dark(href="/customers/"+customer._id) Sửa
+                            if(customer.checkin_state)
+                                td Đã checkin
+                            if(customer.checkout_state)
+                                td Đã checkout

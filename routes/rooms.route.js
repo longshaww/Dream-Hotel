@@ -28,6 +28,8 @@ router.post("/checkout", controller.postCheckOut);
 
 router.get("/checkout/online", controller.onlinePayment);
 
+router.get("/payment-history", controller.paymentHistory);
+
 router.get("/checkout/:id", controller.cashPayment);
 
 router.post("/checkout/:id", controller.postCash);

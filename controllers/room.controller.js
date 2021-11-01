@@ -145,7 +145,7 @@ module.exports.postCheckIn = async (req, res) => {
 	}
 	var room = await Room.findOne({ room_id: req.body.room_id });
 	// create new rent
-	var rent = await Rent.create({
+	await Rent.create({
 		room: room._id,
 		customer: customer._id,
 	});
@@ -155,6 +155,12 @@ module.exports.postCheckIn = async (req, res) => {
 		{ customer: customer._id }, // rent: rent._id
 		{ multi: true }
 	);
+	await Customer.updateOne(
+		{ _id: customer._id },
+		{ checkin_state: true },
+		{ multi: true }
+	);
+
 	res.redirect("/rooms");
 };
 
@@ -229,16 +235,15 @@ module.exports.postCash = async (req, res) => {
 	var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
 	var yyyy = today.getFullYear();
 	today = dd + "/" + mm + "/" + yyyy;
-
+	var checkout = await Room.findOne({ room_id: req.params.id }).populate(
+		"customer"
+	);
 	await Payment.create({
 		//name phone cmnd => customer_id
 		//room_id,days_rent => room_id
-		name: req.body.name,
-		phone: req.body.phone,
-		CMND: req.body.CMND,
-		room_id: req.body.room_id,
+		customer: checkout.customer._id,
+		room: checkout._id,
 		days_rent: req.body.days_rent,
-		price_per_day: req.body.price_per_day,
 		summary: req.body.summary,
 		pay_date: today,
 	});
@@ -246,6 +251,18 @@ module.exports.postCash = async (req, res) => {
 		{ room_id: req.body.room_id },
 		{ $unset: { customer: 1 } }
 	);
+	await Customer.updateOne(
+		{ _id: checkout.customer._id },
+		{ checkout_state: true },
+		{ multi: true }
+	);
 
 	res.redirect("/rooms");
 };
+
+module.exports.paymentHistory = async (req, res) => {
+	var payments = await Payment.find().populate("customer").populate("room");
+	res.render("rooms/payment-history", { payments: payments });
+};
+
+//Thêm trạng thái cho khách hàng checkin:true , checkout:true || false

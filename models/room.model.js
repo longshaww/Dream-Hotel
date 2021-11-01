@@ -8,6 +8,8 @@ var customerSchema = new mongoose.Schema(
 		room_type: String,
 		checkin_date: String,
 		checkout_date: String,
+		checkin_state: Boolean,
+		checkout_state: Boolean,
 	},
 	{
 		collection: "customers",
@@ -40,12 +42,9 @@ var roomSchema = new mongoose.Schema(
 
 var paymentSChema = new mongoose.Schema(
 	{
-		name: String,
-		phone: String,
-		CMND: String,
-		room_id: String,
+		customer: { type: mongoose.Schema.Types.ObjectId, ref: "Customers" },
+		room: { type: mongoose.Schema.Types.ObjectId, ref: "Room" },
 		days_rent: String,
-		price_per_day: String,
 		summary: String,
 		pay_date: String,
 	},

@@ -1,0 +1,28 @@
+extends ../layouts/general
+block content
+    h1 Payment History 
+    .table-responsive 
+        table.table 
+            thead 
+                tr
+                    th.col Tên
+                    th.col Phone
+                    th.col CMND
+                    th.col Phòng 
+                    th.col Số ngày ở
+                    th.col Giá phòng/Ngày
+                    th.col Ngày thanh toán 
+                    th.col Tổng
+            tbody
+                each payment in payments
+                    tr 
+                        td=payment.customer.name 
+                        td=payment.customer.phone 
+                        td=payment.customer.CMND 
+                        td=payment.room.room_id 
+                        td=payment.days_rent
+                        td=payment.room.price 
+                        td=payment.pay_date
+                        td=payment.summary 
+                        
+            
