@@ -44,10 +44,5 @@ module.exports.postService = async (req, res) => {
 		},
 		{ multi: true }
 	);
-	res.redirect("/customers");
+	res.redirect("/customers/services/" + getCustomerId);
 };
-Customer.find()
-	.populate("Services")
-	.then(function (customer) {
-		console.log(customer);
-	});
