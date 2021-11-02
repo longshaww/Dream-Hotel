@@ -10,6 +10,7 @@ var customerSchema = new mongoose.Schema(
 		checkout_date: String,
 		checkin_state: Boolean,
 		checkout_state: Boolean,
+		services: [{ type: mongoose.Schema.Types.ObjectId, ref: "Services" }],
 	},
 	{
 		collection: "customers",
@@ -50,14 +51,24 @@ var paymentSChema = new mongoose.Schema(
 	},
 	{ collection: "payment" }
 );
+var serviceSchema = new mongoose.Schema(
+	{
+		content: String,
+		price: String,
+	},
+	{ collection: "services" }
+);
+
 var Room = mongoose.model("Room", roomSchema, "rooms");
 var Rent = mongoose.model("Rent", rentSchema, "rents");
 var Customer = mongoose.model("Customers", customerSchema, "customers");
 var Payment = mongoose.model("Payments", paymentSChema, "payment");
+var Service = mongoose.model("Services", serviceSchema, "services");
 
 module.exports = {
 	Room: Room,
 	Rent: Rent,
 	Customer: Customer,
 	Payment: Payment,
+	Service: Service,
 };

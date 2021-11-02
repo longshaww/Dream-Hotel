@@ -1,4 +1,4 @@
-const { Customer } = require("../models/room.model");
+const { Customer, Service } = require("../models/room.model");
 
 module.exports.customerHome = async (req, res) => {
 	var customers = await Customer.find();
@@ -24,3 +24,30 @@ module.exports.editCustomerHandling = async (req, res) => {
 	});
 	res.redirect("/customers");
 };
+
+let getCustomerId;
+module.exports.getService = async (req, res) => {
+	// var customers = await Customer.findOne({ _id: req.params.id });
+	getCustomerId = req.params.id;
+	var services = await Service.find();
+	res.render("customers/services", { services: services });
+};
+
+module.exports.postService = async (req, res) => {
+	var serviceId = req.params.id;
+	await Customer.updateOne(
+		{ _id: getCustomerId },
+		{
+			$push: {
+				services: serviceId,
+			},
+		},
+		{ multi: true }
+	);
+	res.redirect("/customers");
+};
+Customer.find()
+	.populate("Services")
+	.then(function (customer) {
+		console.log(customer);
+	});
