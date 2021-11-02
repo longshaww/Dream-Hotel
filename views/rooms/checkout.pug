@@ -21,8 +21,8 @@ block content
                         th.col="Từ ngày"
                         th.col="Giá phòng"
                         th.col="Số ngày ở"
-                        th.col="Tổng"
-                        th.col="Hình thức thanh toán"
+                        th.col="Online"
+                        th.col="Cash"
                 tbody
                     tr
                         th(scope="row")=checkout.room_id 
@@ -33,9 +33,35 @@ block content
                             td=checkout.price
                             if(duration)
                                 td=duration
-                                td='$'+checkout.price.slice(1)*duration
                                 td
                                     a.btn.btn-dark(href="/rooms/checkout/online") Thanh toán online 
+                                td
                                     a.btn.btn-dark.ms-2(href="/rooms/checkout/"+checkout.room_id) Thanh toán tiền mặt
-                        
+        h3 Dịch vụ khách hàng sử dụng 
+            .table-responsive 
+                table.table 
+                    thead 
+                        tr 
+                            th.col Dịch vụ
+                            th.col Giá
+                    tbody
+                        each service in services
+                            tr 
+                                td=service.content 
+                                td=service.price
+                        break
+                            tr
+                                th Tổng
+                                td="$"+Math.ceil(summaryServices)
+        h3 Hóa đơn 
+            .table-responsive 
+                table.table 
+                    thead 
+                        tr 
+                            th.col Công thức
+                            th.col Tổng 
+                    tbody
+                        tr 
+                            td="Giá phòng x số ngày ở + dịch vụ"
+                            td='$'+Math.ceil(parseFloat(checkout.price.slice(1))*duration+summaryServices)
             

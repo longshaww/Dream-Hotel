@@ -177,9 +177,17 @@ module.exports.checkOutForm = async (req, res) => {
 
 module.exports.postCheckOut = async (req, res) => {
 	var errors = [];
-	var checkout = await Room.findOne({ room_id: req.body.room_id }).populate(
-		"customer"
-	);
+	var checkout = await Room.findOne({ room_id: req.body.room_id }).populate({
+		path: "customer",
+		populate: { path: "services" },
+	});
+	var services = checkout.customer.services;
+	var summaryServices = services.reduce(function (a, b) {
+		a = parseFloat(a.price.slice(1));
+		b = parseFloat(b.price.slice(1));
+		return (a += b);
+	});
+
 	if (checkout == null) {
 		errors.push("Phòng không tồn tại");
 		res.render("rooms/checkout", {
@@ -208,7 +216,9 @@ module.exports.postCheckOut = async (req, res) => {
 		res.render("rooms/checkout", {
 			errors: errors,
 			checkout: checkout,
+			services: services,
 			duration: duration,
+			summaryServices: summaryServices,
 		});
 	}
 };
@@ -257,6 +267,7 @@ module.exports.postCash = async (req, res) => {
 		{ multi: true }
 	);
 
+	//Thêm trạng thái cho khách hàng checkin:true , checkout:true || false
 	res.redirect("/rooms");
 };
 
@@ -264,5 +275,3 @@ module.exports.paymentHistory = async (req, res) => {
 	var payments = await Payment.find().populate("customer").populate("room");
 	res.render("rooms/payment-history", { payments: payments });
 };
-
-//Thêm trạng thái cho khách hàng checkin:true , checkout:true || false
