@@ -8,7 +8,8 @@ block content
                     th.col Tên
                     th.col Phone
                     th.col CMND
-                    th.col Phòng 
+                    th.col Phòng
+                    th.col Ngày thuê
                     th.col Số ngày ở
                     th.col Giá phòng/Ngày
                     th.col Ngày thanh toán 
@@ -20,6 +21,7 @@ block content
                         td=payment.customer.phone 
                         td=payment.customer.CMND 
                         td=payment.room.room_id 
+                        td=payment.customer.checkin_date+"-"+payment.customer.checkout_date 
                         td=payment.days_rent
                         td=payment.room.price 
                         td=payment.pay_date
