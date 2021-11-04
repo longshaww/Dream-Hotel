@@ -5,14 +5,15 @@ var { Customer } = require("../models/room.model");
 var { Payment } = require("../models/room.model");
 const moment = require("moment");
 
+//Global variables get today
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, "0");
+var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+var yyyy = today.getFullYear();
+today = dd + "/" + mm + "/" + yyyy;
+
 module.exports.roomHome = async (req, res) => {
 	var rooms = await Room.find().populate("customer");
-
-	var today = new Date();
-	var dd = String(today.getDate()).padStart(2, "0");
-	var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-	var yyyy = today.getFullYear();
-	today = dd + "/" + mm + "/" + yyyy;
 
 	res.render("rooms/roomhome", {
 		rooms: rooms,
@@ -175,18 +176,21 @@ module.exports.checkOutForm = async (req, res) => {
 	res.render("rooms/checkout");
 };
 
+//global variables to reuse in postCash
+let summaryServices;
+let checkout;
+let duration;
 module.exports.postCheckOut = async (req, res) => {
 	var errors = [];
-	var checkout = await Room.findOne({ room_id: req.body.room_id }).populate({
+	checkout = await Room.findOne({ room_id: req.body.room_id }).populate({
 		path: "customer",
 		populate: { path: "services" },
 	});
-	var services = checkout.customer.services;
-	var summaryServices = services.reduce(function (a, b) {
-		a = parseFloat(a.price.slice(1));
-		b = parseFloat(b.price.slice(1));
-		return (a += b);
-	});
+
+	// var summaryServices = services.reduce(function (a, b) {
+	// 	a = parseFloat(a.price.slice(1));
+	// 	b = parseFloat(b.price.slice(1));
+	// 	return a + b;
 
 	if (checkout == null) {
 		errors.push("Phòng không tồn tại");
@@ -202,6 +206,15 @@ module.exports.postCheckOut = async (req, res) => {
 		});
 		return;
 	} else {
+		var services = checkout.customer.services;
+		if (services) {
+			var prices = services.map(function (item) {
+				return item.price.slice(1);
+			});
+			summaryServices = prices.reduce(function (a, b) {
+				return parseFloat(a) + parseFloat(b);
+			}, 0);
+		}
 		var checkInDate = moment(
 			checkout.customer.checkin_date,
 			"DD/MM/YYYY"
@@ -210,9 +223,7 @@ module.exports.postCheckOut = async (req, res) => {
 			checkout.customer.checkout_date,
 			"DD/MM/YYYY"
 		);
-		var duration = moment
-			.duration(checkOutDate.diff(checkInDate))
-			.asDays();
+		duration = moment.duration(checkOutDate.diff(checkInDate)).asDays();
 		res.render("rooms/checkout", {
 			errors: errors,
 			checkout: checkout,
@@ -227,24 +238,14 @@ module.exports.onlinePayment = async (req, res) => {
 };
 
 module.exports.cashPayment = async (req, res) => {
-	var checkout = await Room.findOne({ room_id: req.params.id }).populate(
-		"customer"
-	);
-	var checkInDate = moment(checkout.customer.checkin_date, "DD/MM/YYYY");
-	var checkOutDate = moment(checkout.customer.checkout_date, "DD/MM/YYYY");
-	var duration = moment.duration(checkOutDate.diff(checkInDate)).asDays();
 	res.render("rooms/cash-payment", {
 		checkout: checkout,
 		duration: duration,
+		summaryServices: summaryServices,
 	});
 };
 
 module.exports.postCash = async (req, res) => {
-	var today = new Date();
-	var dd = String(today.getDate()).padStart(2, "0");
-	var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-	var yyyy = today.getFullYear();
-	today = dd + "/" + mm + "/" + yyyy;
 	var checkout = await Room.findOne({ room_id: req.params.id }).populate(
 		"customer"
 	);
@@ -253,6 +254,8 @@ module.exports.postCash = async (req, res) => {
 		//room_id,days_rent => room_id
 		customer: checkout.customer._id,
 		room: checkout._id,
+		//Services
+		// services_price: req.body.services_price,
 		days_rent: req.body.days_rent,
 		summary: req.body.summary,
 		pay_date: today,

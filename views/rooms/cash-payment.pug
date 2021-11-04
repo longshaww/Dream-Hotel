@@ -84,6 +84,7 @@ block content
                                     th.col Công thức
                                     th.col 
                                     th.col
+                                    th.col
                             tbody 
                                 tr 
                                     td
@@ -93,13 +94,17 @@ block content
                                     td 
                                         label.form-label(for="price_per_day") Giá phòng 
                                         input#price_per_day.form-control(name="price_per_day" value=checkout.price)
+                                    td 
+                                        label.form-label(for="services_price") Giá dịch vụ
+                                        input#services_price.form-control(name="services_price" value='$'+Math.ceil(summaryServices))
+                                   
 
                                 tr
                                     th 
                                         label.form-label(for="summary") Tổng
                                     td 
                                     td
-                                        input#summary.form-control(name="summary" value='$'+duration*checkout.price.slice(1))
+                                        input#summary.form-control(name="summary" value='$'+Math.ceil(parseFloat(checkout.price.slice(1))*duration+summaryServices))
                         hr.my-4
                         button.w-100.btn.btn-dark.btn-lg(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal') Continue to Checkout
                         #exampleModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')

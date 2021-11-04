@@ -45,10 +45,11 @@ block content
                             th.col Dịch vụ
                             th.col Giá
                     tbody
-                        each service in services
-                            tr 
-                                td=service.content 
-                                td=service.price
+                        if(services)
+                            each service in services
+                                tr 
+                                    td=service.content 
+                                    td=service.price
                         break
                             tr
                                 th Tổng
