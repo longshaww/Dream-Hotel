@@ -278,3 +278,17 @@ module.exports.paymentHistory = async (req, res) => {
 	var payments = await Payment.find().populate("customer").populate("room");
 	res.render("rooms/payment-history", { payments: payments });
 };
+
+module.exports.paymentSearch = async (req, res) => {
+	var payments = await Payment.find().populate("customer").populate("room");
+	var q = req.query.q;
+	// var end = req.query.end
+	var matchedPayments = payments.filter(function (payment) {
+		var split = payment.pay_date.split("/");
+		return split[1] === q;
+	});
+	if (!q) {
+		matchedPayments = payments;
+	}
+	res.render("rooms/payment-history", { payments: matchedPayments });
+};
