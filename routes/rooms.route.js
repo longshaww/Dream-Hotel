@@ -40,6 +40,10 @@ router.post("/services/new", controller.postService);
 
 router.delete("/services/:id", controller.deleteService);
 
+router.get("/services/:id", controller.editService);
+
+router.put("/services/:id", controller.editServiceHandling);
+
 router.get("/checkout/:id", controller.cashPayment);
 
 router.post("/checkout/:id", controller.postCash);

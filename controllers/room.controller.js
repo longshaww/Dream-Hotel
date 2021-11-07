@@ -1,4 +1,20 @@
 const { forEach } = require("../db");
+const nodemailer = require("nodemailer");
+const moment = require("moment");
+let transporter = nodemailer.createTransport({
+	host: "smtp.gmail.com",
+	port: 465,
+	secure: true, // upgrade later with STARTTLS
+	auth: {
+		user: "at400123@gmail.com",
+		pass: "zddxyogvmgcgxsgu",
+	},
+	tls: {
+		// do not fail on invalid certs
+		rejectUnauthorized: false,
+	},
+});
+
 var {
 	Room,
 	Rent,
@@ -6,8 +22,6 @@ var {
 	Payment,
 	Service,
 } = require("../models/room.model");
-
-const moment = require("moment");
 
 //Global variables get today
 var today = new Date();
@@ -22,6 +36,13 @@ module.exports.roomHome = async (req, res) => {
 	res.render("rooms/roomhome", {
 		rooms: rooms,
 		today: today,
+	});
+	await transporter.sendMail({
+		from: '"Fred Foo 👻" <foo@example.com>', // sender address
+		to: "l.jimmy_tran@yahoo.com", // list of receivers
+		subject: "Hello ✔", // Subject line
+		text: "Hello world?", // plain text body
+		html: "<b>Hello world?</b>", // html body
 	});
 };
 
@@ -191,11 +212,6 @@ module.exports.postCheckOut = async (req, res) => {
 		populate: { path: "services" },
 	});
 
-	// var summaryServices = services.reduce(function (a, b) {
-	// 	a = parseFloat(a.price.slice(1));
-	// 	b = parseFloat(b.price.slice(1));
-	// 	return a + b;
-
 	if (checkout == null) {
 		errors.push("Phòng không tồn tại");
 		res.render("rooms/checkout", {
@@ -313,5 +329,17 @@ module.exports.postService = async (req, res) => {
 
 module.exports.deleteService = async (req, res) => {
 	await Service.findByIdAndRemove({ _id: req.params.id });
+	res.redirect("/rooms/services");
+};
+
+module.exports.editService = async (req, res) => {
+	var service = await Service.findById(req.params.id);
+	res.render("rooms/edit-service", { service: service });
+};
+
+module.exports.editServiceHandling = async (req, res) => {
+	await Service.findByIdAndUpdate({ _id: req.params.id }, req.body, {
+		new: true,
+	});
 	res.redirect("/rooms/services");
 };

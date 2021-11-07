@@ -1,7 +1,8 @@
 extends ../layouts/general
 block content
-    h1 Services
-    a(href="/rooms/services/new" class="btn btn-dark") Create
+    .d-flex.justity.content-center.align-items-center
+        h1 Services
+        a(href="/rooms/services/new" class="btn btn-dark ms-2") Create
     .table-responsive 
         table.table 
             thead 
@@ -15,6 +16,7 @@ block content
                         td=service.content 
                         td=service.price
                         td
+                            a.btn.btn-dark.me-2(href="/rooms/services/"+service._id) Edit
                             button.btn.btn-dark(type='button', data-bs-toggle='modal' data-id=service._id data-bs-target='#deleteServiceModal') Delete
                             #deleteServiceModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
                                 .modal-dialog.modal-dialog-centered
