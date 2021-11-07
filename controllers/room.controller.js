@@ -1,6 +1,7 @@
 const { forEach } = require("../db");
 const nodemailer = require("nodemailer");
 const moment = require("moment");
+
 let transporter = nodemailer.createTransport({
 	host: "smtp.gmail.com",
 	port: 465,
@@ -38,7 +39,7 @@ module.exports.roomHome = async (req, res) => {
 		today: today,
 	});
 	await transporter.sendMail({
-		from: '"Fred Foo 👻" <foo@example.com>', // sender address
+		from: '"Dream Hotel 👻" <DreamHotel@gmail.com>', // sender address
 		to: "l.jimmy_tran@yahoo.com", // list of receivers
 		subject: "Hello ✔", // Subject line
 		text: "Hello world?", // plain text body
