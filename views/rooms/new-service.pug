@@ -1,0 +1,25 @@
+extends ../layouts/general
+block content
+    h1 Create new service
+    form(method="POST" action="/rooms/services/new" id="form" class="needs-validation" novalidate)
+        .from-group
+            label(for="content") Nội dung
+            input#content.form-control(name="content" type="text" required)
+            .invalid-feedback Bạn cần phải nhập nội dung cho dịch vụ
+        .from-group.mb-3
+            label(for="price") Giá $
+            input#price.form-control(name="price" type="text" required)
+            .invalid-feedback Bạn cần phải nhập giá cho dịch vụ
+    button.btn.btn-dark(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal') Create
+    #exampleModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
+        .modal-dialog.modal-dialog-centered
+            .modal-content
+                .modal-header
+                    h5#exampleModalLabel.modal-title Confirmation
+                    button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+                .modal-body Are you sure you want to create new service ?
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancel
+                    button.btn.btn-dark(type='submit' form="form") Create
+
+    script(src='/js/form-validation.js')

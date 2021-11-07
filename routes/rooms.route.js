@@ -32,6 +32,14 @@ router.get("/payment-history", controller.paymentHistory);
 
 router.get("/payment-history/search", controller.paymentSearch);
 
+router.get("/services", controller.services);
+
+router.get("/services/new", controller.newService);
+
+router.post("/services/new", controller.postService);
+
+router.delete("/services/:id", controller.deleteService);
+
 router.get("/checkout/:id", controller.cashPayment);
 
 router.post("/checkout/:id", controller.postCash);

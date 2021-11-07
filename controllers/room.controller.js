@@ -1,8 +1,12 @@
 const { forEach } = require("../db");
-var { Room } = require("../models/room.model");
-var { Rent } = require("../models/room.model");
-var { Customer } = require("../models/room.model");
-var { Payment } = require("../models/room.model");
+var {
+	Room,
+	Rent,
+	Customer,
+	Payment,
+	Service,
+} = require("../models/room.model");
+
 const moment = require("moment");
 
 //Global variables get today
@@ -291,4 +295,23 @@ module.exports.paymentSearch = async (req, res) => {
 		matchedPayments = payments;
 	}
 	res.render("rooms/payment-history", { payments: matchedPayments });
+};
+
+module.exports.services = async (req, res) => {
+	var services = await Service.find();
+	res.render("rooms/services", { services: services });
+};
+
+module.exports.newService = async (req, res) => {
+	res.render("rooms/new-service");
+};
+
+module.exports.postService = async (req, res) => {
+	await Service.create({ content: req.body.content, price: req.body.price });
+	res.redirect("/rooms/services");
+};
+
+module.exports.deleteService = async (req, res) => {
+	await Service.findByIdAndRemove({ _id: req.params.id });
+	res.redirect("/rooms/services");
 };
