@@ -6,6 +6,7 @@ block content
     .row
         .col#checkin
             h1 Check in 
+            button(type="button" class="btn btn-dark m-1" id="liveToastBtn") Phòng đến hạn
             if errors
                 each error in errors 
                     .alert.alert-danger=error        
@@ -75,6 +76,19 @@ block content
                                         h5.card-header="Phòng "+room.room_id
                                         .card-body
                                             li="Loại phòng: "+room.room_type
+
+    .position-fixed.bottom-0.end-0.p-3(style='z-index: 11')
+        #liveToast.toast(role='alert', aria-live='assertive', aria-atomic='true' data-bs-autohide="false")
+            .toast-header
+                img.rounded.me-2(src='/images/logo.jpg', style="width:10%")
+                strong.me-auto Dream Hotel
+                small=today
+                button.btn-close(type='button', data-bs-dismiss='toast', aria-label='Close')
+            .toast-body
+                each customer in customers
+                    if(customer)
+                        if(customer.checkin_date === today && !customer.checkin_state)
+                            h5.text-danger="Khách hàng đến ngày checkin: "+customer.name
 
            
            

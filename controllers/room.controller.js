@@ -1,20 +1,5 @@
 const { forEach } = require("../db");
-const nodemailer = require("nodemailer");
 const moment = require("moment");
-
-let transporter = nodemailer.createTransport({
-	host: "smtp.gmail.com",
-	port: 465,
-	secure: true, // upgrade later with STARTTLS
-	auth: {
-		user: "at400123@gmail.com",
-		pass: "zddxyogvmgcgxsgu",
-	},
-	tls: {
-		// do not fail on invalid certs
-		rejectUnauthorized: false,
-	},
-});
 
 var {
 	Room,
@@ -37,13 +22,6 @@ module.exports.roomHome = async (req, res) => {
 	res.render("rooms/roomhome", {
 		rooms: rooms,
 		today: today,
-	});
-	await transporter.sendMail({
-		from: '"Dream Hotel 👻" <DreamHotel@gmail.com>', // sender address
-		to: "l.jimmy_tran@yahoo.com", // list of receivers
-		subject: "Hello ✔", // Subject line
-		text: "Hello world?", // plain text body
-		html: "<b>Hello world?</b>", // html body
 	});
 };
 
@@ -115,7 +93,11 @@ module.exports.editRoomHandling = async (req, res) => {
 module.exports.checkInForm = async (req, res) => {
 	var customers = await Customer.find();
 	var rooms = await Room.find().populate("customer");
-	res.render("rooms/checkin", { rooms: rooms, customers: customers });
+	res.render("rooms/checkin", {
+		rooms: rooms,
+		customers: customers,
+		today: today,
+	});
 };
 module.exports.searchCustomer = async (req, res) => {
 	var customers = await Customer.find();

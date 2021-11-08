@@ -37,14 +37,15 @@ block content
             tbody
                 each payment in payments
                     tr 
-                        td=payment.customer.name 
-                        td=payment.customer.phone 
-                        td=payment.customer.CMND 
-                        td=payment.room.room_id 
-                        td=payment.customer.checkin_date+"-"+payment.customer.checkout_date 
-                        td=payment.days_rent
-                        td=payment.room.price 
-                        td=payment.pay_date
-                        td=payment.summary 
+                        if(payment.customer)
+                            td=payment.customer.name 
+                            td=payment.customer.phone 
+                            td=payment.customer.CMND 
+                            td=payment.room.room_id 
+                            td=payment.customer.checkin_date+"-"+payment.customer.checkout_date 
+                            td=payment.days_rent
+                            td=payment.room.price 
+                            td=payment.pay_date
+                            td=payment.summary 
                         
             

@@ -27,4 +27,16 @@ window.onload = () => {
 		rooms.classList.remove("col-md");
 		rooms.style.display = "none";
 	});
+
+	//toast
+	var toastLiveExample = document.getElementById("liveToast");
+	var toast = new bootstrap.Toast(toastLiveExample);
+	window.onload = toast.show();
+
+	var toastTrigger = document.getElementById("liveToastBtn");
+	if (toastTrigger) {
+		toastTrigger.addEventListener("click", function () {
+			toast.show();
+		});
+	}
 };

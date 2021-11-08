@@ -13,9 +13,10 @@ block content
             tbody 
                 each rent in rents
                     tr 
-                        td=rent.room.room_id 
-                        td=rent.customer.name
-                        td=rent.customer.CMND 
-                        td=rent.customer.phone
-                        td=rent.customer.checkin_date+" - "+rent.customer.checkout_date
-        
+                        if(rent.customer)
+                            td=rent.room.room_id 
+                            td=rent.customer.name
+                            td=rent.customer.CMND 
+                            td=rent.customer.phone
+                            td=rent.customer.checkin_date+" - "+rent.customer.checkout_date
+            
