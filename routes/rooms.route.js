@@ -48,6 +48,8 @@ router.get("/checkout/:id", controller.cashPayment);
 
 router.post("/checkout/:id", controller.postCash);
 
+router.post("/checkout/:id/voucher", controller.postVoucher);
+
 router.get("/:id", controller.viewRoom);
 
 router.delete("/:id", controller.deleteRoom);

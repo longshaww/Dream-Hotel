@@ -7,6 +7,7 @@ var {
 	Customer,
 	Payment,
 	Service,
+	Voucher,
 } = require("../models/room.model");
 
 //Global variables get today
@@ -246,6 +247,27 @@ module.exports.cashPayment = async (req, res) => {
 		duration: duration,
 		summaryServices: summaryServices,
 	});
+};
+
+module.exports.postVoucher = async (req, res) => {
+	var error;
+	var voucher = await Voucher.findOne({ code: req.body.code });
+	if (voucher) {
+		res.render("rooms/cash-payment", {
+			voucher: voucher,
+			checkout: checkout,
+			duration: duration,
+			summaryServices: summaryServices,
+		});
+	} else {
+		error = "Mã voucher không hợp lệ";
+		res.render("rooms/cash-payment", {
+			checkout: checkout,
+			duration: duration,
+			summaryServices: summaryServices,
+			error: error,
+		});
+	}
 };
 
 module.exports.postCash = async (req, res) => {

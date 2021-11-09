@@ -60,11 +60,24 @@ var serviceSchema = new mongoose.Schema(
 	{ collection: "services" }
 );
 
+var voucherSchema = new mongoose.Schema(
+	{
+		code: String,
+		date_start: String,
+		date_end: String,
+		discount: String,
+	},
+	{
+		collection: "vouchers",
+	}
+);
+
 var Room = mongoose.model("Room", roomSchema, "rooms");
 var Rent = mongoose.model("Rent", rentSchema, "rents");
 var Customer = mongoose.model("Customers", customerSchema, "customers");
 var Payment = mongoose.model("Payments", paymentSChema, "payment");
 var Service = mongoose.model("Services", serviceSchema, "services");
+var Voucher = mongoose.model("Vouchers", voucherSchema, "vouchers");
 
 module.exports = {
 	Room: Room,
@@ -72,4 +85,5 @@ module.exports = {
 	Customer: Customer,
 	Payment: Payment,
 	Service: Service,
+	Voucher: Voucher,
 };
