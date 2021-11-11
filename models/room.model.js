@@ -48,6 +48,7 @@ var paymentSChema = new mongoose.Schema(
 		room: { type: mongoose.Schema.Types.ObjectId, ref: "Room" },
 		days_rent: String,
 		summary: String,
+		discount: String,
 		pay_date: String,
 	},
 	{ collection: "payment" }
@@ -62,7 +63,6 @@ var serviceSchema = new mongoose.Schema(
 
 var voucherSchema = new mongoose.Schema(
 	{
-		code: String,
 		date_start: String,
 		date_end: String,
 		discount: String,

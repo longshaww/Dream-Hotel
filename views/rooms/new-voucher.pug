@@ -1,0 +1,29 @@
+extends ../layouts/general
+block content
+    h1 Create new voucher
+    form(method="POST" action="/rooms/voucher/new" id="form" class="needs-validation" novalidate)
+        .from-group
+            label(for="date_start") Ngày bắt đầu
+            input#date_start.form-control.datepick(name="date_start" type="text" required)
+            .invalid-feedback Bạn cần phải nhập ngày bắt đầu
+        .from-group.mb-3
+            label(for="date_end") Ngày kết thúc
+            input#date_end.form-control.datepick(name="date_end" type="text" required)
+            .invalid-feedback Bạn cần phải nhập ngày kết thúc
+        .from-group.mb-3
+            label(for="discount") Số phần trăm giảm
+            input#discount.form-control(name="discount" type="text" required)
+            .invalid-feedback Bạn cần phải nhập số phần trăm giảm
+    button.btn.btn-dark(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal') Create
+    #exampleModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
+        .modal-dialog.modal-dialog-centered
+            .modal-content
+                .modal-header
+                    h5#exampleModalLabel.modal-title Confirmation
+                    button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+                .modal-body Are you sure you want to create new voucher ?
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancel
+                    button.btn.btn-dark(type='submit' form="form") Create
+    script(src='/js/form-validation.js')
+    script(src='/js/datepicker.js')

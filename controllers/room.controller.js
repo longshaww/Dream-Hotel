@@ -186,9 +186,10 @@ module.exports.checkOutForm = async (req, res) => {
 };
 
 //global variables to reuse in postCash
-let summaryServices;
-let checkout;
-let duration;
+var summaryServices;
+var checkout;
+var duration;
+var totalNoDiscount;
 module.exports.postCheckOut = async (req, res) => {
 	var errors = [];
 	checkout = await Room.findOne({ room_id: req.body.room_id }).populate({
@@ -242,22 +243,36 @@ module.exports.onlinePayment = async (req, res) => {
 };
 
 module.exports.cashPayment = async (req, res) => {
+	totalNoDiscount = Math.ceil(
+		parseFloat(checkout.price.slice(1)) * duration + summaryServices
+	);
 	res.render("rooms/cash-payment", {
 		checkout: checkout,
 		duration: duration,
 		summaryServices: summaryServices,
+		totalNoDiscount: totalNoDiscount,
 	});
 };
 
 module.exports.postVoucher = async (req, res) => {
 	var error;
-	var voucher = await Voucher.findOne({ code: req.body.code });
+	var voucher = await Voucher.findOne({ _id: req.body.code });
 	if (voucher) {
+		//số phần trăm giảm
+		var discount = voucher.discount / 100;
+		//tổng chưa giảm
+
+		//Số tiền giảm
+		var discountedMoney = Math.round(discount * totalNoDiscount);
+		// số tiền tổng đã có discount = tổng chưa giảm - số tiền giảm
+		var totalDiscount = totalNoDiscount - discountedMoney;
+
 		res.render("rooms/cash-payment", {
 			voucher: voucher,
 			checkout: checkout,
 			duration: duration,
 			summaryServices: summaryServices,
+			totalDiscount: totalDiscount,
 		});
 	} else {
 		error = "Mã voucher không hợp lệ";
@@ -266,6 +281,7 @@ module.exports.postVoucher = async (req, res) => {
 			duration: duration,
 			summaryServices: summaryServices,
 			error: error,
+			totalNoDiscount: totalNoDiscount,
 		});
 	}
 };
@@ -279,6 +295,7 @@ module.exports.postCash = async (req, res) => {
 		//room_id,days_rent => room_id
 		customer: checkout.customer._id,
 		room: checkout._id,
+		discount: req.body.discount,
 		//Services
 		// services_price: req.body.services_price,
 		days_rent: req.body.days_rent,
@@ -347,4 +364,39 @@ module.exports.editServiceHandling = async (req, res) => {
 		new: true,
 	});
 	res.redirect("/rooms/services");
+};
+
+module.exports.vouchers = async (req, res) => {
+	var vouchers = await Voucher.find();
+	res.render("rooms/vouchers", { vouchers: vouchers });
+};
+
+module.exports.newVoucher = async (req, res) => {
+	res.render("rooms/new-voucher");
+};
+
+module.exports.postVoucher = async (req, res) => {
+	await Voucher.create({
+		date_start: req.body.date_start,
+		date_end: req.body.date_end,
+		discount: req.body.discount,
+	});
+	res.redirect("/rooms/vouchers");
+};
+
+module.exports.editVoucher = async (req, res) => {
+	var voucher = await Voucher.findById(req.params.id);
+	res.render("rooms/edit-voucher", { voucher: voucher });
+};
+
+module.exports.editVoucherHandling = async (req, res) => {
+	await Voucher.findByIdAndUpdate({ _id: req.params.id }, req.body, {
+		new: true,
+	});
+	res.redirect("/rooms/vouchers");
+};
+
+module.exports.deleteVoucher = async (req, res) => {
+	await Voucher.findByIdAndRemove(req.params.id);
+	res.redirect("/rooms/vouchers");
 };

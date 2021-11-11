@@ -38,6 +38,18 @@ router.get("/services/new", controller.newService);
 
 router.post("/services/new", controller.postService);
 
+router.get("/vouchers", controller.vouchers);
+
+router.get("/vouchers/new", controller.newVoucher);
+
+router.post("/voucher/new", controller.postVoucher);
+
+router.get("/vouchers/:id", controller.editVoucher);
+
+router.put("/vouchers/:id", controller.editVoucherHandling);
+
+router.delete("/vouchers/:id", controller.deleteVoucher);
+
 router.delete("/services/:id", controller.deleteService);
 
 router.get("/services/:id", controller.editService);

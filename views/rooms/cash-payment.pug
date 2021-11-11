@@ -49,8 +49,8 @@ block content
                             input.form-control(type='text' name="code" placeholder='Promo code')
                             button.btn.btn-secondary(type='submit') Redeem
                             .invalid-feedback Invalid voucher
-                            if(error)
-                                .alert.alert-danger=error
+                    if(error)
+                        .alert.alert-danger=error
                 .col-md-7.col-lg-8
                     h4.mb-3 Thông tin
                     form.needs-validation(novalidate='' method="POST" action="/rooms/checkout/"+checkout.room_id id="form")
@@ -114,10 +114,9 @@ block content
                                     td 
                                     td
                                         if(voucher)
-                                            -var voucher = (voucher.discount/100)    
-                                            input#summary.form-control(name="summary" value='$'+Math.round(voucher*Math.ceil(parseFloat(checkout.price.slice(1))*duration+summaryServices)))
+                                            input#summary.form-control(name="summary" value='$'+totalDiscount)
                                         else
-                                            input#summary.form-control(name="summary" value='$'+Math.ceil(parseFloat(checkout.price.slice(1))*duration+summaryServices))
+                                            input#summary.form-control(name="summary" value='$'+totalNoDiscount)
                         hr.my-4
                         button.w-100.btn.btn-dark.btn-lg(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal') Continue to Checkout
                         #exampleModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
