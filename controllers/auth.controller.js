@@ -1,12 +1,12 @@
-const db = require("../db");
+var { User } = require("../models/user.model");
 
-module.exports.login = (req, res) => {
+module.exports.login = async (req, res) => {
 	res.render("auth/login");
 };
-module.exports.postLogin = (req, res) => {
+module.exports.postLogin = async (req, res) => {
 	var email = req.body.email;
 	var password = req.body.password;
-	var user = db.get("users").find({ email: email }).value();
+	var user = await User.findOne({ email: email });
 
 	if (!user) {
 		res.render("auth/login", {
@@ -22,10 +22,10 @@ module.exports.postLogin = (req, res) => {
 		});
 		return;
 	}
-	res.cookie("userId", user.id, {
+	res.cookie("userId", user._id, {
 		signed: true,
 		expires: new Date(Date.now() + 5000000),
 		httpOnly: true,
 	});
-	res.redirect("/users");
+	res.redirect("/rooms");
 };

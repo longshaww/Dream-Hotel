@@ -5,3 +5,11 @@
 .card:hover {
 	transform: translate(0, -0.5rem);
 }
+
+tr:hover {
+	background-color: #bc8cf2;
+}
+
+.btn {
+	cursor: pointer;
+}

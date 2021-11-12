@@ -1,0 +1,132 @@
+extends ../layouts/general
+block append head
+    link(rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/checkout/")
+    link(rel="stylesheet" type="text/css" href="/styles/form-validation.css")
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+block content
+    .container
+        main
+            .py-5.text-center
+                img.d-block.mx-auto.mb-4(src='/images/logo.jpg', alt='', width='72', height='57')
+                h2 Checkout form
+                p.lead Dream Hotel
+                h3 Thanh toán tiền mặt
+            .row.g-5
+                .col-md-5.col-lg-4.order-md-last
+                    h4.d-flex.justify-content-between.align-items-center.mb-3
+                        span.text-primary Your cart
+                        span.badge.bg-primary.rounded-pill 3
+                    ul.list-group.mb-3
+                        li.list-group-item.d-flex.justify-content-between.lh-sm
+                            div
+                                h6.my-0 Product name
+                                small.text-muted Brief description
+                            span.text-muted $12
+                        li.list-group-item.d-flex.justify-content-between.lh-sm
+                            div
+                                h6.my-0 Second product
+                                small.text-muted Brief description
+                            span.text-muted $8
+                        li.list-group-item.d-flex.justify-content-between.lh-sm
+                            div
+                                h6.my-0 Third item
+                                small.text-muted Brief description
+                            span.text-muted $5
+                        li.list-group-item.d-flex.justify-content-between.bg-light
+                            .text-success
+                                h6.my-0 Promo code
+                                small EXAMPLECODE
+                            span.text-success &minus;$5
+                        li.list-group-item.d-flex.justify-content-between
+                            span Total (USD)
+                            strong $20
+                    form.card.p-2.needs-validation(novalidate='' method="POST" action="/rooms/checkout/"+checkout.room_id+"/voucher" id="voucher")
+                        .input-group
+                            input.form-control(type='text' name="code" placeholder='Promo code')
+                            button.btn.btn-secondary(type='submit' form="voucher") Redeem
+                            .invalid-feedback Invalid voucher
+                    if(error)
+                        .alert.alert-danger=error
+                .col-md-7.col-lg-8
+                    h4.mb-3 Thông tin
+                    form.needs-validation(novalidate='' method="POST" action="/rooms/checkout/"+checkout.room_id id="form")
+                        .row.g-3
+                            .col-sm
+                                label.form-label(for='name') Tên
+                                input#name.form-control(type='text', placeholder='', value=checkout.customer.name, required='' name="name")
+                                .invalid-feedback Valid name required
+                            .col-12
+                                label.form-label(for='phone') Phone
+                                input#phone.form-control(type='text', placeholder='',value=checkout.customer.phone required='' name="phone")
+                                .invalid-feedback Please enter phone number
+                            .col-md-12
+                                label.form-label(for='CMND') CMND
+                                input#CMND.form-control(type='text',value=checkout.customer.CMND placeholder='', required='' name="CMND")
+                                .invalid-feedback Please provide your identity card
+                            .col-md-12
+                                label.form-label(for='room') Phòng
+                                input#room.form-control(type='text',value=checkout.room_id placeholder='', required='' name="room_id")
+                                .invalid-feedback Please provide your room.
+                        hr.my-4
+                        .form-check
+                            input#save-info.form-check-input(type='checkbox')
+                            label.form-check-label(for='save-info') Save this information for next time
+                        hr.my-4
+                        h4.mb-3 Payment
+                        .my-3
+                            .form-check
+                                input#cash.form-check-input(type='radio', checked='', required='')
+                                label.form-check-label(for='cash') Cash
+                        table.table 
+                            thead
+                                tr
+                                    th.col Công thức
+                                    th.col 
+                                    th.col
+                                    th.col
+                                    th.col
+                                    th.col
+                            tbody 
+                                tr 
+                                    td
+                                        label.form-label(for="days_rent") Số ngày
+                                        input#days_rent.form-control(name="days_rent" value=duration)
+                                    td x
+                                    td 
+                                        label.form-label(for="price_per_day") Giá phòng 
+                                        input#price_per_day.form-control(name="price_per_day" value=checkout.price)
+                                    td +
+                                    td 
+                                        label.form-label(for="services_price") Giá dịch vụ
+                                        input#services_price.form-control(name="services_price" value='$'+Math.ceil(summaryServices))
+                                    td 
+                                        if(voucher)
+                                            label.form-label(for="discount") Voucher
+                                            input#discount.form-control(name="discount" value=voucher.discount)
+
+                                tr
+                                    th 
+                                        label.form-label(for="summary") Tổng
+                                    td 
+                                    td
+                                        if(voucher)
+                                            input#summary.form-control(name="summary" value='$'+totalDiscount)
+                                        else
+                                            input#summary.form-control(name="summary" value='$'+totalNoDiscount)
+                        hr.my-4
+                        button.w-100.btn.btn-dark.btn-lg(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal') Continue to Checkout
+                        #exampleModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                            .modal-dialog.modal-dialog-centered
+                                .modal-content
+                                    .modal-header
+                                        h5#exampleModalLabel.modal-title Confirmation
+                                        button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+                                    .modal-body Please check your infomation before checkout !
+                                    .modal-footer
+                                        button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancel
+                                        button.btn.btn-primary(type='submit' form="form") Checkout
+    script(src='/js/form-validation.js')

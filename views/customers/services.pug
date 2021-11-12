@@ -1,0 +1,47 @@
+extends ../layouts/general
+block content
+    h1 Services
+    .table-responsive 
+        table.table 
+            thead 
+                tr 
+                    th.col Content
+                    th.col Price 
+                    th.col Option
+            tbody        
+                each service in services
+                    tr
+                        td=service.content 
+                        td=service.price
+                        td
+                            button.btn.btn-dark(type='button', data-bs-toggle='modal' data-id=service._id data-bs-target='#addServiceModal') Chọn
+                            #addServiceModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                                .modal-dialog.modal-dialog-centered
+                                    .modal-content
+                                        .modal-header
+                                            h5#exampleModalLabel.modal-title Confirmation
+                                            button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+                                        .modal-body Are you sure you want to add this service ?
+                                        .modal-footer
+                                            button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancel
+                                            button#btn-add-service.btn.btn-dark Add
+    form(name="add-service-form" method="POST")                           
+    script.
+            window.onload = ()=>{
+                var serviceId;
+                var addServiceModal = document.getElementById('addServiceModal');
+                var btnAddService = document.getElementById('btn-add-service');
+                var addServiceForm = document.forms["add-service-form"];
+
+                addServiceModal.addEventListener('show.bs.modal', function (event) {
+                    var button = event.relatedTarget;
+                    serviceId  = button.getAttribute('data-id');
+                    });
+                    btnAddService.addEventListener("click",function(){
+                        addServiceForm.action="/customers/services/add/"+ serviceId;
+                        addServiceForm.submit();
+                       
+                })
+            }
+        
+      

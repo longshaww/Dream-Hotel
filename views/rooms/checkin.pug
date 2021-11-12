@@ -2,14 +2,14 @@ extends ../layouts/general
 block append head 
     script(src="/js/checkin.js")
 block content
-
     .row
         .col#checkin
             h1 Check in 
+            button(type="button" class="btn btn-dark m-1" id="liveToastBtn") Phòng đến hạn
             if errors
                 each error in errors 
                     .alert.alert-danger=error        
-            form(method="POST" action="/rooms/checkin")
+            form(method="POST" action="/rooms/checkin" id="form")
                 .from-group
                     label(for="name") Tên khách
                     input#name.form-control(name="name" type="text")
@@ -19,34 +19,75 @@ block content
                 .from-group.mb-3
                     label(for="room_id") Phòng
                     input#room_id.form-control(name="room_id" type="text")
-                button.btn.btn-dark Checkin
-            h3.text-secondary Tùy chọn:
+            button.btn.btn-dark(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal') Checkin
+            #exampleModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                .modal-dialog.modal-dialog-centered
+                    .modal-content
+                        .modal-header
+                            h5#exampleModalLabel.modal-title Confirmation
+                            button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+                        .modal-body Are you sure you want to checkin?
+                        .modal-footer
+                            button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancel
+                            button.btn.btn-dark(type='submit' form="form") Checkin
+            h3 Tùy chọn:
             button#orderedCustomer.btn.btn-dark Khách đã đặt
-            button#remainRoom.btn.btn-dark.ml-2 Phòng còn
-        .col-md-3#customers
+            button#remainRoom.btn.btn-dark.ms-2 Phòng còn
+    .row
+        .col-md#customers
             .d-flex.justify-content-center.align-items-center
                 h2 Khách hàng đã đặt
-                button#close-customer.btn.btn-dark.ml-1 X
-            each customer in customers 
-                ul.card.list-unstyled.shadow-lg.m-2.border-success(class="text-dark bg-light mb-3")
-                    h5.card-header="Khách: "+customer._id
-                    .card-body
-                        li="Tên: "+customer.name 
-                        li="Phone: "+customer.phone 
-                        li="Loại phòng: "+customer.room_type 
-                        li="Checkin: "+customer.checkin_date 
-                        li="Checkout: "+customer.checkout_date
-        .col-md-5#rooms
+                button#close-customer.btn-close.ms-1(type="button" aria-label="Close")
+                form(action="/rooms/checkin/searchCus",method="GET" class="d-flex ms-auto")
+                    input(type="text", name="q" class="form-control")
+                    button(class="btn btn-dark ms-3") Search
+            .table-responsive
+                table.table
+                    thead 
+                        tr
+                            th.col Tên
+                            th.col Phone 
+                            th.col Loại phòng 
+                            th.col Checkin 
+                            th.col Checkout
+                    tbody 
+                        each customer in customers
+                            if(!customer.checkin_state)
+                                tr 
+                                    td=customer.name 
+                                    td=customer.phone 
+                                    td=customer.room_type
+                                    td=customer.checkin_date 
+                                    td=customer.checkout_date
+        .col-md#rooms
                 .d-flex.justify-content-center.align-items-center
                     h2 Phòng còn
-                    button#close-room.btn.btn-dark.ml-2 X
-                .d-flex.flex-wrap
-                    each room in rooms
-                        if(!room.customer)
-                            ul.card.list-unstyled.shadow-lg.m-2.border-success(class= "text-dark bg-light mb-3")
-                                h5.card-header="Phòng "+room.room_id
-                                .card-body
-                                    li="Loại phòng: "+room.room_type
+                    button#close-room.btn-close.ms-1(type="button" aria-label="Close")
+                    form(action="/rooms/checkin/searchRo",method="GET" class="d-flex ms-auto")
+                        input(type="text", name="q" class="form-control")
+                        button(class="btn btn-dark ms-3") Search
+                .container 
+                    .row(class="row-cols-1 row-cols-sm-1 row-cols-lg-2")
+                        each room in rooms
+                            if(!room.customer)
+                                .col
+                                    ul.card.list-unstyled.shadow-lg.m-2.border-success(class= "text-dark bg-light mb-3")
+                                        h5.card-header="Phòng "+room.room_id
+                                        .card-body
+                                            li="Loại phòng: "+room.room_type
+
+    .position-fixed.bottom-0.end-0.p-3(style='z-index: 11')
+        #liveToast.toast(role='alert', aria-live='assertive', aria-atomic='true' data-bs-autohide="false")
+            .toast-header
+                img.rounded.me-2(src='/images/logo.jpg', style="width:10%")
+                strong.me-auto Dream Hotel
+                small=today
+                button.btn-close(type='button', data-bs-dismiss='toast', aria-label='Close')
+            .toast-body
+                each customer in customers
+                    if(customer)
+                        if(customer.checkin_date === today && !customer.checkin_state)
+                            h5.text-danger="Khách hàng đến ngày checkin: "+customer.name
 
            
            
