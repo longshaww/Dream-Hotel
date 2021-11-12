@@ -40,7 +40,7 @@ var roomSchema = new mongoose.Schema(
 		room_state: Boolean,
 		room_id: String,
 		image: String,
-		rent: { type: mongoose.Schema.Types.ObjectId, ref: "Rent" },
+		// rent: { type: mongoose.Schema.Types.ObjectId, ref: "Rent" },
 		customer: { type: mongoose.Schema.Types.ObjectId, ref: "Customers" },
 	},
 	{ collection: "rooms" }

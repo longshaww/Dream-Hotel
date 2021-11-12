@@ -1,6 +1,4 @@
 var { Rent } = require("../models/room.model");
-const nodemailer = require("nodemailer");
-const pug = require("pug");
 
 //Global variables get today
 var today = new Date();
@@ -8,20 +6,6 @@ var dd = String(today.getDate()).padStart(2, "0");
 var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
 var yyyy = today.getFullYear();
 today = dd + "/" + mm + "/" + yyyy;
-
-let transporter = nodemailer.createTransport({
-	host: "smtp.gmail.com",
-	port: 465,
-	secure: true, // upgrade later with STARTTLS
-	auth: {
-		user: "at400123@gmail.com",
-		pass: "zddxyogvmgcgxsgu",
-	},
-	tls: {
-		// do not fail on invalid certs
-		rejectUnauthorized: false,
-	},
-});
 
 module.exports.bookingHome = async (req, res) => {
 	res.render("booking/bookinghome");
@@ -51,13 +35,7 @@ module.exports.postBookingForm = async (req, res) => {
 			state: false,
 			booking_date: today,
 		});
-		// await transporter.sendMail({
-		// 	from: '"Dream Hotel 👻" <DreamHotel@gmail.com>', // sender address
-		// 	to: req.body.email, // list of receivers
-		// 	subject: "Dream Hotel ✔", // Subject line
-		// 	text: "Hello world?", // plain text body
-		// 	html: pug.renderFile("C:/DEV/ExpressJS/views/email/email.pug"),
-		// });
+
 		res.redirect("/booking");
 	}
 	//email input is wrong

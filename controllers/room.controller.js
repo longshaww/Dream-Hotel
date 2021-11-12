@@ -1,6 +1,8 @@
-const { forEach } = require("../db");
 const moment = require("moment");
 const shortid = require("shortid");
+const nodemailer = require("nodemailer");
+const pug = require("pug");
+const path = require("path");
 
 var {
 	Room,
@@ -10,7 +12,21 @@ var {
 	Service,
 	Voucher,
 } = require("../models/room.model");
-// const { duration } = require("moment");
+
+//nodemailer
+let transporter = nodemailer.createTransport({
+	host: "smtp.gmail.com",
+	port: 465,
+	secure: true, // upgrade later with STARTTLS
+	auth: {
+		user: "at400123@gmail.com",
+		pass: "zddxyogvmgcgxsgu",
+	},
+	tls: {
+		// do not fail on invalid certs
+		rejectUnauthorized: false,
+	},
+});
 
 //Global variables get today
 var today = new Date();
@@ -189,9 +205,36 @@ module.exports.confirmRent = async (req, res) => {
 };
 
 module.exports.postRent = async (req, res) => {
-	await Rent.updateOne({ _id: req.params.id }, { state: true });
-	await Customer.create(req.body);
-	res.redirect("/rooms/rents");
+	var errors = [];
+	var rent = await Rent.findById(req.params.id);
+	var name = req.body.name;
+	var email = req.body.email;
+
+	function validateEmail(email) {
+		const re =
+			/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(email);
+	}
+	if (validateEmail(email)) {
+		await Rent.updateOne({ _id: req.params.id }, { state: true });
+		await Customer.create(req.body);
+		await transporter.sendMail({
+			from: '"Dream Hotel 👻" <DreamHotel@gmail.com>', // sender address
+			to: req.body.email, // list of receivers
+			subject: "Dream Hotel ✔", // Subject line
+			text: "Cảm ơn bạn đã đặt phòng tại Dream Hotel ! Chúng tôi sẽ sớm gọi bạn để xác nhận thông tin", // plain text body
+			html: pug.renderFile(path.resolve("./views/email/email.pug"), {
+				name: name,
+			}),
+		});
+		res.redirect("/rooms/rents");
+	} else {
+		errors.push("Email bạn đã nhập sai");
+		res.render("rooms/rent-confirm", {
+			rent: rent,
+			errors: errors,
+		});
+	}
 };
 
 module.exports.checkOutForm = async (req, res) => {

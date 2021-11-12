@@ -1,5 +1,4 @@
-const { forEach } = require("../db");
-const { Customer, Service, Room } = require("../models/room.model");
+const { Customer, Service } = require("../models/room.model");
 
 module.exports.customerHome = async (req, res) => {
 	var customers = await Customer.find();

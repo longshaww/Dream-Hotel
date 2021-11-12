@@ -12,5 +12,11 @@ block content
         .from-group.mb-3
             label(for="phone") Phone
             input#phone.form-control(name="phone" type="text" value= values ? values.phone :'')
+        .from-group.mb-3
+            label(for="email") Email
+            input#email.form-control(name="email" type="text" value= values ? values.email :'')
+        .from-group.mb-3
+            label(for="password") Password
+            input#password.form-control(name="password" type="text" value= values ? values.password :'')
    
         button.btn.btn-primary Create

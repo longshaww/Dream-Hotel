@@ -1,6 +1,9 @@
 extends ../layouts/general
 block content
     h1 Confirmation rent form
+    if(errors)
+        each error in errors 
+            .alert.alert-danger=error
     form(name="confirm-rent-form" method="POST" action="/rooms/rents/"+rent._id id="form" class="needs-validation" novalidate)
         .from-group.mb-3
             label(for="name") Tên
