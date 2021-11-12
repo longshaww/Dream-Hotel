@@ -20,11 +20,15 @@ var customerSchema = new mongoose.Schema(
 
 var rentSchema = new mongoose.Schema(
 	{
-		room: { type: mongoose.Schema.Types.ObjectId, ref: "Room" },
-		customer: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Customers",
-		},
+		name: String,
+		email: String,
+		phone: String,
+		CMND: String,
+		room_type: String,
+		checkin_date: String,
+		checkout_date: String,
+		booking_date: String,
+		state: Boolean,
 	},
 	{ collection: "rents" }
 );
@@ -63,6 +67,7 @@ var serviceSchema = new mongoose.Schema(
 
 var voucherSchema = new mongoose.Schema(
 	{
+		code: String,
 		date_start: String,
 		date_end: String,
 		discount: String,

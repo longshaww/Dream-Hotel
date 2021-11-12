@@ -44,10 +44,10 @@ block content
                         li.list-group-item.d-flex.justify-content-between
                             span Total (USD)
                             strong $20
-                    form.card.p-2.needs-validation(novalidate='' method="POST" action="/rooms/checkout/"+checkout.room_id+"/voucher")
+                    form.card.p-2.needs-validation(novalidate='' method="POST" action="/rooms/checkout/"+checkout.room_id+"/voucher" id="voucher")
                         .input-group
                             input.form-control(type='text' name="code" placeholder='Promo code')
-                            button.btn.btn-secondary(type='submit') Redeem
+                            button.btn.btn-secondary(type='submit' form="voucher") Redeem
                             .invalid-feedback Invalid voucher
                     if(error)
                         .alert.alert-danger=error

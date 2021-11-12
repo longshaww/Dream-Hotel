@@ -1,0 +1,37 @@
+extends ../layouts/general
+block content
+    h1 Rent history    
+    .table-responsive
+        table.table
+            thead 
+                tr  
+                    th Tên khách 
+                    th Email
+                    th Phone 
+                    th CMND
+                    th Loại phòng 
+                    th Ngày checkin 
+                    th Ngày checkout
+                    th Ngày book
+                    th Confirmation
+                    th Trạng thái
+            tbody 
+                each rent in rents
+                    tr 
+                        td=rent.name
+                        td=rent.email
+                        td=rent.phone 
+                        td=rent.CMND 
+                        td=rent.room_type 
+                        td=rent.checkin_date                          
+                        td=rent.checkout_date 
+                        td=rent.booking_date
+                        td
+                            if(rent.state) 
+                                a.btn.btn-dark(href="/rooms/rents/"+rent._id class="disabled") Confirm
+                            else
+                                a.btn.btn-dark(href="/rooms/rents/"+rent._id class) Confirm
+                        if(rent.state)
+                            td Đã xác nhận
+                        else 
+                            td Chưa xác nhận

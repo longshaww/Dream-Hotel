@@ -9,10 +9,14 @@ block content
                     th.col Date start 
                     th.col Date end
                 tr 
-                    td= voucher._id
+                    td= voucher.code
                     td= voucher.date_start
                     td= voucher.date_end
     form(method="POST" action="/rooms/vouchers/"+voucher._id+"?_method=PUT" id="form" class="needs-validation" novalidate)
+        .from-group
+            label(for="code") Mã voucher
+            input#code.form-control(name="code" type="text" required value=voucher.code)
+            .invalid-feedback Bạn cần phải nhập mã voucher
         .from-group
             label(for="date_start") Ngày bắt đầu
             input#date_start.form-control.datepick(name="date_start" type="text" required)

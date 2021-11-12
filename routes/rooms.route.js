@@ -20,7 +20,9 @@ router.get("/checkin/searchRo", controller.searchRo);
 
 router.post("/checkin", controller.postCheckIn);
 
-router.get("/history", controller.rentHistory);
+router.get("/rents", controller.rentHistory);
+
+router.get("/rents/:id", controller.confirmRent);
 
 router.get("/checkout", controller.checkOutForm);
 
@@ -60,7 +62,7 @@ router.get("/checkout/:id", controller.cashPayment);
 
 router.post("/checkout/:id", controller.postCash);
 
-router.post("/checkout/:id/voucher", controller.postVoucher);
+router.post("/checkout/:id/voucher", controller.checkVoucher);
 
 router.get("/:id", controller.viewRoom);
 
@@ -69,5 +71,7 @@ router.delete("/:id", controller.deleteRoom);
 router.get("/:id/edit", controller.editRoomPug);
 
 router.put("/:id", controller.editRoomHandling);
+
+router.post("/rents/:id", controller.postRent);
 
 module.exports = router;

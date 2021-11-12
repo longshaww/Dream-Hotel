@@ -3,6 +3,10 @@ block content
     h1 Create new voucher
     form(method="POST" action="/rooms/voucher/new" id="form" class="needs-validation" novalidate)
         .from-group
+            label(for="code") Mã voucher
+            input#code.form-control(name="code" type="text" required value=code)
+            .invalid-feedback Bạn cần phải nhập mã voucher
+        .from-group
             label(for="date_start") Ngày bắt đầu
             input#date_start.form-control.datepick(name="date_start" type="text" required)
             .invalid-feedback Bạn cần phải nhập ngày bắt đầu

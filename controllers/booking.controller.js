@@ -1,6 +1,13 @@
-var { Customer } = require("../models/room.model");
+var { Rent } = require("../models/room.model");
 const nodemailer = require("nodemailer");
 const pug = require("pug");
+
+//Global variables get today
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, "0");
+var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+var yyyy = today.getFullYear();
+today = dd + "/" + mm + "/" + yyyy;
 
 let transporter = nodemailer.createTransport({
 	host: "smtp.gmail.com",
@@ -33,14 +40,24 @@ module.exports.postBookingForm = async (req, res) => {
 	}
 	//if email input is correct
 	if (validateEmail(email)) {
-		await Customer.create(req.body);
-		await transporter.sendMail({
-			from: '"Dream Hotel 👻" <DreamHotel@gmail.com>', // sender address
-			to: req.body.email, // list of receivers
-			subject: "Dream Hotel ✔", // Subject line
-			text: "Hello world?", // plain text body
-			html: pug.renderFile("C:/DEV/ExpressJS/views/email/email.pug"),
+		await Rent.create({
+			name: req.body.name,
+			email: req.body.email,
+			phone: req.body.phone,
+			CMND: req.body.CMND,
+			room_type: req.body.room_type,
+			checkin_date: req.body.checkin_date,
+			checkout_date: req.body.checkout_date,
+			state: false,
+			booking_date: today,
 		});
+		// await transporter.sendMail({
+		// 	from: '"Dream Hotel 👻" <DreamHotel@gmail.com>', // sender address
+		// 	to: req.body.email, // list of receivers
+		// 	subject: "Dream Hotel ✔", // Subject line
+		// 	text: "Hello world?", // plain text body
+		// 	html: pug.renderFile("C:/DEV/ExpressJS/views/email/email.pug"),
+		// });
 		res.redirect("/booking");
 	}
 	//email input is wrong

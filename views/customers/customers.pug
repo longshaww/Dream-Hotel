@@ -17,10 +17,10 @@ block content
                     th.col Loại phòng
                     th.col Checkin 
                     th.col Checkout
-                    th.col Edit
-                    th.col Service
                     th.col Checkin State
                     th.col Checkout State
+                    th.col Edit
+                    th.col Service
 
                 tbody
                     each customer in customers
@@ -31,11 +31,21 @@ block content
                             td=customer.room_type
                             td=customer.checkin_date 
                             td=customer.checkout_date
-                            td 
-                               a.btn.btn-dark(href="/customers/"+customer._id) Sửa
-                            td 
-                                a.btn.btn-dark(href="/customers/services/"+customer._id) Add
                             if(customer.checkin_state)
-                                td Đã checkin
+                                td.fw-bold Đã checkin
+                            else 
+                                td Chưa checkin
                             if(customer.checkout_state)
-                                td Đã checkout
+                                td.fw-bold Đã checkout
+                            else
+                                td Chưa Checkout
+                            td 
+                                if(customer.checkout_state)
+                                    a.btn.btn-dark(href="/customers/"+customer._id class="disabled") Edit
+                                else 
+                                    a.btn.btn-dark(href="/customers/"+customer._id) Edit
+                            td 
+                                if(customer.checkout_state)
+                                    a.btn.btn-dark(href="/customers/services/"+customer._id class="disabled") Add
+                                else
+                                    a.btn.btn-dark(href="/customers/services/"+customer._id) Add

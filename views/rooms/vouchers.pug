@@ -12,18 +12,20 @@ block content
                     th.col Ngày bắt đầu 
                     th.col Ngày kết thúc
                     th.col Giảm
-                    th.col Option
+                    th.col Edit 
+                    th.col Delete
             tbody
                 each voucher,index in vouchers
                     tr 
                             td=index 
-                            td=voucher._id 
+                            td=voucher.code
                             td=voucher.date_start 
                             td=voucher.date_end
                             td=voucher.discount+"%"
                             td 
                                 a.btn.btn-dark(href="/rooms/vouchers/"+voucher._id) Edit 
-                                button.btn.btn-dark.ms-2(type='button', data-bs-toggle='modal' data-id=voucher._id data-bs-target='#deleteVoucherModal') Delete
+                            td
+                                button.btn.btn-dark(type='button', data-bs-toggle='modal' data-id=voucher._id data-bs-target='#deleteVoucherModal') Delete
                                 #deleteVoucherModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
                                     .modal-dialog.modal-dialog-centered
                                         .modal-content

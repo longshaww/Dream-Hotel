@@ -1,5 +1,6 @@
 const { forEach } = require("../db");
 const moment = require("moment");
+const shortid = require("shortid");
 
 var {
 	Room,
@@ -9,6 +10,7 @@ var {
 	Service,
 	Voucher,
 } = require("../models/room.model");
+// const { duration } = require("moment");
 
 //Global variables get today
 var today = new Date();
@@ -175,10 +177,21 @@ module.exports.postCheckIn = async (req, res) => {
 };
 
 module.exports.rentHistory = async (req, res) => {
-	var rents = await Rent.find().populate("customer").populate("room");
-	res.render("rooms/history", {
+	var rents = await Rent.find();
+	res.render("rooms/rents", {
 		rents: rents,
 	});
+};
+
+module.exports.confirmRent = async (req, res) => {
+	var rent = await Rent.findById(req.params.id);
+	res.render("rooms/rent-confirm", { rent: rent });
+};
+
+module.exports.postRent = async (req, res) => {
+	await Rent.updateOne({ _id: req.params.id }, { state: true });
+	await Customer.create(req.body);
+	res.redirect("/rooms/rents");
 };
 
 module.exports.checkOutForm = async (req, res) => {
@@ -254,9 +267,10 @@ module.exports.cashPayment = async (req, res) => {
 	});
 };
 
-module.exports.postVoucher = async (req, res) => {
+module.exports.checkVoucher = async (req, res) => {
 	var error;
-	var voucher = await Voucher.findOne({ _id: req.body.code });
+	var voucher = await Voucher.findOne({ code: req.body.code });
+
 	if (voucher) {
 		//số phần trăm giảm
 		var discount = voucher.discount / 100;
@@ -372,11 +386,13 @@ module.exports.vouchers = async (req, res) => {
 };
 
 module.exports.newVoucher = async (req, res) => {
-	res.render("rooms/new-voucher");
+	var code = shortid.generate();
+	res.render("rooms/new-voucher", { code: code });
 };
 
 module.exports.postVoucher = async (req, res) => {
 	await Voucher.create({
+		code: req.body.code,
 		date_start: req.body.date_start,
 		date_end: req.body.date_end,
 		discount: req.body.discount,
