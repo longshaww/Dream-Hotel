@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 mongoose.connect(
-	"mongodb+srv://admin:eM38sI9eYLP6JbfN@dreamhotel.dpejq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+	"mongodb+srv://admin:eM38sI9eYLP6JbfN@dreamhotel.dpejq.mongodb.net/express-js?retryWrites=true&w=majority",
 	{ useNewUrlParser: true, useUnifiedTopology: true }
 );
 
