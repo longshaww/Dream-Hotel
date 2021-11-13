@@ -5,7 +5,10 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/express-js");
+mongoose.connect(
+	"mongodb+srv://admin:eM38sI9eYLP6JbfN@dreamhotel.dpejq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+	{ useNewUrlParser: true, useUnifiedTopology: true }
+);
 
 const userRoute = require("./routes/user.route");
 const roomRoute = require("./routes/rooms.route");
@@ -14,7 +17,7 @@ const customerRoute = require("./routes/customer.route");
 const authRoute = require("./routes/auth.route");
 const logOutRoute = require("./routes/logout.route");
 const authMiddleware = require("./middlewares/auth.middleware");
-const port = 4000;
+const port = process.env.PORT || 4000;
 const app = express();
 
 app.set("view engine", "pug");
