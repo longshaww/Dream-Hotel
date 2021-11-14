@@ -5,10 +5,10 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
-mongoose.connect(
-	"mongodb+srv://admin:eM38sI9eYLP6JbfN@dreamhotel.dpejq.mongodb.net/express-js?retryWrites=true&w=majority",
-	{ useNewUrlParser: true, useUnifiedTopology: true }
-);
+mongoose.connect(process.env.MONGODB_URL, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+});
 
 const userRoute = require("./routes/user.route");
 const roomRoute = require("./routes/rooms.route");

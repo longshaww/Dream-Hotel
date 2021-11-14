@@ -1,0 +1,36 @@
+extends ../layouts/general
+block content
+    h1 Edit user
+    form(method="POST" action="/users/"+user._id+"/edit"+"?_method=PUT" id="form" class="needs-validation" novalidate enctype="multipart/form-data")
+        .from-group
+            label(for="name") Name
+            input#namet.form-control(name="name" type="text" required value=user.name)
+            .invalid-feedback Bạn cần phải nhập tên 
+        .from-group.mb-3
+            label(for="phone") Phone
+            input#phone.form-control(name="phone" type="text" required value=user.phone)
+            .invalid-feedback Bạn cần phải nhập SĐT
+        .from-group.mb-3
+            label(for="email") Email
+            input#email.form-control(name="email" type="text" required value=user.email)
+            .invalid-feedback Bạn cần phải nhập Email
+        .from-group.mb-3
+            label(for="password") Password
+            input#password.form-control(name="password" type="password" required value=user.password)
+            .invalid-feedback Bạn cần phải mật khẩu
+        .from-group.mb-3
+            label(for="avatar") Ảnh
+            input#avatar.form-control(type="file" name="avatar" multiple)
+        button.btn.btn-dark(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal') Edit
+        #exampleModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
+            .modal-dialog.modal-dialog-centered
+                .modal-content
+                    .modal-header
+                        h5#exampleModalLabel.modal-title Confirmation
+                        button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+                    .modal-body Are you sure you want to edit this user?
+                    .modal-footer
+                        button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancel
+                        button.btn.btn-dark(type='submit' form="form") Edit
+     
+    script(src='/js/form-validation.js')

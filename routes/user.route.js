@@ -3,7 +3,6 @@ const controller = require("../controllers/user.controller");
 const router = express.Router();
 const validate = require("../validate/user.validate");
 const upload = require("../utils/multer");
-// const cloudinary = require("../utils/cloudinary");
 
 router.get("/", controller.index);
 
@@ -22,5 +21,11 @@ router.post(
 	validate.postCreate,
 	controller.postCreate
 );
+
+router.get("/:id/edit", controller.editUser);
+
+router.put("/:id/edit", upload.single("avatar"), controller.editUserHandling);
+
+router.delete("/:id/delete", controller.deleteUser);
 
 module.exports = router;

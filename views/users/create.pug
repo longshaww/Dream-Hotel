@@ -19,6 +19,6 @@ block content
             label(for="password") Password
             input#password.form-control(name="password" type="text" value= values ? values.password :'')
         .from-group.mb-3
-            input.form-control(type="file" name="avatar" multiple)
+            label(for="avatar") Ảnh
+            input#avatar.form-control(type="file" name="avatar" multiple)
         button.btn.btn-primary(type="submit") Create
-    //- script(src="/js/uploadfile.js")
