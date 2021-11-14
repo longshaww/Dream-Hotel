@@ -10,12 +10,17 @@ block content
         h3 Name
         table.table 
             tr
+                th Avatar
                 th Name
                 th Phone
                 th Actions
             each user in users
                 tr
+                    td
+                        if(user.avatar)
+                            img.rounded-circle(src=user.avatar style="width:30px;height:30px")
                     td=user.name
                     td=user.phone
                     td
                         a.btn.btn-primary(href="/users/"+ user.id class="ml-2") View
+                
