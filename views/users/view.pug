@@ -2,7 +2,24 @@ extends ../layouts/general
 block content 
 
     h1 View user
-    p="Name: " + user.name
-    p= "Phone: " + user.phone
-    p="Email:" +user.email 
-    p="Password: "+user.password
+
+    .table-responsive
+        table.table.text-center
+            thead 
+                th
+                    img(src=user.avatar class="rounded-circle border border-dark" style="width:12.5rem;height:12.5rem")
+            tbody 
+                td    
+                    ul.list-unstyled.fs-4
+                        li.fw-bold
+                            i(class="fa-solid fa-id-card")
+                            span="Name: "+user.name
+                        li    
+                            i(class="fa-solid fa-phone")
+                            span="Phone: "+user.phone
+                        li
+                            i(class="fa-solid fa-envelope")
+                            span="Email: " +user.email 
+                        li
+                            i(class="fa-solid fa-lock")
+                            span="Password: "+"**********"
