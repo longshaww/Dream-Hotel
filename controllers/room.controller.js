@@ -1,6 +1,7 @@
 const moment = require("moment");
 const shortid = require("shortid");
 const nodemailer = require("nodemailer");
+const cloudinary = require("../utils/cloudinary");
 const pug = require("pug");
 const path = require("path");
 
@@ -60,32 +61,29 @@ module.exports.createRoomPug = (req, res) => {
 };
 
 module.exports.createRoomValidation = async (req, res) => {
-	var remain = "còn";
-	var over = "hết";
-	if (
-		req.body.room_state
-			.toLowerCase()
-			.localeCompare(remain.toLowerCase()) === 0
-	) {
-		req.body.room_state = true;
-		await Room.create(req.body);
+	if (req.file) {
+		var image = await cloudinary.uploader.unsigned_upload(
+			req.file.path,
+			"oeaxhoph"
+		);
+		await Room.create({
+			room_type: req.body.room_type,
+			price: req.body.price,
+			note: req.body.note,
+			room_id: req.body.room_id,
+			image: image.secure_url,
+		});
 		res.redirect("/rooms");
-		return;
-	}
-	if (
-		req.body.room_state
-			.toLowerCase()
-			.localeCompare(over.toLowerCase()) === 0
-	) {
-		req.body.room_state = false;
-		await Room.create(req.body);
+	} else {
+		await Room.create({
+			room_type: req.body.room_type,
+			price: req.body.price,
+			note: req.body.note,
+			room_id: req.body.room_id,
+			// image: image.secure_url,
+		});
 		res.redirect("/rooms");
-		return;
 	}
-	res.render("rooms/createroom", {
-		errors: ["Wrong room state !!! Please try again"],
-		values: req.body,
-	});
 };
 module.exports.viewRoom = async (req, res) => {
 	var id = req.params.id;
@@ -105,9 +103,37 @@ module.exports.editRoomPug = async (req, res) => {
 	res.render("rooms/edit", { room: room });
 };
 module.exports.editRoomHandling = async (req, res) => {
-	var id = req.params.id;
-	await Room.findByIdAndUpdate({ _id: id }, req.body, { new: true });
-	res.redirect("/rooms/" + id);
+	if (req.file) {
+		var image = await cloudinary.uploader.unsigned_upload(
+			req.file.path,
+			"oeaxhoph"
+		);
+		await Room.findByIdAndUpdate(
+			{ _id: req.params.id },
+			{
+				room_type: req.body.room_type,
+				price: req.body.price,
+				note: req.body.note,
+				room_id: req.body.room_id,
+				image: image.secure_url,
+			},
+			{ new: true }
+		);
+		res.redirect("/rooms/" + req.params.id);
+	} else {
+		await Room.findByIdAndUpdate(
+			{ _id: req.params.id },
+			{
+				room_type: req.body.room_type,
+				price: req.body.price,
+				note: req.body.note,
+				room_id: req.body.room_id,
+				image: "",
+			},
+			{ new: true }
+		);
+		res.redirect("/rooms/" + req.params.id);
+	}
 };
 module.exports.checkInForm = async (req, res) => {
 	var customers = await Customer.find();

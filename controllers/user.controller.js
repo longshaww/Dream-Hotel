@@ -87,7 +87,7 @@ module.exports.editUserHandling = async (req, res) => {
 				phone: req.body.phone,
 				email: req.body.email,
 				password: req.body.password,
-				// avatar: avatar.secure_url,
+				avatar: "",
 			},
 			{
 				new: true,

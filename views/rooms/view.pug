@@ -1,16 +1,26 @@
 extends ../layouts/general
 block content 
-        h1 View Room
-        ul.list-unstyled.d-flex.flex-column.justify-content-center.align-items-center
-            img(src= room.image class="img-fluid rounded")
-            li="Số Phòng: " +room.room_id
-            li="Loại phòng: "+room.room_type
-            li="Giá phòng: "+room.price 
-            li="Ghi chú: "+room.note 
-            li=`Tình trạng: ${room.room_state? "Còn" : "Hết"}`
-            form(method="POST" action="/rooms/"+room.id+"?_method=DELETE") 
-                .form-group
-                    a.btn.btn-primary(href="/rooms/"+room.id+"/edit") Edit 
-                    button(type="submit" class="btn btn-primary") Delete
-                
-                
+    h1 View Room
+    //- line
+    .card.mb-3.bg-white.text-dark(style='max-width: auto;')
+        .row.g-0
+            .col-md
+                img.img-fluid.rounded-start(src= room.image class="img-fluid rounded")
+            .col-md
+                .card-body.align-middle
+                    h5.card-title.text-center
+                        p.fs-3.fw-bold="Số Phòng: " +room.room_id
+                    p.card-text
+                          ul.list-unstyled.fs-4.text-center
+                            li="Loại phòng: "+room.room_type
+                            li="Giá phòng: "+room.price 
+                            li="Ghi chú: "+room.note 
+                            form(method="POST" action="/rooms/"+room.id+"?_method=DELETE") 
+                                .form-group
+                                    a.btn.btn-dark(href="/rooms/"+room.id+"/edit") Edit 
+                                    button(type="submit" class="btn btn-dark ms-2") Delete
+                    p.card-text
+                        small.text-muted Last updated 3 mins ago
+
+
+                        

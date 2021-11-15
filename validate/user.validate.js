@@ -6,6 +6,12 @@ module.exports.postCreate = (req, res, next) => {
 	if (!req.body.phone) {
 		errors.push("Phone is required");
 	}
+	if (!req.body.email) {
+		errors.push("Email required");
+	}
+	if (!req.body.password) {
+		errors.push("Password required");
+	}
 	if (errors.length) {
 		res.render("users/create", {
 			errors: errors,
