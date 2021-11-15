@@ -1,20 +1,36 @@
 extends ../layouts/general
 block content 
-     h1 Create Room
-     if errors
+    h1 Create Room
+    if errors
         each error in errors 
             .alert.alert-danger=error
-     form(action="/rooms/create" ,method="POST")
+    form(action="/rooms/create" ,method="POST" enctype="multipart/form-data" id="form")
         .from-group
             label(for="room_id") Số phòng
             input#room_id.form-control(name="room_id" type="text" value = values ? values.room_id :'')
+            .invalid-feedback Bạn cần phải nhập số phòng
         .from-group.mb-3
             label(for="room_type") Loại phòng
             input#room_type.form-control(name="room_type" type="text" value = values ? values.room_type :'')
+            .invalid-feedback Bạn cần phải nhập loại phòng
         .from-group.mb-3
             label(for="price") Giá phòng
             input#price.form-control(name="price" type="text" value = values ? values.price :'')
+            .invalid-feedback Bạn cần phải nhập giá phòng
         .from-group.mb-3
             label(for="note") Ghi chú
-            input#note.form-control(name="note" type="text" value = values ? values.note :'')    
-        button.btn.btn-primary Create
+            input#note.form-control(name="note" type="text" value = values ? values.note :'')   
+        .from-group.mb-3
+            label(for="image") Ảnh
+            input#avatar.form-control(type="file" name="image" multiple)
+    button.btn.btn-dark(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal') Create
+    #exampleModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
+        .modal-dialog.modal-dialog-centered
+            .modal-content
+                .modal-header
+                    h5#exampleModalLabel.modal-title Confirmation
+                    button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+                .modal-body Are you sure you want to create room ?
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancel
+                    button.btn.btn-dark(type='submit' form="form") Create

@@ -6,6 +6,9 @@
 	transform: translate(0, -0.5rem);
 	border: 2px solid #bc8cf2;
 }
+tr {
+	vertical-align: middle;
+}
 
 tr:hover {
 	background-color: #bc8cf2;

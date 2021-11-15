@@ -1,11 +1,10 @@
 extends ../layouts/general
 block content 
     h1 Create user 
-
     if errors
         each error in errors 
             .alert.alert-danger=error
-    form(action="/users/create" ,method="POST")
+    form(action="/users/create" ,method="POST" enctype="multipart/form-data" id="form")
         .from-group
             label(for="name") Name
             input#name.form-control(name="name" type="text" value= values ? values.name :'')
@@ -18,5 +17,17 @@ block content
         .from-group.mb-3
             label(for="password") Password
             input#password.form-control(name="password" type="text" value= values ? values.password :'')
-   
-        button.btn.btn-primary Create
+        .from-group.mb-3
+            label(for="avatar") Ảnh
+            input#avatar.form-control(type="file" name="avatar" multiple)
+    button.btn.btn-dark(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal') Create
+    #exampleModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
+        .modal-dialog.modal-dialog-centered
+            .modal-content
+                .modal-header
+                    h5#exampleModalLabel.modal-title Confirmation
+                    button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+                .modal-body Are you sure you want to create user ?
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancel
+                    button.btn.btn-dark(type='submit' form="form") Create

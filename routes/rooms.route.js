@@ -2,6 +2,8 @@ const express = require("express");
 const controller = require("../controllers/room.controller");
 const router = express.Router();
 const validate = require("../validate/room.validate");
+const upload = require("../utils/multer");
+
 router.get("/", controller.roomHome);
 
 router.get("/search", controller.searchRoom);
@@ -9,6 +11,7 @@ router.get("/search", controller.searchRoom);
 router.get("/create", controller.createRoomPug);
 router.post(
 	"/create",
+	upload.single("image"),
 	validate.createRoomValidation,
 	controller.createRoomValidation
 );
@@ -70,7 +73,7 @@ router.delete("/:id", controller.deleteRoom);
 
 router.get("/:id/edit", controller.editRoomPug);
 
-router.put("/:id", controller.editRoomHandling);
+router.put("/:id/edit", upload.single("image"), controller.editRoomHandling);
 
 router.post("/rents/:id", controller.postRent);
 
