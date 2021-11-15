@@ -1,4 +1,7 @@
 extends ../layouts/general
+block append head 
+    script(src="https://unpkg.com/xlsx/dist/xlsx.full.min.js")
+
 block content
     h1 Payment History 
     form(action="/rooms/payment-history/search",method="GET" )
@@ -22,7 +25,7 @@ block content
                 button.btn.btn-dark(type="submit") Search
 
     .table-responsive 
-        table.table 
+        table.table#report-table 
             thead 
                 tr
                     th.col Tên
@@ -46,6 +49,37 @@ block content
                             td=payment.days_rent
                             td=payment.room.price 
                             td=payment.pay_date
-                            td=payment.summary 
-                        
+                            td#price=payment.summary
+                break
+                    tr
+                        td.fw-bold Tổng
+                        td#get-total
+    button#total-btn.btn.btn-dark(href="") Tính tổng
+    button#export-btn.btn.btn-dark.ms-2(onclick="ExportToExcel('xlsx', 'ReportTable')") Xuất excel
             
+    script.
+        var arr = [];
+        var reportTable = document.querySelector("#report-table");
+        // var exportBtn = document.querySelector("#export-btn");
+        var totalBtn = document.querySelector("#total-btn");
+        var getTotal = document.querySelector("#get-total");
+        var prices = document.querySelectorAll("#price");
+        prices.forEach(function (price) {
+            arr.push(parseInt(price.innerHTML.slice(1)));
+        });
+        var total = arr.reduce(function (a, b) {
+            return a + b;
+        }, 0);
+
+        totalBtn.addEventListener("click", function () {
+            getTotal.innerHTML = total;
+        });
+        // exportBtn.addEventListner("click", ExportToExcel("xlsx", "ReportTable"));
+        function ExportToExcel(fileExtension, fileName) {
+            var wb = XLSX.utils.table_to_book(reportTable, { sheet: "sheet1" });
+            return XLSX.writeFile(
+                wb,
+                fileName + "." + fileExtension ||
+                    "MySheetName." + (fileExtension || "xlsx")
+            );
+        }
