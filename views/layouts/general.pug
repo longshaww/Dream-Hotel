@@ -1,13 +1,11 @@
 html
     head
         block head
-            link(rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css")
-            script(src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous")
-            script(src="https://code.jquery.com/ui/1.13.0/jquery-ui.js")
-            script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js", integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13", crossorigin="anonymous")
-            script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js", integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p", crossorigin="anonymous")
-            script(src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous")
-            link(href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet")
+            meta(charset='utf-8')
+            meta(name='viewport', content='width=device-width, initial-scale=1')
+            link(rel="icon" href="/images/logo.jpg")
+            link(rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css")
+            link(href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet")
             link(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet")
             link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css", integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3", crossorigin="anonymous")    
             link(rel="stylesheet", href="/styles/style.css")
@@ -15,6 +13,9 @@ html
             link(rel="stylesheet",href="/styles/button.css")
 
     body
+        script(src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous")
+        script(src="https://code.jquery.com/ui/1.13.0/jquery-ui.js")
+        script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js", integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13", crossorigin="anonymous") 
         nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
             .container-fluid
                 a.navbar-brand(href='/') Dream Hotel
@@ -31,6 +32,8 @@ html
                             a.nav-link(href='/rooms') Rooms
                         li.nav-item
                             a.nav-link(href='/customers') Customers
+                        li.nav-item
+                            a.nav-link(type='button', data-bs-toggle='offcanvas', data-bs-target='#offcanvasWithBothOptions', aria-controls='offcanvasWithBothOptions') Guide
                         li.nav-item(style="position:absolute;right:10%")
                             a(href="/logout")
                                 i(class="fas fa-sign-out-alt fa-2x" style="color:white")
@@ -43,6 +46,41 @@ html
                                     a.dropdown-item(href='#') Another action
                                 li
                                     a.dropdown-item(href='#') Something else here
+        #offcanvasWithBothOptions.offcanvas.offcanvas-start(data-bs-scroll='true', tabindex='-1', aria-labelledby='offcanvasWithBothOptionsLabel')
+            .offcanvas-header
+                img.rounded(src='/images/logo.jpg', style="width:10%")
+                h5#offcanvasWithBothOptionsLabel.offcanvas-title Dream Hotel
+                button.btn-close.text-reset(type='button', data-bs-dismiss='offcanvas', aria-label='Close')
+            .offcanvas-body
+                ul
+                    h3 Description
+                    li This is an developing project for hotels.
+                    li Receptionist can access all feature of management 
+                    li Customers can only book or looking for rooms
+                ul 
+                    h3 Available management
+                    li Check in
+                        p - Usage: Click <strong>check in</strong> button will show all customers that you're confirmed in <strong>Rent history</strong>
+                            |  and also rooms that are available . Search for the customer information and type into the form. There is a alert message for wrong information !
+                    li Check out
+                        p - Usage: Click <strong>check out</strong> button. You have to type in room you want to checkout. Then
+                            |  customer information that currently rent that room will showup. Check the information then ask customer the payment 
+                            |  method. Choose payment method and confirm information again...
+                    li Rent history 
+                        p - Usage: This is where you confirm customers booking. These customers will be able to check in your hotel in the future.
+                    li Payment history
+                        p - Usage: This is where the bills history come up. Also you can get revenue of a month and export to excel.
+                    li Services 
+                        p - Usage: To add services for customers
+                    li Vouchers
+                        p - Usage: Type in a voucher code to get discount when checking out.
+                    li Searching data
+                        p - Usage: Just type in what you want to search
+                ul 
+                    h3 Upcoming features
+                    li We are planing to develope this project bigger to suitable for big hotels that need a management website 
+                ul.list-inline 
+                    li.list-inline-item.fw-bold &copy; A3-CNPM-HUFLIT
 
     .container-md.pt-5
         block content
