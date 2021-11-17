@@ -1,6 +1,7 @@
 html
     head
         block head
+            title Dream Hotel
             meta(charset='utf-8')
             meta(name='viewport', content='width=device-width, initial-scale=1')
             link(rel="icon" href="/images/logo.jpg")
@@ -32,8 +33,6 @@ html
                             a.nav-link(href='/rooms') Rooms
                         li.nav-item
                             a.nav-link(href='/customers') Customers
-                        li.nav-item
-                            a.nav-link(type='button', data-bs-toggle='offcanvas', data-bs-target='#offcanvasWithBothOptions', aria-controls='offcanvasWithBothOptions') Guide
                         li.nav-item(style="position:absolute;right:10%")
                             a(href="/logout")
                                 i(class="fas fa-sign-out-alt fa-2x" style="color:white")
@@ -46,6 +45,8 @@ html
                                     a.dropdown-item(href='#') Another action
                                 li
                                     a.dropdown-item(href='#') Something else here
+                        li.nav-item
+                            button.btn.btn-outline-success.me-2(type='button', data-bs-toggle='offcanvas', data-bs-target='#offcanvasWithBothOptions', aria-controls='offcanvasWithBothOptions') Guide
         #offcanvasWithBothOptions.offcanvas.offcanvas-start(data-bs-scroll='true', tabindex='-1', aria-labelledby='offcanvasWithBothOptionsLabel')
             .offcanvas-header
                 img.rounded(src='/images/logo.jpg', style="width:10%")
