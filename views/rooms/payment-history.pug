@@ -54,8 +54,10 @@ block content
                     tr
                         td.fw-bold Tổng
                         td#get-total
-    button#total-btn.btn.btn-dark(href="") Tính tổng
-    button#export-btn.btn.btn-dark.ms-2(onclick="ExportToExcel('xlsx', 'ReportTable')") Xuất excel
+    .row 
+        .col.text-center.pt-4
+            button#total-btn.btn.btn-dark(href="") Tính tổng
+            button#export-btn.btn.btn-dark.ms-2(onclick="ExportToExcel('xlsx', 'ReportTable')") Xuất excel
             
     script.
         var arr = [];

@@ -1,6 +1,6 @@
 extends ../layouts/general
 block content
-    h1 Booking form 
+    h1.text-center Booking form 
     if(errors)
         each error in errors
             .alert.alert-danger=error
@@ -33,23 +33,20 @@ block content
             label(for="checkout_date") Ngày Checkout 
             input#checkout_date.form-control.datepick(name="checkout_date" type="text" required)
             .invalid-feedback Bạn cần phải nhập ngày checkout
-    button.btn.btn-dark(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal') Send
-    #exampleModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
-        .modal-dialog.modal-dialog-centered
-            .modal-content
-                .modal-header
-                    h5#exampleModalLabel.modal-title Confirmation
-                    button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
-                .modal-body Are you sure you want to booking ?
-                .modal-footer
-                    button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancel
-                    button.btn.btn-dark(type='submit' form="form") Send
+    .row 
+        .col.text-center
+            button.btn.btn-dark.mt-4(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal') Send
+            #exampleModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                .modal-dialog.modal-dialog-centered
+                    .modal-content
+                        .modal-header
+                            h5#exampleModalLabel.modal-title Confirmation
+                            button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+                        .modal-body Are you sure you want to booking ?
+                        .modal-footer
+                            button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancel
+                            button.btn.btn-dark(type='submit' form="form") Send
 
 
     script(src='/js/form-validation.js')
-    script.
-            $('.datepick').each(function(){
-            $(this).datepicker({
-                dateFormat:"dd/mm/yy"
-            });
-            });
+    script(src='/js/datepicker.js')
