@@ -47,6 +47,10 @@ html
                                     a.dropdown-item(href='#') Something else here
                         li.nav-item
                             button.btn.btn-outline-success.me-2(type='button', data-bs-toggle='offcanvas', data-bs-target='#offcanvasWithBothOptions', aria-controls='offcanvasWithBothOptions') Guide
+                        li.nav-item
+                            a(type="button" id="body-color-btn")
+                                i(class="fas fa-adjust fa-2x" style="color:#d3a1c4")
+
         #offcanvasWithBothOptions.offcanvas.offcanvas-start(data-bs-scroll='true', tabindex='-1', aria-labelledby='offcanvasWithBothOptionsLabel')
             .offcanvas-header
                 img.rounded(src='/images/logo.jpg', style="width:10%")
@@ -87,7 +91,7 @@ html
         block content
         block foot 
             footer.my-5.pt-5.text-muted.text-center.text-small
-                img.rounded(src='/images/logo.jpg', style="width:10%")
+                img.rounded-circle(src='/images/logo.jpg', style="width:10%")
                 p.mb-1 &copy; 2017&ndash;2021 Dream Hotel
                 p &copy; A3-CNPM-HUFLIT
                 ul.list-inline
@@ -107,3 +111,10 @@ html
                     li.list-inline-item
                         a(target="_blank" href="https://github.com/longshaww")
                             i(class="fab fa-github fa-2x" style="color:black") 
+
+    script.
+        $(document).ready(function(){
+            $("#body-color-btn").click(function(){
+                $("body").toggleClass("body-color");
+            });
+        });
