@@ -7,9 +7,6 @@ var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
 var yyyy = today.getFullYear();
 today = dd + "/" + mm + "/" + yyyy;
 
-module.exports.bookingHome = async (req, res) => {
-	res.render("booking/bookinghome");
-};
 module.exports.bookingForm = async (req, res) => {
 	res.render("booking/bookingform");
 };
@@ -36,7 +33,7 @@ module.exports.postBookingForm = async (req, res) => {
 			booking_date: today,
 		});
 
-		res.redirect("/booking");
+		res.redirect("/");
 	}
 	//email input is wrong
 	else {

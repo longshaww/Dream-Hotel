@@ -4,7 +4,7 @@ block content
     if(errors)
         each error in errors
             .alert.alert-danger=error
-    form(method="POST" action="/booking/bookingform" id="form" class="needs-validation" novalidate)
+    form(method="POST" action="/booking" id="form" class="needs-validation" novalidate)
         .from-group
             label(for="name") Tên
             input#name.form-control(name="name" type="text" required)
