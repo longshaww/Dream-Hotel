@@ -36,7 +36,7 @@
 .name-web:hover {
 	transition: 0.2s;
 	opacity: 0.7;
-	color: #fff;
+	color: rgb(0, 0, 0);
 }
 
 .dropdown {
@@ -72,7 +72,7 @@
 		margin-top: 0;
 	}
 	.navbar .nav-item:hover .nav-link {
-		color: #fff;
+		color: rgb(0, 0, 0);
 	}
 	.navbar .dropdown-menu.fade-down {
 		top: 80%;
