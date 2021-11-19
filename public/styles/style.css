@@ -28,6 +28,68 @@
 		background-position: 0% 50%;
 	}
 }
+/*Navbar*/
+.name-web {
+	transition: 0.2s;
+}
+
+.name-web:hover {
+	transition: 0.2s;
+	opacity: 0.7;
+	color: #fff;
+}
+
+.dropdown {
+	transition: 0.6s;
+}
+
+@media (min-width: 992px) {
+	.navbar-expand-lg .navbar-nav .nav-link {
+		padding-right: 2rem;
+		padding-left: 2rem;
+	}
+}
+
+.dropdown:hover > .dropdown-menu {
+	display: block;
+	transition: 0.6s;
+}
+
+.dropdown > .dropdown-toggle:active {
+	pointer-events: none;
+}
+
+@media all and (min-width: 992px) {
+	.navbar .dropdown-menu-end {
+		right: 0;
+		left: auto;
+	}
+	.navbar .nav-item .dropdown-menu {
+		display: block;
+		opacity: 0;
+		visibility: hidden;
+		transition: 0.3s;
+		margin-top: 0;
+	}
+	.navbar .nav-item:hover .nav-link {
+		color: #fff;
+	}
+	.navbar .dropdown-menu.fade-down {
+		top: 80%;
+		transform: rotateX(-75deg);
+		transform-origin: 0% 0%;
+	}
+	.navbar .dropdown-menu.fade-up {
+		top: 180%;
+	}
+	.navbar .nav-item:hover .dropdown-menu {
+		transition: 0.3s;
+		opacity: 1;
+		visibility: visible;
+		top: 100%;
+		transform: rotateX(0deg);
+	}
+}
 .card {
 	transition: transform 0.5s;
 }

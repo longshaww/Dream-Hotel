@@ -1,4 +1,120 @@
 extends ../layouts/general
+block append head
+    link(href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap', rel='stylesheet')
+    // MDB
+    link(href='https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css', rel='stylesheet')
+    link(rel="stylesheet" href="/styles/booking.css")
 block content
-    h1 Booking
-    a(href='/booking/bookingform' class="btn btn-dark m-2") Đặt Phòng
+        h1 Booking
+        section.p-5
+            .container
+                .row
+                    .col-sm-8
+                        .row.text-center.mb-4
+                            .col-md
+                                .card.bg-light.text-dark.border.border-dark
+                                    a.bg-image.hover-zoom(href='#')
+                                        img.card-img-top(src='images/room1.jpg', alt='...')
+                                    .text-center.p-0
+                                        .p-3
+                                            h5.card-title Standard Room
+                                            p.card-text
+                                                | Some quick example text to build on the card title and make
+                                                | up
+                                                | the bulk
+                                                | of the card&apos;s content.
+                                        ul.d-flex.flex-row.group-items
+                                            li.item-card.item-left.bg-light.p-2
+                                                a.btn.btn-dark.btn-lg.m-2.py-2.btn_book(href='/booking') Book
+                                            li.item-card.item-right.bg-light.p-2
+                                                span $100.00
+                                                p.m-0 Per Night
+                            .col-md
+                                .card.bg-light.text-dark.border.border-dark
+                                    a.bg-image.hover-zoom(href='#')
+                                        img.card-img-top(src='images/room2.jpg', alt='...')
+                                    .card-body.text-center.p-0
+                                        .p-3
+                                            h5.card-title Superior Room
+                                            p.card-text
+                                                | Some quick example text to build on the card title and make
+                                                | up
+                                                | the bulk
+                                                | of the card&apos;s content.
+                                        ul.d-flex.flex-row.group-items
+                                            li.item-card.item-left.bg-light.p-2
+                                                a.btn.btn-dark.btn-lg.m-2.py-2.btn_book(href='/booking') Book
+                                            li.item-card.item-right.bg-light.p-2
+                                                span $100.00
+                                                p.m-0 Per Night
+                        .row.text-center
+                            .col-md
+                                .card.bg-light.text-dark.border.border-dark
+                                    a.bg-image.hover-zoom(href='#')
+                                        img.card-img-top(src='images/room3.jpg', alt='...')
+                                    .card-body.text-center.p-0
+                                        .p-3
+                                            h5.card-title Deluxe Room
+                                            p.card-text
+                                                | Some quick example text to build on the card title and make
+                                                | up
+                                                | the bulk
+                                                | of the card&apos;s content.
+                                        ul.d-flex.flex-row.group-items
+                                            li.item-card.item-left.bg-light.p-2
+                                                a.btn.btn-dark.btn-lg.m-2.py-2.btn_book(href='/booking') Book
+                                            li.item-card.item-right.bg-light.p-2
+                                                span $100.00
+                                                p.m-0 Per Night
+                            .col-md
+                                .card.bg-light.text-dark.border.border-dark
+                                    a.bg-image.hover-zoom(href='#')
+                                        img.card-img-top(src='images/room4.jpg', alt='...')
+                                    .card-body.text-center.p-0
+                                        .p-3
+                                            h5.card-title Luxury Suite
+                                            p.card-text
+                                                | Some quick example text to build on the card title and make
+                                                | up
+                                                | the bulk
+                                                | of the card&apos;s content.
+                                        ul.d-flex.flex-row.group-items
+                                            li.item-card.item-left.bg-light.p-2
+                                                a.btn.btn-dark.btn-lg.m-2.py-2.btn_book(href='/booking') Book
+                                            li.item-card.item-right.bg-light.p-2
+                                                span $100.00
+                                                p.m-0 Per Night
+                    .col-sm-4
+                        form.row.p-5.form-group(autocompleted='off')
+                            .input-group.date.mb-4.p-0(data-date-format='dd-mm-yyyy')
+                                input.datepick.form-control.check-form(type='text', placeholder='Arrive', autocompleted='off')
+                                span.input-group-append
+                                    span.input-group-text
+                                        i.fa.fa-calendar.icon-calendar
+                            .input-group.date.mb-4.p-0(data-date-format='dd-mm-yyyy', autocompleted='off')
+                                input.datepick.form-control.check-form(type='text', placeholder='Depart')
+                                span.input-group-append
+                                    span.input-group-text
+                                        i.fa.fa-calendar.icon-calendar
+                            select#autoSizingSelect.form-select.mb-4.select-box.check-form
+                                option(selected='') Adults
+                                option(value='1') 1
+                                option(value='2') 2
+                                option(value='3') 3
+                                option(value='1') 4
+                                option(value='2') 5
+                                option(value='3') 6
+                                option(value='1') 7
+                                option(value='2') 8
+                                option(value='3') 9
+                                option(value='3') 10
+                            select#autoSizingSelect.form-select.mb-4.select-box.check-form
+                                option(selected='') Room type
+                                option(value='1') Standard
+                                option(value='2') Superior
+                                option(value='3') Deluxe
+                                option(value='4') Room
+                            button.btn.btn-dark.btn-lg.p-3(type='submit') Check Availability
+        script(type="text/javascript" src="/js/datepicker.js")
+        // MDB
+        script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js')

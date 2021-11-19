@@ -28,9 +28,7 @@ app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
 app.get("/", (req, res) => {
-	res.render("index", {
-		name: "Long",
-	});
+	res.render("booking/bookinghome");
 });
 
 app.use("/rooms", authMiddleware.requireAuth, roomRoute);
