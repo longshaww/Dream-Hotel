@@ -1,18 +1,22 @@
 extends ../layouts/general
+block append head 
+    link(rel="stylesheet" href="/styles/background-image.css")
 block content 
-    h1.text-center Login
-
-    if errors
-        each error in errors 
-            .alert.alert-danger=error
-    form(action="/auth/login" method="POST")
-        .from-group.mb-3
-            label(for="email") Email
-            input#email.form-control(name="email" type="text" value= values ? values.name :'')
-        .from-group.mb-3
-            label(for="password") Password
-            input#password.form-control(name="password" type="password" value= values ? values.phone :'')
-        .row 
-            .col.text-center
-                button.btn.btn-dark.mt-4 Login
+    body.background
+        .text-dark.fw-bold
+            h1.text-center Login
+            if errors
+                each error in errors 
+                    .alert.alert-danger=error
+            form(action="/auth/login" method="POST")
+                .from-group.mb-3
+                    label(for="email") Email
+                    input#email.form-control(name="email" type="text" value= values ? values.name :'')
+                .from-group.mb-3
+                    label(for="password") Password
+                    input#password.form-control(name="password" type="password" value= values ? values.phone :'')
+                .row 
+                    .col.text-center
+                        button.btn.btn-dark.mt-4 Login
+        
 
