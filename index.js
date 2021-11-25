@@ -16,6 +16,8 @@ const bookingRoute = require("./routes/booking.route");
 const customerRoute = require("./routes/customer.route");
 const authRoute = require("./routes/auth.route");
 const logOutRoute = require("./routes/logout.route");
+
+const apiRoomRoute = require("./api/routes/room.route");
 const authMiddleware = require("./middlewares/auth.middleware");
 const port = process.env.PORT || 4000;
 const app = express();
@@ -27,6 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
+
 app.get("/", (req, res) => {
 	res.render("booking/bookinghome");
 });
@@ -37,7 +40,7 @@ app.use("/booking", bookingRoute);
 app.use("/customers", authMiddleware.requireAuth, customerRoute);
 app.use("/auth", authRoute);
 app.use("/logout", logOutRoute);
-
+app.use("/api/rooms", apiRoomRoute);
 app.listen(port, () => {
 	console.log(`Dream Hotel website listening at http://localhost:${port}`);
 });
