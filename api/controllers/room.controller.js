@@ -19,8 +19,14 @@ const editRoom = async (req, res) => {
 	res.json(room);
 };
 
+const deleteRoom = async (req, res) => {
+	const room = await Room.findOneAndRemove({ _id: req.params.id });
+	res.json(room);
+};
+
 module.exports = {
 	roomHome,
 	createRoom,
 	editRoom,
+	deleteRoom,
 };

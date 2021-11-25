@@ -23,8 +23,11 @@ block content
             .invalid-feedback Bạn cần phải nhập CMND
         .from-group.mb-3
             label(for="room_type") Loại Phòng
-            input#room_type.form-control(name="room_type" type="text" required)
-            .invalid-feedback Bạn cần phải nhập loại phòng
+            select#room_type.form-select(name="room_type" aria-label='Default select example')
+                option(selected='') Chọn loại phòng
+                option(value='Standard') Standard
+                option(value='Superior') Superior
+                option(value='Deluxe') Deluxe
         .from-group.mb-3
             label(for="checkin_date") Ngày Checkin
             input#checkin_date.form-control.datepick(name="checkin_date" type="text" required)
