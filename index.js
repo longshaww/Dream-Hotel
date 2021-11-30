@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
+var cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
@@ -21,9 +22,14 @@ const apiRoomRoute = require("./api/routes/room.route");
 const authMiddleware = require("./middlewares/auth.middleware");
 const port = process.env.PORT || 4000;
 const app = express();
-
+app.use(cors());
 app.set("view engine", "pug");
 app.set("views", "./views");
+app.all("/", function (req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "X-Requested-With");
+	next();
+});
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(cookieParser(process.env.SESSION_SECRET));
