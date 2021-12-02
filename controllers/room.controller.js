@@ -38,7 +38,9 @@ today = dd + "/" + mm + "/" + yyyy;
 
 module.exports.roomHome = async (req, res) => {
 	var rooms = await Room.find().populate("customer");
-
+	rooms.sort((a, b) => {
+		return a.room_id - b.room_id;
+	});
 	res.render("rooms/roomhome", {
 		rooms: rooms,
 		today: today,
