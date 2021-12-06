@@ -24,9 +24,15 @@ const deleteRoom = async (req, res) => {
 	res.json(room);
 };
 
+const singleRoom = async (req, res) => {
+	const room = await Room.findById(req.params.id);
+	res.json(room);
+};
+
 module.exports = {
 	roomHome,
 	createRoom,
 	editRoom,
 	deleteRoom,
+	singleRoom,
 };
