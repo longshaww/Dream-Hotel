@@ -19,6 +19,13 @@ block content
             input#password.form-control(name="password" type="password" required value=user.password)
             .invalid-feedback Bạn cần phải mật khẩu
         .from-group.mb-3
+            label(for="position") Loại Phòng
+            select#room_type.form-select(name="position" aria-label='Default select example')
+                option(selected='') Chọn chức vụ
+                option(value='CEO') CEO 
+                option(value='Manager') Manager
+                option(value='Employee') Employee
+        .from-group.mb-3
             label(for="avatar") Ảnh
             input#avatar.form-control(type="file" name="avatar" multiple)
     button.btn.btn-dark(type='button', data-bs-toggle='modal', data-bs-target='#exampleModal') Edit

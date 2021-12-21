@@ -5,6 +5,7 @@ var cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
+
 const mongoose = require("mongoose");
 mongoose.connect(process.env.MONGODB_URL, {
 	useNewUrlParser: true,
@@ -19,7 +20,8 @@ const authRoute = require("./routes/auth.route");
 const logOutRoute = require("./routes/logout.route");
 
 const apiRoomRoute = require("./api/routes/room.route");
-const authMiddleware = require("./middlewares/auth.middleware");
+const { requireAuth } = require("./middlewares/auth.middleware");
+
 const port = process.env.PORT || 4000;
 const app = express();
 app.use(cors());
@@ -40,10 +42,10 @@ app.get("/", (req, res) => {
 	res.render("booking/bookinghome");
 });
 
-app.use("/rooms", authMiddleware.requireAuth, roomRoute);
-app.use("/users", authMiddleware.requireAuth, userRoute);
+app.use("/rooms", requireAuth, roomRoute);
+app.use("/users", requireAuth, userRoute);
 app.use("/booking", bookingRoute);
-app.use("/customers", authMiddleware.requireAuth, customerRoute);
+app.use("/customers", requireAuth, customerRoute);
 app.use("/auth", authRoute);
 app.use("/logout", logOutRoute);
 app.use("/api/rooms", apiRoomRoute);

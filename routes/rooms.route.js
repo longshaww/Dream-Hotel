@@ -3,6 +3,7 @@ const controller = require("../controllers/room.controller");
 const router = express.Router();
 const validate = require("../validate/room.validate");
 const upload = require("../utils/multer");
+const { managerRequire } = require("../middlewares/auth.middleware");
 
 router.get("/", controller.roomHome);
 
@@ -33,7 +34,7 @@ router.post("/checkout", controller.postCheckOut);
 
 router.get("/checkout/online", controller.onlinePayment);
 
-router.get("/payment-history", controller.paymentHistory);
+router.get("/payment-history", managerRequire, controller.paymentHistory);
 
 router.get("/payment-history/search", controller.paymentSearch);
 

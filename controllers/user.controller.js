@@ -29,6 +29,16 @@ module.exports.getID = async (req, res) => {
 	});
 };
 module.exports.postCreate = async (req, res) => {
+	if (req.body.position === "CEO") {
+		req.body.permission = 3;
+	}
+	if (req.body.position === "Manager") {
+		req.body.permission = 2;
+	}
+	if (req.body.position === "Employee") {
+		req.body.permission = 1;
+	}
+
 	if (req.file) {
 		var avatar = await cloudinary.uploader.unsigned_upload(
 			req.file.path,
@@ -39,7 +49,9 @@ module.exports.postCreate = async (req, res) => {
 			phone: req.body.phone,
 			email: req.body.email,
 			password: req.body.password,
+			position: req.body.position,
 			avatar: avatar.secure_url,
+			permission: req.body.permission,
 		});
 		res.redirect("/users");
 	} else {
@@ -48,6 +60,8 @@ module.exports.postCreate = async (req, res) => {
 			phone: req.body.phone,
 			email: req.body.email,
 			password: req.body.password,
+			position: req.body.position,
+			permission: req.body.permission,
 			// avatar: avatar.secure_url,
 		});
 		res.redirect("/users");
@@ -60,6 +74,15 @@ module.exports.editUser = async (req, res) => {
 };
 
 module.exports.editUserHandling = async (req, res) => {
+	if (req.body.position === "CEO") {
+		req.body.permission = 3;
+	}
+	if (req.body.position === "Manager") {
+		req.body.permission = 2;
+	}
+	if (req.body.position === "Employee") {
+		req.body.permission = 1;
+	}
 	if (req.file) {
 		var avatar = await cloudinary.uploader.unsigned_upload(
 			req.file.path,
@@ -73,6 +96,8 @@ module.exports.editUserHandling = async (req, res) => {
 				email: req.body.email,
 				password: req.body.password,
 				avatar: avatar.secure_url,
+				position: req.body.position,
+				permission: req.body.permission,
 			},
 			{
 				new: true,
@@ -87,6 +112,8 @@ module.exports.editUserHandling = async (req, res) => {
 				phone: req.body.phone,
 				email: req.body.email,
 				password: req.body.password,
+				position: req.body.position,
+				permission: req.body.permission,
 				avatar: "",
 			},
 			{

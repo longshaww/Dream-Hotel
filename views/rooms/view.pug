@@ -11,14 +11,22 @@ block content
                     h5.card-title.text-center
                         p.fs-3.fw-bold="Số Phòng: " +room.room_id
                     p.card-text
-                          ul.list-unstyled.fs-4.text-center
+                          ul.list-unstyled.fs-5.text-center
                             li="Loại phòng: "+room.room_type
                             li="Giá phòng: "+room.price 
-                            li="Ghi chú: "+room.note 
-                            form(method="POST" action="/rooms/"+room.id+"?_method=DELETE") 
-                                .form-group
-                                    a.btn.btn-dark(href="/rooms/"+room.id+"/edit") Edit 
-                                    button(type="submit" class="btn btn-dark ms-2") Delete
+                            li="Ghi chú: "+room.note
+                            if(room.customer)
+                                p.fs-4.fw-bold Customer information
+                                li="Name: "+ room.customer.name
+                                li="Phone: "+ room.customer.phone
+                                li="CMND: "+ room.customer.CMND 
+                                li="Checkin: "+ room.customer.checkin_date 
+                                li="Checkout: "+ room.customer.checkout_date
+                            if(user.permission > 2)
+                                form(method="POST" action="/rooms/"+room.id+"?_method=DELETE") 
+                                    .form-group
+                                        a.btn.btn-dark(href="/rooms/"+room.id+"/edit") Edit 
+                                        button(type="submit" class="btn btn-dark ms-2") Delete
                     p.card-text
                         small.text-muted Last updated 3 mins ago
 

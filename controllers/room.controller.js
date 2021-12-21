@@ -37,7 +37,7 @@ var yyyy = today.getFullYear();
 today = dd + "/" + mm + "/" + yyyy;
 
 module.exports.roomHome = async (req, res) => {
-	var rooms = await Room.find().populate("customer");
+	var rooms = await Room.find();
 	rooms.sort((a, b) => {
 		return a.room_id - b.room_id;
 	});
@@ -89,7 +89,7 @@ module.exports.createRoomValidation = async (req, res) => {
 };
 module.exports.viewRoom = async (req, res) => {
 	var id = req.params.id;
-	var room = await Room.findById(id);
+	var room = await Room.findById(id).populate("customer");
 	res.render("rooms/view", {
 		room: room,
 	});

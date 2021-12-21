@@ -7,6 +7,8 @@ var userSchema = new mongoose.Schema(
 		email: String,
 		password: String,
 		avatar: String,
+		permission: Number,
+		position: String,
 	},
 	{
 		collection: "users",

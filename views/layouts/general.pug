@@ -34,9 +34,6 @@ html
                             a.nav-link(href='/rooms') Rooms
                         li.nav-item
                             a.nav-link(href='/customers') Customers
-                        li.nav-item(style="position:absolute;right:10%")
-                            a(href="/logout")
-                                i(class="fas fa-sign-out-alt fa-2x" style="color:black")
                         li.nav-item.dropdown
                             a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href='#', role='button', data-bs-toggle='dropdown', aria-expanded='false') Contact
                             ul.dropdown-menu(aria-labelledby='navbarDropdownMenuLink')
@@ -51,6 +48,17 @@ html
                         li.nav-item
                             a(type="button" id="body-color-btn")
                                 i(class="fas fa-adjust fa-2x" style="color:#d3a1c4")
+                if(user)
+                    #navbarNavDropdown.collapse.navbar-collapse
+                        ul.navbar-nav.ms-auto
+                            li.nav-item
+                                .d-flex.justify-content-center.align-items.center
+                                    .d-flex 
+                                        img.m-auto(src=user.avatar style="width:2.5rem" class="rounded-circle border border-dark")
+                                        a.m-auto.ms-2(href=`/users/${user.id}`)=user.name
+                                    a.ms-2(href="/logout")
+                                        i(class="fas fa-sign-out-alt fa-2x" style="color:black")
+
 
         #offcanvasWithBothOptions.offcanvas.offcanvas-start(data-bs-scroll='true', tabindex='-1', aria-labelledby='offcanvasWithBothOptionsLabel')
             .offcanvas-header

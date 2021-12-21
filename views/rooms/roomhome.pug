@@ -34,13 +34,13 @@ block content
                     img(src=`${room.image}` class="card-img-top")
                     .card-body
                         h5.card-title="Phòng "+room.room_id
-                        li="Loại phòng: "+room.room_type
-                        li="Giá phòng: "+room.price 
+                        //- li="Loại phòng: "+room.room_type
+                        //- li="Giá phòng: "+room.price 
                         //- li="Ghi chú: "+room.note 
-                        if(room.customer)
-                            li="Tên khách hàng: "+room.customer.name
-                            li="Ngày checkin: "+room.customer.checkin_date
-                            li="Ngày checkout:"+room.customer.checkout_date
+                        //- if(room.customer)
+                        //-     li="Tên khách hàng: "+room.customer.name
+                        //-     li="Ngày checkin: "+room.customer.checkin_date
+                        //-     li="Ngày checkout:"+room.customer.checkout_date
                         a.mt-2.button(href="/rooms/"+room._id class=room.customer? "btn btn-light":"btn btn-dark")
                             span View
     .position-fixed.bottom-0.end-0.p-3(style='z-index: 11')

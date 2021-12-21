@@ -13,22 +13,24 @@ block content
                 tr
                     th.col Tên 
                     th.col Phone
-                    th.col CMND
-                    th.col Loại phòng
+                    if(user.permission > 1)
+                        th.col CMND
+                        th.col Loại phòng
                     th.col Checkin 
                     th.col Checkout
                     th.col Checkin State
                     th.col Checkout State
-                    th.col Edit
+                    if(user.permission > 1)
+                        th.col Edit
                     th.col Service
-
                 tbody
                     each customer in customers
                         tr
                             td=customer.name 
                             td=customer.phone 
-                            td=customer.CMND 
-                            td=customer.room_type
+                            if(user.permission > 1)
+                                td=customer.CMND 
+                                td=customer.room_type
                             td=customer.checkin_date 
                             td=customer.checkout_date
                             if(customer.checkin_state)
@@ -39,11 +41,12 @@ block content
                                 td.fw-bold Đã checkout
                             else
                                 td Chưa Checkout
-                            td 
-                                if(customer.checkout_state)
-                                    a.btn.btn-dark(href="/customers/"+customer._id class="disabled") Edit
-                                else 
-                                    a.btn.btn-dark(href="/customers/"+customer._id) Edit
+                            if(user.permission > 1)
+                                td 
+                                    if(customer.checkout_state)
+                                        a.btn.btn-dark(href="/customers/"+customer._id class="disabled") Edit
+                                    else 
+                                        a.btn.btn-dark(href="/customers/"+customer._id) Edit
                             td 
                                 if(customer.checkout_state)
                                     a.btn.btn-dark(href="/customers/services/"+customer._id class="disabled") Add
