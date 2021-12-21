@@ -114,7 +114,6 @@ module.exports.editUserHandling = async (req, res) => {
 				password: req.body.password,
 				position: req.body.position,
 				permission: req.body.permission,
-				avatar: "",
 			},
 			{
 				new: true,

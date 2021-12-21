@@ -27,10 +27,10 @@ block content
             .from-group.mb-3
                 label(for="room_type") Loại Phòng
                 select#room_type.form-select(name="room_type" aria-label='Default select example')
-                    option(selected='') Chọn loại phòng
                     option(value='Standard') Standard
                     option(value='Superior') Superior
                     option(value='Deluxe') Deluxe
+                    option(value='Luxury') Luxury
             .from-group.mb-3.text-light
                 label(for="checkin_date") Ngày Checkin
                 input#checkin_date.form-control.datepick(name="checkin_date" type="text" required)

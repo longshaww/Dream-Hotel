@@ -130,7 +130,6 @@ module.exports.editRoomHandling = async (req, res) => {
 				price: req.body.price,
 				note: req.body.note,
 				room_id: req.body.room_id,
-				image: "",
 			},
 			{ new: true }
 		);

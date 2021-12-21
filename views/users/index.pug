@@ -15,6 +15,7 @@ block content
                 th Name
                 th Phone
                 th Email
+                th Position
                 th View 
                 th Edit
                 th Delete
@@ -26,6 +27,7 @@ block content
                     td=user.name
                     td=user.phone
                     td=user.email
+                    td=user.position    
                     td
                         a.btn.btn-dark(href="/users/"+ user.id) View
                     td

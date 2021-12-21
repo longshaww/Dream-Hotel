@@ -11,8 +11,12 @@ block content
             .invalid-feedback Bạn cần phải nhập số phòng
         .from-group.mb-3
             label(for="room_type") Loại phòng
-            input#room_type.form-control(name="room_type" type="text" value = values ? values.room_type :'')
-            .invalid-feedback Bạn cần phải nhập loại phòng
+            select#room_type.form-select(name="room_type" aria-label='Default select example')
+                option(value='Standard') Standard 
+                option(value='Superior') Superior
+                option(value='Deluxe') Deluxe
+                option(value='Luxury') Luxury
+            .invalid-feedback Bạn cần chọn loại phòng
         .from-group.mb-3
             label(for="price") Giá phòng
             input#price.form-control(name="price" type="text" value = values ? values.price :'')
