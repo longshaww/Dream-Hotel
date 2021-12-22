@@ -26,6 +26,8 @@ router.post("/checkin", controller.postCheckIn);
 
 router.get("/rents", controller.rentHistory);
 
+router.get("/rents/search", controller.rentSearch);
+
 router.get("/rents/:id", controller.confirmRent);
 
 router.get("/checkout", controller.checkOutForm);

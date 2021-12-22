@@ -37,7 +37,8 @@ var yyyy = today.getFullYear();
 today = dd + "/" + mm + "/" + yyyy;
 
 module.exports.roomHome = async (req, res) => {
-	var rooms = await Room.find();
+	var rooms = await Room.find().populate("customer");
+
 	rooms.sort((a, b) => {
 		return a.room_id - b.room_id;
 	});
@@ -51,7 +52,10 @@ module.exports.searchRoom = async (req, res) => {
 	var rooms = await Room.find().populate("customer");
 	var q = req.query.q;
 	var matchedRooms = rooms.filter(function (room) {
-		return room.room_type.toLowerCase().indexOf(q.toLowerCase()) !== -1;
+		return (
+			room.room_type.toLowerCase().indexOf(q.toLowerCase()) !== -1 ||
+			room.available.includes(parseInt(q))
+		);
 	});
 	res.render("rooms/roomhome", {
 		rooms: matchedRooms,
@@ -198,7 +202,9 @@ module.exports.postCheckIn = async (req, res) => {
 		});
 		return;
 	}
-	var room = await Room.findOne({ room_id: req.body.room_id });
+	var room = await Room.findOne({ room_id: req.body.room_id }).populate(
+		"customer"
+	);
 	// create new rent
 	await Rent.create({
 		room: room._id,
@@ -210,6 +216,22 @@ module.exports.postCheckIn = async (req, res) => {
 		{ customer: customer._id }, // rent: rent._id
 		{ multi: true }
 	);
+
+	// if (room.customer) {
+	// 	var checkin_date = parseInt(room.customer.checkin_date.slice(0, 2));
+	// 	var checkout_date = parseInt(room.customer.checkout_date.slice(0, 2));
+
+	// 	const available = [...room.available];
+	// 	const indexCheckin = available.indexOf(checkin_date);
+	// 	const indexCheckout = available.indexOf(checkout_date);
+	// 	const diff = indexCheckout - indexCheckin;
+	// 	available.splice(indexCheckin, diff + 1);
+	// 	await Room.updateOne(
+	// 		{ _id: room._id },
+	// 		{ available },
+	// 		{ multi: true }
+	// 	);
+	// }
 	await Customer.updateOne(
 		{ _id: customer._id },
 		{ checkin_state: true },
@@ -221,7 +243,29 @@ module.exports.postCheckIn = async (req, res) => {
 
 module.exports.rentHistory = async (req, res) => {
 	var rents = await Rent.find();
+	var rooms = await Room.find();
+	rooms.sort((a, b) => {
+		return a.room_id - b.room_id;
+	});
 	res.render("rooms/rents", {
+		rents: rents,
+		rooms: rooms,
+	});
+};
+
+module.exports.rentSearch = async (req, res) => {
+	var rents = await Rent.find();
+	var rooms = await Room.find();
+	var q = req.query.q;
+	var matchedRooms = rooms.filter(function (room) {
+		return (
+			room.room_type.toLowerCase().indexOf(q.toLowerCase()) !== -1 ||
+			room.room_id.toLowerCase().indexOf(q.toLowerCase()) !== -1 ||
+			room.available.includes(parseInt(q))
+		);
+	});
+	res.render("rooms/rents", {
+		rooms: matchedRooms,
 		rents: rents,
 	});
 };
