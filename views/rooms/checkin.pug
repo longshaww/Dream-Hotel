@@ -50,6 +50,7 @@ block content
                             th.col Loại phòng 
                             th.col Checkin 
                             th.col Checkout
+                            th.col Phòng
                     tbody 
                         each customer in customers
                             if(!customer.checkin_state)
@@ -59,6 +60,7 @@ block content
                                     td=customer.room_type
                                     td=customer.checkin_date 
                                     td=customer.checkout_date
+                                    td=customer.room_id
         .col-md#rooms
                 .d-flex.justify-content-center.align-items-center
                     h2 Phòng còn

@@ -11,6 +11,7 @@ var customerSchema = new mongoose.Schema(
 		checkout_date: String,
 		checkin_state: Boolean,
 		checkout_state: Boolean,
+		room_id: String,
 		services: [{ type: mongoose.Schema.Types.ObjectId, ref: "Services" }],
 	},
 	{
@@ -29,6 +30,7 @@ var rentSchema = new mongoose.Schema(
 		checkout_date: String,
 		booking_date: String,
 		state: Boolean,
+		room_id: String,
 	},
 	{ collection: "rents" }
 );
@@ -40,11 +42,18 @@ var roomSchema = new mongoose.Schema(
 		room_state: Boolean,
 		room_id: String,
 		image: String,
-		// rent: { type: mongoose.Schema.Types.ObjectId, ref: "Rent" },
 		customer: { type: mongoose.Schema.Types.ObjectId, ref: "Customers" },
-		available: [Number],
+		available: { type: mongoose.Schema.Types.ObjectId, ref: "Years" },
 	},
 	{ collection: "rooms" }
+);
+
+var yearSchema = new mongoose.Schema(
+	{
+		month: String,
+		days: [Number],
+	},
+	{ collection: "years" }
 );
 
 var paymentSChema = new mongoose.Schema(
@@ -84,6 +93,7 @@ var Customer = mongoose.model("Customers", customerSchema, "customers");
 var Payment = mongoose.model("Payments", paymentSChema, "payment");
 var Service = mongoose.model("Services", serviceSchema, "services");
 var Voucher = mongoose.model("Vouchers", voucherSchema, "vouchers");
+var Year = mongoose.model("Years", yearSchema, "years");
 
 module.exports = {
 	Room: Room,
@@ -92,4 +102,5 @@ module.exports = {
 	Payment: Payment,
 	Service: Service,
 	Voucher: Voucher,
+	Year: Year,
 };

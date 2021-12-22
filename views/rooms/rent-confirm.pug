@@ -1,42 +1,63 @@
 extends ../layouts/general
 block content
-    h1 Confirmation rent form
-    if(errors)
-        each error in errors 
-            .alert.alert-danger=error
-    form(name="confirm-rent-form" method="POST" action="/rooms/rents/"+rent._id id="form" class="needs-validation" novalidate)
-        .from-group.mb-3
-            label(for="name") Tên
-            input#name.form-control(type="text" name="name" value=rent.name)
-        .from-group.mb-3
-            label(for="email") Email
-            input#email.form-control(type="text" name="email" value=rent.email) 
-        .from-group.mb-3
-            label(for="phone") SĐT
-            input#phone.form-control(type="text" name="phone" value=rent.phone)   
-        .from-group.mb-3
-            label(for="CMND") CMND            
-            input#CMND.form-control(type="text" name="CMND" value=rent.CMND)
-        .from-group.mb-3
-            label(for="room_type") Loại Phòng            
-            input#room_type.form-control(type="text" name="room_type" value=rent.room_type)                    
-        .from-group.mb-3
-            label(for="checkin_date") Ngày checkin
-            input#checkin_date.form-control.datepick(type="text" name="checkin_date" value=rent.checkin_date) 
-        .from-group.mb-3
-            label(for="checkout_date") Ngày checkout
-            input#checkout_date.form-control.datepick(type="text" name="checkout_date" value=rent.checkout_date)
-    button.btn.btn-dark(type='button', data-bs-toggle='modal' data-id=rent._id data-bs-target='#confirmRentModal') Confirm
-    #confirmRentModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
-        .modal-dialog.modal-dialog-centered
-            .modal-content
-                .modal-header
-                    h5#exampleModalLabel.modal-title Confirmation
-                    button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
-                .modal-body 
-                        |Are you sure you want to confirm this rent ?
-                .modal-footer
-                    button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancel
-                    button(type="submit" form="form")#btn-confirm-rent.btn.btn-dark Confirm
+    .d-flex
+        h1 Confirmation rent form
+        .ms-auto
+            h2.text-center Phòng còn
+            form(action=`/rooms/rents/${rent._id}/search`,method="GET" class="d-flex")
+                input(type="text", name="q" class="form-control" placeholder="Nhập ngày")
+                button(class="btn btn-dark ms-3") Search
+    .row 
+        .col-md-8
+            if(errors)
+                each error in errors 
+                    .alert.alert-danger=error
+            form(name="confirm-rent-form" method="POST" action="/rooms/rents/"+rent._id id="form" class="needs-validation" novalidate)
+                .from-group.mb-3
+                    label(for="name") Tên
+                    input#name.form-control(type="text" name="name" value=rent.name)
+                .from-group.mb-3
+                    label(for="email") Email
+                    input#email.form-control(type="text" name="email" value=rent.email) 
+                .from-group.mb-3
+                    label(for="phone") SĐT
+                    input#phone.form-control(type="text" name="phone" value=rent.phone)   
+                .from-group.mb-3
+                    label(for="CMND") CMND            
+                    input#CMND.form-control(type="text" name="CMND" value=rent.CMND)
+                .from-group.mb-3
+                    label(for="room_type") Loại Phòng            
+                    input#room_type.form-control(type="text" name="room_type" value=rent.room_type)                    
+                .from-group.mb-3
+                    label(for="checkin_date") Ngày checkin
+                    input#checkin_date.form-control.datepick(type="text" name="checkin_date" value=rent.checkin_date) 
+                .from-group.mb-3
+                    label(for="checkout_date") Ngày checkout
+                    input#checkout_date.form-control.datepick(type="text" name="checkout_date" value=rent.checkout_date)
+                .from-group.mb-3
+                    label(for="room_id") Phòng
+                    input#room_id.form-control(type="text" name="room_id")
+                    .invalid-feedback Bạn cần phải nhập số phòng
+            button.btn.btn-dark(type='button', data-bs-toggle='modal' data-id=rent._id data-bs-target='#confirmRentModal') Confirm
+            #confirmRentModal.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                .modal-dialog.modal-dialog-centered
+                    .modal-content
+                        .modal-header
+                            h5#exampleModalLabel.modal-title Confirmation
+                            button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+                        .modal-body 
+                                |Are you sure you want to confirm this rent ?
+                        .modal-footer
+                            button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancel
+                            button(type="submit" form="form")#btn-confirm-rent.btn.btn-dark Confirm
+        .col-md-4
+                .row(class="row-cols-1 row-cols-sm-1 row-cols-lg-2")
+                    each room in rooms
+                        .col.text-center
+                            ul.card.list-unstyled.shadow-lg.m-2.border-success(class= "text-dark bg-light mb-3")
+                                h5.card-header="Phòng "+room.room_id
+                                .card-body
+                                    li="Loại phòng: "+room.room_type
+
     script(src='/js/form-validation.js')
     script(src='/js/datepicker.js')

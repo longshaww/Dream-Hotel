@@ -253,9 +253,15 @@ module.exports.rentHistory = async (req, res) => {
 	});
 };
 
-module.exports.rentSearch = async (req, res) => {
-	var rents = await Rent.find();
+module.exports.confirmRent = async (req, res) => {
 	var rooms = await Room.find();
+	var rent = await Rent.findById(req.params.id);
+	res.render("rooms/rent-confirm", { rent, rooms });
+};
+
+module.exports.rentSearch = async (req, res) => {
+	var rooms = await Room.find();
+	var rent = await Rent.findById(req.params.id);
 	var q = req.query.q;
 	var matchedRooms = rooms.filter(function (room) {
 		return (
@@ -264,15 +270,10 @@ module.exports.rentSearch = async (req, res) => {
 			room.available.includes(parseInt(q))
 		);
 	});
-	res.render("rooms/rents", {
+	res.render("rooms/rent-confirm", {
 		rooms: matchedRooms,
-		rents: rents,
+		rent: rent,
 	});
-};
-
-module.exports.confirmRent = async (req, res) => {
-	var rent = await Rent.findById(req.params.id);
-	res.render("rooms/rent-confirm", { rent: rent });
 };
 
 module.exports.postRent = async (req, res) => {
@@ -280,6 +281,15 @@ module.exports.postRent = async (req, res) => {
 	var rent = await Rent.findById(req.params.id);
 	var name = req.body.name;
 	var email = req.body.email;
+
+	if (!req.body.room_id) {
+		errors.push("Bạn chưa nhập số phòng");
+		res.render("rooms/rent-confirm", {
+			rent: rent,
+			errors: errors,
+		});
+		return;
+	}
 
 	function validateEmail(email) {
 		const re =
