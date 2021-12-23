@@ -43,7 +43,7 @@ var roomSchema = new mongoose.Schema(
 		room_id: String,
 		image: String,
 		customer: { type: mongoose.Schema.Types.ObjectId, ref: "Customers" },
-		available: { type: mongoose.Schema.Types.ObjectId, ref: "Years" },
+		available: [{ type: mongoose.Schema.Types.ObjectId, ref: "Years" }],
 	},
 	{ collection: "rooms" }
 );
