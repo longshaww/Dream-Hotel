@@ -43,17 +43,9 @@ var roomSchema = new mongoose.Schema(
 		room_id: String,
 		image: String,
 		customer: { type: mongoose.Schema.Types.ObjectId, ref: "Customers" },
-		available: [{ type: mongoose.Schema.Types.ObjectId, ref: "Years" }],
+		// available: [{ type: mongoose.Schema.Types.ObjectId }],
 	},
 	{ collection: "rooms" }
-);
-
-var yearSchema = new mongoose.Schema(
-	{
-		month: String,
-		days: [Number],
-	},
-	{ collection: "years" }
 );
 
 var paymentSChema = new mongoose.Schema(
@@ -93,7 +85,6 @@ var Customer = mongoose.model("Customers", customerSchema, "customers");
 var Payment = mongoose.model("Payments", paymentSChema, "payment");
 var Service = mongoose.model("Services", serviceSchema, "services");
 var Voucher = mongoose.model("Vouchers", voucherSchema, "vouchers");
-var Year = mongoose.model("Years", yearSchema, "years");
 
 module.exports = {
 	Room: Room,
@@ -102,5 +93,4 @@ module.exports = {
 	Payment: Payment,
 	Service: Service,
 	Voucher: Voucher,
-	Year: Year,
 };

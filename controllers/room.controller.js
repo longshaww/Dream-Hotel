@@ -37,25 +37,10 @@ var yyyy = today.getFullYear();
 today = dd + "/" + mm + "/" + yyyy;
 
 module.exports.roomHome = async (req, res) => {
-	var rooms = await Room.find().populate("customer").populate("available");
+	var rooms = await Room.find().populate("customer");
 	rooms.sort((a, b) => {
 		return a.room_id - b.room_id;
 	});
-	// if (room.customer) {
-	// 	var checkin_date = parseInt(room.customer.checkin_date.slice(0, 2));
-	// 	var checkout_date = parseInt(room.customer.checkout_date.slice(0, 2));
-
-	// 	const available = [...room.available];
-	// 	const indexCheckin = available.indexOf(checkin_date);
-	// 	const indexCheckout = available.indexOf(checkout_date);
-	// 	const diff = indexCheckout - indexCheckin;
-	// 	available.splice(indexCheckin, diff + 1);
-	// 	await Room.updateOne(
-	// 		{ _id: room._id },
-	// 		{ available },
-	// 		{ multi: true }
-	// 	);
-	// }
 	res.render("rooms/roomhome", {
 		rooms: rooms,
 		today: today,
@@ -253,7 +238,7 @@ module.exports.rentHistory = async (req, res) => {
 };
 
 module.exports.confirmRent = async (req, res) => {
-	var rooms = await Room.find().populate("available");
+	var rooms = await Room.find();
 	var rent = await Rent.findById(req.params.id);
 	res.render("rooms/rent-confirm", { rent, rooms });
 };
