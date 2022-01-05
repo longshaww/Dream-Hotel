@@ -16,6 +16,7 @@ block content
                     if(user.permission > 1)
                         th.col CMND
                         th.col Loại phòng
+                    th.col Phòng
                     th.col Checkin 
                     th.col Checkout
                     th.col Checkin State
@@ -31,6 +32,7 @@ block content
                             if(user.permission > 1)
                                 td=customer.CMND 
                                 td=customer.room_type
+                            td=customer.room_id
                             td=customer.checkin_date 
                             td=customer.checkout_date
                             if(customer.checkin_state)

@@ -16,6 +16,7 @@ var customerSchema = new mongoose.Schema(
 	},
 	{
 		collection: "customers",
+		versionKey: false,
 	}
 );
 
@@ -32,7 +33,7 @@ var rentSchema = new mongoose.Schema(
 		state: Boolean,
 		room_id: String,
 	},
-	{ collection: "rents" }
+	{ collection: "rents", versionKey: false }
 );
 var roomSchema = new mongoose.Schema(
 	{
@@ -43,9 +44,9 @@ var roomSchema = new mongoose.Schema(
 		room_id: String,
 		image: String,
 		customer: { type: mongoose.Schema.Types.ObjectId, ref: "Customers" },
-		// available: [{ type: mongoose.Schema.Types.ObjectId }],
+		available: [String],
 	},
-	{ collection: "rooms" }
+	{ collection: "rooms", versionKey: false }
 );
 
 var paymentSChema = new mongoose.Schema(
@@ -57,14 +58,14 @@ var paymentSChema = new mongoose.Schema(
 		discount: String,
 		pay_date: String,
 	},
-	{ collection: "payment" }
+	{ collection: "payment", versionKey: false }
 );
 var serviceSchema = new mongoose.Schema(
 	{
 		content: String,
 		price: String,
 	},
-	{ collection: "services" }
+	{ collection: "services", versionKey: false }
 );
 
 var voucherSchema = new mongoose.Schema(
@@ -76,6 +77,7 @@ var voucherSchema = new mongoose.Schema(
 	},
 	{
 		collection: "vouchers",
+		versionKey: false,
 	}
 );
 

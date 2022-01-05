@@ -51,10 +51,7 @@ module.exports.searchRoom = async (req, res) => {
 	var rooms = await Room.find().populate("customer");
 	var q = req.query.q;
 	var matchedRooms = rooms.filter(function (room) {
-		return (
-			room.room_type.toLowerCase().indexOf(q.toLowerCase()) !== -1 ||
-			room.available.includes(parseInt(q))
-		);
+		return room.room_type.toLowerCase().indexOf(q.toLowerCase()) !== -1;
 	});
 	res.render("rooms/roomhome", {
 		rooms: matchedRooms,
@@ -238,7 +235,7 @@ module.exports.rentHistory = async (req, res) => {
 };
 
 module.exports.confirmRent = async (req, res) => {
-	var rooms = await Room.find();
+	var rooms = await Room.find().sort({ room_id: 1 });
 	var rent = await Rent.findById(req.params.id);
 	res.render("rooms/rent-confirm", { rent, rooms });
 };
@@ -283,6 +280,19 @@ module.exports.postRent = async (req, res) => {
 	if (validateEmail(email)) {
 		await Rent.updateOne({ _id: req.params.id }, { state: true });
 		await Customer.create(req.body);
+		const room = await Room.findOne({ room_id: req.body.room_id });
+		const availableArr = room.available;
+		await Room.updateOne(
+			{ room_id: req.body.room_id },
+			{
+				available: [
+					...availableArr,
+					req.body.checkin_date,
+					req.body.checkout_date,
+				],
+			},
+			{ multi: true }
+		);
 		await transporter.sendMail({
 			from: '"Dream Hotel 👻" <DreamHotel@gmail.com>', // sender address
 			to: req.body.email, // list of receivers
