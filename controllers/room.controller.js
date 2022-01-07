@@ -37,10 +37,7 @@ var yyyy = today.getFullYear();
 today = dd + "/" + mm + "/" + yyyy;
 
 module.exports.roomHome = async (req, res) => {
-	var rooms = await Room.find().populate("customer");
-	rooms.sort((a, b) => {
-		return a.room_id - b.room_id;
-	});
+	var rooms = await Room.find().populate("customer").sort({ room_id: 1 });
 	res.render("rooms/roomhome", {
 		rooms: rooms,
 		today: today,
@@ -147,7 +144,7 @@ module.exports.editRoomHandling = async (req, res) => {
 };
 module.exports.checkInForm = async (req, res) => {
 	var customers = await Customer.find();
-	var rooms = await Room.find().populate("customer");
+	var rooms = await Room.find().populate("customer").sort({ room_id: 1 });
 	res.render("rooms/checkin", {
 		rooms: rooms,
 		customers: customers,
@@ -160,7 +157,7 @@ module.exports.searchCustomer = async (req, res) => {
 	var matchedCustomers = customers.filter(function (customer) {
 		return customer.name.toLowerCase().indexOf(q.toLowerCase()) !== -1;
 	});
-	var rooms = await Room.find().populate("customer");
+	var rooms = await Room.find().populate("customer").sort({ room_id: 1 });
 	res.render("rooms/checkin", {
 		customers: matchedCustomers,
 		rooms: rooms,
@@ -168,7 +165,7 @@ module.exports.searchCustomer = async (req, res) => {
 };
 module.exports.searchRo = async (req, res) => {
 	var customers = await Customer.find();
-	var rooms = await Room.find().populate("customer");
+	var rooms = await Room.find().populate("customer").sort({ room_id: 1 });
 	var q = req.query.q;
 	var matchedRooms = rooms.filter(function (room) {
 		return (
@@ -187,7 +184,9 @@ module.exports.postCheckIn = async (req, res) => {
 	var customer = await Customer.findOne({
 		name: req.body.name,
 	});
-	var rerenderRoom = await Room.find().populate("customer");
+	var rerenderRoom = await Room.find()
+		.populate("customer")
+		.sort({ room_id: 1 });
 	var rerenderCustomer = await Customer.find();
 	if (!customer) {
 		res.render("rooms/checkin", {
@@ -247,7 +246,7 @@ module.exports.confirmRent = async (req, res) => {
 };
 
 module.exports.rentSearch = async (req, res) => {
-	var rooms = await Room.find();
+	var rooms = await Room.find().sort({ room_id: 1 });
 	var rent = await Rent.findById(req.params.id);
 	var q = req.query.q;
 	var matchedRooms = rooms.filter(function (room) {
