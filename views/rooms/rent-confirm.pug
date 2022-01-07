@@ -53,11 +53,12 @@ block content
         .col-md-4
                 .row(class="row-cols-1 row-cols-sm-1 row-cols-lg-2")
                     each room in rooms
-                        .col.text-center
-                            ul.card.list-unstyled.shadow-lg.m-2.border-success(class= "text-dark bg-light mb-3")
-                                h5.card-header="Phòng "+room.room_id
-                                .card-body
-                                    li="Loại phòng: "+room.room_type
+                        -if(!room.available.includes(rent.checkin_date))
+                            .col.text-center
+                                ul.card.list-unstyled.shadow-lg.m-2.border-success(class= "text-dark bg-light mb-3")
+                                    h5.card-header="Phòng "+room.room_id
+                                    .card-body
+                                        li="Loại phòng: "+room.room_type
 
     script(src='/js/form-validation.js')
     script(src='/js/datepicker.js')

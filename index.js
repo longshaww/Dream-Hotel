@@ -12,6 +12,7 @@ mongoose.connect(process.env.MONGODB_URL, {
 	useUnifiedTopology: true,
 });
 
+const { Voucher } = require("./models/room.model");
 const userRoute = require("./routes/user.route");
 const roomRoute = require("./routes/rooms.route");
 const bookingRoute = require("./routes/booking.route");
@@ -38,8 +39,9 @@ app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
 
-app.get("/", (req, res) => {
-	res.render("booking/bookinghome");
+app.get("/", async (req, res) => {
+	const vouchers = await Voucher.find().limit(3);
+	res.render("booking/bookinghome", { vouchers });
 });
 
 app.use("/rooms", requireAuth, roomRoute);

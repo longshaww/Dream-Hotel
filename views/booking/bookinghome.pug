@@ -114,6 +114,26 @@ block content
                                 option(value='3') Deluxe
                                 option(value='4') Room
                             button.btn.btn-dark.btn-lg.p-3(type='submit') Check Availability
+
+        h3.text-center Congratulation ! You are one of luckiest customer to see these vouchers
+        table.table.table-responsive 
+            thead 
+                tr 
+                    th STT 
+                    th Code 
+                    th Ngày bắt đầu
+                    th Ngày kết thúc
+                    th Giảm
+            tbody 
+                each voucher,index in vouchers 
+                    tr 
+                        td=index 
+                        td=voucher.code
+                        td=voucher.date_start 
+                        td=voucher.date_end 
+                        td=voucher.discount+"%"
+                    
+
         script(type="text/javascript" src="/js/datepicker.js")
         // MDB
         script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js')

@@ -48,11 +48,20 @@ module.exports.roomHome = async (req, res) => {
 };
 
 module.exports.searchRoom = async (req, res) => {
-	var rooms = await Room.find().populate("customer");
+	var rooms = await Room.find().sort({ room_id: 1 });
 	var q = req.query.q;
+
 	var matchedRooms = rooms.filter(function (room) {
-		return room.room_type.toLowerCase().indexOf(q.toLowerCase()) !== -1;
+		return (
+			room.room_type.toLowerCase().indexOf(q.toLowerCase()) !== -1 ||
+			!room.available.includes(q)
+		);
 	});
+
+	if (q === "") {
+		matchedRooms = rooms;
+	}
+
 	res.render("rooms/roomhome", {
 		rooms: matchedRooms,
 	});
@@ -224,10 +233,7 @@ module.exports.postCheckIn = async (req, res) => {
 
 module.exports.rentHistory = async (req, res) => {
 	var rents = await Rent.find();
-	var rooms = await Room.find();
-	rooms.sort((a, b) => {
-		return a.room_id - b.room_id;
-	});
+	var rooms = await Room.find().sort({ room_id: 1 });
 	res.render("rooms/rents", {
 		rents: rents,
 		rooms: rooms,
@@ -258,38 +264,46 @@ module.exports.rentSearch = async (req, res) => {
 };
 
 module.exports.postRent = async (req, res) => {
-	var errors = [];
-	var rent = await Rent.findById(req.params.id);
-	var name = req.body.name;
-	var email = req.body.email;
+	const errors = [];
+	const rooms = await Room.find().sort({ room_id: 1 });
+	const rent = await Rent.findById(req.params.id);
+	const name = req.body.name;
+	const email = req.body.email;
+	const room = await Room.findOne({ room_id: req.body.room_id });
+	const availableArr = room.available;
+	const fromDate = moment(req.body.checkin_date, "DD/MM/YYYY");
+	const toDate = moment(req.body.checkout_date, "DD/MM/YYYY");
+	const dates = enumerateDaysBetweenDates(fromDate, toDate);
 
 	if (!req.body.room_id) {
 		errors.push("Bạn chưa nhập số phòng");
+	}
+
+	if (availableArr.includes(req.body.checkin_date)) {
+		errors.push(
+			`Phòng ${req.body.room_id} đã kín vào thời gian khách chọn !`
+		);
+	}
+
+	if (!validateEmail(email)) {
+		errors.push("Email bạn đã nhập sai");
+	}
+
+	if (errors.length) {
 		res.render("rooms/rent-confirm", {
+			rooms: rooms,
 			rent: rent,
 			errors: errors,
 		});
 		return;
-	}
-
-	function validateEmail(email) {
-		const re =
-			/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		return re.test(email);
-	}
-	if (validateEmail(email)) {
+	} else {
 		await Rent.updateOne({ _id: req.params.id }, { state: true });
 		await Customer.create(req.body);
-		const room = await Room.findOne({ room_id: req.body.room_id });
-		const availableArr = room.available;
+
 		await Room.updateOne(
 			{ room_id: req.body.room_id },
 			{
-				available: [
-					...availableArr,
-					req.body.checkin_date,
-					req.body.checkout_date,
-				],
+				available: [...availableArr, ...dates],
 			},
 			{ multi: true }
 		);
@@ -303,13 +317,24 @@ module.exports.postRent = async (req, res) => {
 			}),
 		});
 		res.redirect("/rooms/rents");
-	} else {
-		errors.push("Email bạn đã nhập sai");
-		res.render("rooms/rent-confirm", {
-			rent: rent,
-			errors: errors,
-		});
 	}
+};
+
+function validateEmail(email) {
+	const re =
+		/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return re.test(email);
+}
+
+var enumerateDaysBetweenDates = function (startDate, endDate) {
+	var now = startDate,
+		dates = [];
+
+	while (now.isSameOrBefore(endDate)) {
+		dates.push(now.format("DD/MM/YYYY"));
+		now.add(1, "days");
+	}
+	return dates;
 };
 
 module.exports.checkOutForm = async (req, res) => {
