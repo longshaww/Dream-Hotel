@@ -53,7 +53,7 @@ block content
         .col-md-4
                 .row(class="row-cols-1 row-cols-sm-1 row-cols-lg-2")
                     each room in rooms
-                        -if(!room.available.includes(rent.checkin_date))
+                        -if(!room.available.includes(rent.checkin_date) && room.room_type === rent.room_type)
                             .col.text-center
                                 ul.card.list-unstyled.shadow-lg.m-2.border-success(class= "text-dark bg-light mb-3")
                                     h5.card-header="Phòng "+room.room_id

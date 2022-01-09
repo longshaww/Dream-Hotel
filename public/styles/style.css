@@ -108,3 +108,10 @@ tr:hover {
 .btn {
 	cursor: pointer;
 }
+
+#load-more:hover {
+	transform: translate(0, 15px);
+}
+#load-more {
+	transition: 0.7s all;
+}

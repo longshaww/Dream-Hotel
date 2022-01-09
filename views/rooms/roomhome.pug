@@ -31,6 +31,10 @@ block content
         option(value='Superior') Superior
         option(value='Deluxe') Deluxe
         option(value='Luxury') Luxury
+    select.form-select(id="room_state" class="mt-2")
+        option(value='') Filter with Room State
+        option(value='Available') Available
+        option(value='Not Available') Not Available
     .row(class="row-cols-1 row-cols-sm-2 row-cols-lg-4 pt-4" id="rooms-card")
         //- each room in rooms
         //-     .col.text-center
@@ -59,6 +63,7 @@ block content
                     if(room.customer)
                         if(room.customer.checkout_date === today)
                             h5.text-danger="Phòng đến ngày checkout: "+room.room_id
+    i(class="fas fa-chevron-circle-down fa-4x d-flex justify-content-center" id="load-more")
 
     script(type="text/javascript" src="/js/room-home.js")
     script(src='/js/datepicker.js')

@@ -3,12 +3,15 @@ var toast = new bootstrap.Toast(toastLiveExample);
 
 let $roomsCard;
 let rooms;
+let loadCount = 10;
 
 window.onload = () => {
 	toast.show();
 	$roomsCard = $("#rooms-card");
 	$("#room_type").on("change", onTypeSelected);
 	$("#available").on("keyup", onAvailable);
+	$("#load-more").on("click", onLoad);
+	$("#room_state").on("change", onStateSelected);
 	getData();
 };
 
@@ -41,6 +44,29 @@ function onAvailable(e) {
 	}
 }
 
+function onLoad() {
+	loadCount += 10;
+	renderRooms(rooms);
+}
+
+function onStateSelected() {
+	const unavailableRoom = rooms.filter((room) => {
+		if (room.customer) {
+			return room;
+		}
+	});
+	const availableRoom = rooms.filter((room) => {
+		if (!room.customer) {
+			return room;
+		}
+	});
+	if (this.value === "Not Available") {
+		renderRooms(unavailableRoom);
+	} else {
+		renderRooms(availableRoom);
+	}
+}
+
 async function getData() {
 	const response = await fetch("https://dreamhotel.herokuapp.com/api/rooms");
 	const data = await response.json();
@@ -53,6 +79,7 @@ async function getData() {
 
 function renderRooms(list) {
 	const roomsList = list
+		.slice(0, loadCount)
 		.map((room) => {
 			return `
 			<div class="col text-center">
