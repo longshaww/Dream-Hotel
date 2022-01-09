@@ -21,17 +21,9 @@ module.exports.postBookingForm = async (req, res) => {
 	}
 	//if email input is correct
 	if (validateEmail(email)) {
-		await Rent.create({
-			name: req.body.name,
-			email: req.body.email,
-			phone: req.body.phone,
-			CMND: req.body.CMND,
-			room_type: req.body.room_type,
-			checkin_date: req.body.checkin_date,
-			checkout_date: req.body.checkout_date,
-			state: false,
-			booking_date: today,
-		});
+		req.body.state = false;
+		req.body.booking_date = today;
+		await Rent.create(req.body);
 
 		res.redirect("/");
 	}
