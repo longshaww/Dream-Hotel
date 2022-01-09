@@ -37,8 +37,11 @@ var rentSchema = new mongoose.Schema(
 );
 var roomSchema = new mongoose.Schema(
 	{
-		room_type: String,
-		price: String,
+		room_type: {
+			type: String,
+			enum: ["Standard", "Superior", "Deluxe", "Luxury"],
+		},
+		price: { type: String, enum: ["$10", "$20", "$30", "$40"] },
 		note: String,
 		room_state: Boolean,
 		room_id: String,

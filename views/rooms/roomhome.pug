@@ -23,26 +23,30 @@ block content
             //-     input(type="text", name="q" class="form-control")
             //-     button(class="btn btn-dark ms-3") Search
             .container-2
-                form(action="/rooms/search",method="GET" class="m-auto")
-                    span.icon
-                        i.fa.fa-search
-                    input#search(type='text' name="q" placeholder='')
-    .row(class="row-cols-1 row-cols-sm-2 row-cols-lg-4 pt-4")
-        each room in rooms
-            .col.text-center
-                #room-list.h-auto.card.list-unstyled.shadow-lg(class= room.customer ? "text-white bg-dark mb-3 ":"text-dark bg-light mb-3 ")
-                    img(src=`${room.image}` class="card-img-top")
-                    .card-body
-                        h5.card-title="Phòng "+room.room_id
-                        li="Loại phòng: "+room.room_type
-                        //- li="Giá phòng: "+room.price 
-                        //- li="Ghi chú: "+room.note 
-                        //- if(room.customer)
-                        //-     li="Tên khách hàng: "+room.customer.name
-                        //-     li="Ngày checkin: "+room.customer.checkin_date
-                        //-     li="Ngày checkout:"+room.customer.checkout_date
-                        a.mt-2.button(href="/rooms/"+room._id class=room.customer? "btn btn-light":"btn btn-dark")
-                            span View
+                input.datepick(type='text' placeholder='Check available' class="form-control" id="available")
+                   
+    select.form-select(id="room_type" class="mt-2")
+        option(value='') Filter with Room Type
+        option(value='Standard') Standard
+        option(value='Superior') Superior
+        option(value='Deluxe') Deluxe
+        option(value='Luxury') Luxury
+    .row(class="row-cols-1 row-cols-sm-2 row-cols-lg-4 pt-4" id="rooms-card")
+        //- each room in rooms
+        //-     .col.text-center
+        //-         #room-list.h-auto.card.list-unstyled.shadow-lg(class= room.customer ? "text-white bg-dark mb-3 ":"text-dark bg-light mb-3 ")
+        //-             img(src=`${room.image}` class="card-img-top")
+        //-             .card-body
+        //-                 h5.card-title="Phòng "+room.room_id
+        //-                 li="Loại phòng: "+room.room_type
+        //-                 //- li="Giá phòng: "+room.price 
+        //-                 //- li="Ghi chú: "+room.note 
+        //-                 //- if(room.customer)
+        //-                 //-     li="Tên khách hàng: "+room.customer.name
+        //-                 //-     li="Ngày checkin: "+room.customer.checkin_date
+        //-                 //-     li="Ngày checkout:"+room.customer.checkout_date
+        //-                 a.mt-2.button(href="/rooms/"+room._id class=room.customer? "btn btn-light":"btn btn-dark")
+        //-                     span View
     .position-fixed.bottom-0.end-0.p-3(style='z-index: 11')
         #liveToast.toast(role='alert', aria-live='assertive', aria-atomic='true' data-bs-autohide="false")
             .toast-header
@@ -56,18 +60,6 @@ block content
                         if(room.customer.checkout_date === today)
                             h5.text-danger="Phòng đến ngày checkout: "+room.room_id
 
-    style. 
-        #room-list{
-            height: 21rem;
-        }
-    script.
-        var toastLiveExample = document.getElementById('liveToast')
-        var toast = new bootstrap.Toast(toastLiveExample)
-        window.onload = toast.show()
-
-        var toastTrigger = document.getElementById('liveToastBtn')
-        if (toastTrigger) {
-        toastTrigger.addEventListener('click', function () {
-            toast.show()
-        })
-        }
+    script(type="text/javascript" src="/js/room-home.js")
+    script(src='/js/datepicker.js')
+       

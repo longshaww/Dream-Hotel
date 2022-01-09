@@ -12,9 +12,6 @@ module.exports.createRoomValidation = async (req, res, next) => {
 	if (!req.body.room_type) {
 		errors.push("Room type is required");
 	}
-	if (!req.body.price) {
-		errors.push("Price is required");
-	}
 	if (errors.length) {
 		res.render("rooms/createroom", {
 			errors: errors,

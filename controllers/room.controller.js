@@ -74,24 +74,22 @@ module.exports.createRoomValidation = async (req, res) => {
 			req.file.path,
 			"oeaxhoph"
 		);
-		await Room.create({
-			room_type: req.body.room_type,
-			price: req.body.price,
-			note: req.body.note,
-			room_id: req.body.room_id,
-			image: image.secure_url,
-		});
-		res.redirect("/rooms");
-	} else {
-		await Room.create({
-			room_type: req.body.room_type,
-			price: req.body.price,
-			note: req.body.note,
-			room_id: req.body.room_id,
-			// image: image.secure_url,
-		});
-		res.redirect("/rooms");
+		req.body.image = image.secure_url;
 	}
+	if (req.body.room_type === "Standard") {
+		req.body.price = "$10";
+	}
+	if (req.body.room_type === "Superior") {
+		req.body.price = "$20";
+	}
+	if (req.body.room_type === "Deluxe") {
+		req.body.price = "$30";
+	}
+	if (req.body.room_type === "Luxury") {
+		req.body.price = "$40";
+	}
+	await Room.create(req.body);
+	res.redirect("/rooms");
 };
 module.exports.viewRoom = async (req, res) => {
 	var id = req.params.id;
@@ -116,31 +114,24 @@ module.exports.editRoomHandling = async (req, res) => {
 			req.file.path,
 			"oeaxhoph"
 		);
-		await Room.findByIdAndUpdate(
-			{ _id: req.params.id },
-			{
-				room_type: req.body.room_type,
-				price: req.body.price,
-				note: req.body.note,
-				room_id: req.body.room_id,
-				image: image.secure_url,
-			},
-			{ new: true }
-		);
-		res.redirect("/rooms/" + req.params.id);
-	} else {
-		await Room.findByIdAndUpdate(
-			{ _id: req.params.id },
-			{
-				room_type: req.body.room_type,
-				price: req.body.price,
-				note: req.body.note,
-				room_id: req.body.room_id,
-			},
-			{ new: true }
-		);
-		res.redirect("/rooms/" + req.params.id);
+		req.body.image = image.secure_url;
 	}
+	if (req.body.room_type === "Standard") {
+		req.body.price = "$10";
+	}
+	if (req.body.room_type === "Superior") {
+		req.body.price = "$20";
+	}
+	if (req.body.room_type === "Deluxe") {
+		req.body.price = "$30";
+	}
+	if (req.body.room_type === "Luxury") {
+		req.body.price = "$40";
+	}
+	await Room.findByIdAndUpdate({ _id: req.params.id }, req.body, {
+		new: true,
+	});
+	res.redirect("/rooms/" + req.params.id);
 };
 module.exports.checkInForm = async (req, res) => {
 	var customers = await Customer.find();
