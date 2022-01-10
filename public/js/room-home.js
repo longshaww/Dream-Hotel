@@ -38,7 +38,7 @@ function onAvailable(e) {
 			return renderRooms(rooms);
 		}
 		const matchedRoom = rooms.filter((room) => {
-			return room.available.includes(val);
+			return !room.available.includes(val);
 		});
 		renderRooms(matchedRoom);
 	}
