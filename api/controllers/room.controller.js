@@ -1,4 +1,4 @@
-const { Room, Customer } = require("../../models/room.model");
+const { Room, Charts } = require("../../models/room.model");
 
 const roomHome = async (req, res) => {
 	const rooms = await Room.find().populate("customer");
@@ -29,10 +29,16 @@ const singleRoom = async (req, res) => {
 	res.json(room);
 };
 
+const getPayment = async (req, res) => {
+	const charts = await Charts.find();
+	res.json(charts);
+};
+
 module.exports = {
 	roomHome,
 	createRoom,
 	editRoom,
 	deleteRoom,
 	singleRoom,
+	getPayment,
 };
