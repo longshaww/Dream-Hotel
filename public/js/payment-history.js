@@ -36,7 +36,7 @@ $("#chart-btn").click(() => {
 
 async function getData() {
 	const response = await fetch(
-		"http://dreamhotel.herokuapp.com/api/rooms/payment-history"
+		"https://dreamhotel.herokuapp.com/api/rooms/payment-history"
 	);
 	const data = await response.json();
 	let labels = [];
